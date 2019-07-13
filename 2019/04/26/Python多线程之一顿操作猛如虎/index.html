@@ -1,0 +1,1518 @@
+<!DOCTYPE html>
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+<html class="theme-next gemini use-motion" lang="zh-CN">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=6.3.0" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/cat.png?v=6.3.0">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=6.3.0">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=6.3.0">
+
+
+  <link rel="mask-icon" href="/images/cat.svg?v=6.3.0" color="#222">
+
+
+
+
+
+
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Gemini',
+    version: '6.3.0',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: false,
+    fastclick: false,
+    lazyload: false,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+  
+
+
+
+
+  <meta name="description" content="&amp;emsp;&amp;emsp;Python通过两个标准库thread和threading提供对线程的支持。thread提供了低级别的、原始的线程以及一个简单的锁。标准库thread在此不做讨论，主要探讨threading模块的基本使用以及线程同步问题。">
+<meta name="keywords" content="python多线程,锁">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Python多线程之一顿操作猛如虎">
+<meta property="og:url" content="http://yoursite.com/2019/04/26/Python多线程之一顿操作猛如虎/index.html">
+<meta property="og:site_name" content="AiforeのBlog">
+<meta property="og:description" content="&amp;emsp;&amp;emsp;Python通过两个标准库thread和threading提供对线程的支持。thread提供了低级别的、原始的线程以及一个简单的锁。标准库thread在此不做讨论，主要探讨threading模块的基本使用以及线程同步问题。">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:updated_time" content="2019-07-12T18:19:42.611Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Python多线程之一顿操作猛如虎">
+<meta name="twitter:description" content="&amp;emsp;&amp;emsp;Python通过两个标准库thread和threading提供对线程的支持。thread提供了低级别的、原始的线程以及一个简单的锁。标准库thread在此不做讨论，主要探讨threading模块的基本使用以及线程同步问题。">
+
+
+
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2019/04/26/Python多线程之一顿操作猛如虎/"/>
+
+
+
+<script type="text/javascript" id="page.configurations">
+  CONFIG.page = {
+    sidebar: "",
+  };
+</script>
+
+  <title>Python多线程之一顿操作猛如虎 | AiforeのBlog</title>
+  
+
+
+
+
+
+
+
+
+
+  <noscript>
+  <style type="text/css">
+    .use-motion .motion-element,
+    .use-motion .brand,
+    .use-motion .menu-item,
+    .sidebar-inner,
+    .use-motion .post-block,
+    .use-motion .pagination,
+    .use-motion .comments,
+    .use-motion .post-header,
+    .use-motion .post-body,
+    .use-motion .collection-title { opacity: initial; }
+
+    .use-motion .logo,
+    .use-motion .site-title,
+    .use-motion .site-subtitle {
+      opacity: initial;
+      top: initial;
+    }
+
+    .use-motion {
+      .logo-line-before i { left: initial; }
+      .logo-line-after i { right: initial; }
+    }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-CN">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">AiforeのBlog</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+    
+      
+        <p class="site-subtitle">太陽が輝く限り、希望もまた輝く。</p>
+      
+    
+  </div>
+
+  <div class="site-nav-toggle">
+    <button aria-label="切换导航栏">
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  
+    <ul id="menu" class="menu">
+      
+        
+        
+        
+          
+          <li class="menu-item menu-item-home">
+    <a href="/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-home"></i> <br />首页</a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-about">
+    <a href="/about/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-user"></i> <br />关于</a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-tags">
+    <a href="/tags/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />标签</a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-categories">
+    <a href="/categories/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-th"></i> <br />分类</a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-archives">
+    <a href="/archives/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />归档</a>
+  </li>
+
+      
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br />搜索</a>
+        </li>
+      
+    </ul>
+  
+
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup search-popup local-search-popup">
+  <div class="local-search-header clearfix">
+    <span class="search-icon">
+      <i class="fa fa-search"></i>
+    </span>
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+    <div class="local-search-input-wrapper">
+      <input autocomplete="off"
+             placeholder="搜索..." spellcheck="false"
+             type="text" id="local-search-input">
+    </div>
+  </div>
+  <div id="local-search-result"></div>
+</div>
+
+
+
+    </div>
+  
+</nav>
+
+
+
+  
+
+
+
+</div>
+    </header>
+
+    
+
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+            
+
+          
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/04/26/Python多线程之一顿操作猛如虎/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Aifore">
+      <meta itemprop="description" content="欢迎来到宇宙最帅Aifore的博客！">
+      <meta itemprop="image" content="/images/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="AiforeのBlog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">Python多线程之一顿操作猛如虎
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+
+              
+                
+              
+
+              <time title="创建时间：2019-04-26 17:00:48" itemprop="dateCreated datePublished" datetime="2019-04-26T17:00:48+07:00">2019-04-26</time>
+            
+
+            
+              
+
+              
+                
+                <span class="post-meta-divider">|</span>
+                
+
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">更新于</span>
+                
+                <time title="修改时间：2019-07-13 01:19:42" itemprop="dateModified" datetime="2019-07-13T01:19:42+07:00">2019-07-13</time>
+              
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/Python基础/" itemprop="url" rel="index"><span itemprop="name">Python基础</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2019/04/26/Python多线程之一顿操作猛如虎/#comments" itemprop="discussionUrl">
+                
+                  <span class="post-comments-count disqus-comment-count"
+                        data-disqus-identifier="2019/04/26/Python多线程之一顿操作猛如虎/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+            <span class="post-meta-divider">|</span>
+            <span class="post-meta-item-icon"
+            >
+            <i class="fa fa-eye"></i>
+             阅读次数： 
+            <span class="busuanzi-value" id="busuanzi_value_page_pv" ></span>
+            </span>
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>&emsp;&emsp;Python通过两个标准库<strong>thread</strong>和<strong>threading</strong>提供对线程的支持。thread提供了低级别的、原始的线程以及一个简单的锁。标准库thread在此不做讨论，主要探讨threading模块的基本使用以及线程同步问题。</p>
+<a id="more"></a>
+<blockquote>
+<p>参考资料：</p>
+<ul>
+<li><a href="http://www.runoob.com/python/python-multithreading.html" target="_blank" rel="noopener">菜鸟教程：Python多线程</a></li>
+<li><a href="https://github.com/coco369/knowledge/blob/master/spider/3.0spider_process_threading.md" target="_blank" rel="noopener">老王knowledeg：多线程</a>（比较基础）</li>
+</ul>
+</blockquote>
+<h2 id="0-前言"><a href="#0-前言" class="headerlink" title="0. 前言"></a>0. 前言</h2><p>&emsp;&emsp;Python主要通过标准库中的<strong>threading</strong>包来实现多线程。由于cpython解释器GIL全局解释性锁的关系，python的多线程设计有一定的妥协，并非真正意义上的多线程，在同一时间有且只有一个线程在工作，所谓的多线程，只是多个线程轮换执行（每隔一定时间片或者cpu指令数GIL会释放锁让其他线程有机会执行）。</p>
+<p>&emsp;&emsp;如一个四核四线程的cpu（因为超线程技术，有四核八线程的），一个java程序创建了10个线程，而java能实现真正意义的多线程，同一时间允许四核的四个线程同时执行，10个线程在四个核心中轮换执行（<strong>四个一批轮换</strong>），所以能充分利用cpu的多个核心，而python程序同一时间只有一个线程执行（<strong>一个一批轮换</strong>），即使四核cpu也只能利用一个核心的性能（有可能在其他核心执行，但总会有三个核心被闲置，所以只能说综合性能只有一个核的）。因此python程序通常是通过多进程方式来充分发挥多核性能（如部署常用的uwsgi服务器uWSGI和Gunicorn都是通过开启多个进程来提高程序的处理能力）。</p>
+<p>&emsp;&emsp;上面说了，python多线程只是有所妥协而已：<strong>cpu密集的任务</strong>，由于同一时间只有一个线程在运算，如果开启多个线程，反而增加了线程切换的资源消耗，所以这种情况性能反而不及单线程高，比较有代表性的就是numpy等需要高计算性能的场景，通过调用c语言（没有线程限制）来执行计算工作。但也不是完全的鸡肋：<strong>IO密集型的任务</strong>，由于程序执行的大部分时间都是在等待IO操作，代码执行所占的时间极短，所以此时使用多线程，可以在等待IO的时候切换到其他线程执行，避免单线程等待IO所带来的程序阻塞，最有代表性的场景就是爬虫和web。</p>
+<h2 id="1-基本方法"><a href="#1-基本方法" class="headerlink" title="1. 基本方法"></a>1. 基本方法</h2><ul>
+<li><strong>start():</strong> 开启线程。</li>
+<li><strong>getName():</strong> 返回线程名。</li>
+<li><strong>setName():</strong> 设置线程名。</li>
+<li><strong>isAlive():</strong> 返回线程是否活动的。</li>
+<li><strong>run():</strong> 表示线程活动的方法。在线程启动后会自动被调用，其中传入的target对象就是在这里面调用的。</li>
+<li><strong>setDaemon([True]):</strong> 当定义子线程为守护线程，当主线程结束，不管子线程是否执行完，都会被直接给暂停掉。默认daemon为False，主线程只有在子线程全部结束后才会结束。</li>
+<li><strong>join([time]):</strong> 线程阻塞：等待至线程中止。这阻塞调用线程直至线程的join() 方法被<u>调用中止</u>、<u>正常退出</u>或者<u>抛出未处理的异常</u>、或者是<u>可选的超时</u>发生，才能继续运行后面的代码。</li>
+</ul>
+<h2 id="2-线程同步"><a href="#2-线程同步" class="headerlink" title="2. 线程同步"></a>2. 线程同步</h2><blockquote>
+<p>如果多个线程共同对某个数据修改（比如一个常量或者一个列表），很可能出现不可预期的结果（资源竞争），为了保证数据的正确性，需要对多个线程进行同步。</p>
+<p>对于多线程程序来说，同步(synchronization)是指在一定的时间内只允许某一个线程访问某个资源 。而在此时间内，不允许其它的线程访问该资源。我们可以通过<strong>互斥锁(mutex)</strong>，<strong>条件变量(condition variable)</strong>和<strong>读写锁(reader-writer lock)</strong>来同步资源。</p>
+<p>参考博客：</p>
+<ul>
+<li><a href="http://www.cnblogs.com/vamei/archive/2012/10/11/2720042.html" target="_blank" rel="noopener">Vamei：Python标准库08 多线程与同步 (threading包)</a></li>
+<li><a href="https://www.cnblogs.com/vamei/archive/2012/10/09/2715393.html" target="_blank" rel="noopener">Vamei：Linux并发与同步</a></li>
+</ul>
+</blockquote>
+<p>示例：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> threading</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">MyThread</span><span class="params">(threading.Thread)</span>:</span></span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">run</span><span class="params">(self)</span>:</span></span><br><span class="line">        <span class="keyword">global</span> n, lock</span><br><span class="line">        n += <span class="number">1</span></span><br><span class="line">        lock.acquire()</span><br><span class="line">        <span class="comment"># 会出现两个线程打印的n一样</span></span><br><span class="line">        print(n, threading.current_thread().name)</span><br><span class="line">        lock.release()</span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> __name__ == <span class="string">'__main__'</span>:</span><br><span class="line">    n = <span class="number">0</span>  <span class="comment"># 设置全局变量</span></span><br><span class="line">    ThreadList = []</span><br><span class="line">    lock = threading.Lock()</span><br><span class="line"></span><br><span class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> range(<span class="number">1</span>, <span class="number">20</span>):</span><br><span class="line">        t = MyThread()</span><br><span class="line">        ThreadList.append(t)</span><br><span class="line"></span><br><span class="line">    <span class="keyword">for</span> t <span class="keyword">in</span> ThreadList:</span><br><span class="line">        t.start()</span><br><span class="line"></span><br><span class="line">    <span class="keyword">for</span> t <span class="keyword">in</span> ThreadList:</span><br><span class="line">        t.join()</span><br></pre></td></tr></table></figure>
+<h3 id="2-1-产生原因"><a href="#2-1-产生原因" class="headerlink" title="2.1 产生原因"></a>2.1 产生原因</h3><p>多线程相当于一个<strong>并发(concunrrency)系统</strong>。并发系统一般同时执行多个任务。如果多个任务可以共享资源，特别是同时写入某个变量的时候，就需要解决同步的问题。比如说，我们有一个多线程火车售票系统，用全局变量i存储剩余的票数。多个线程不断地卖票(i = i - 1)，直到剩余票数为0。所以每个都需要执行如下操作：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/*mu is a global mutex*/</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">while</span> (<span class="number">1</span>) &#123;                        <span class="comment">/*infinite loop*/</span></span><br><span class="line">    <span class="keyword">if</span> (i != <span class="number">0</span>) i = i <span class="number">-1</span></span><br><span class="line">    <span class="keyword">else</span> &#123;</span><br><span class="line">      <span class="built_in">printf</span>(<span class="string">"no more tickets"</span>);</span><br><span class="line">      <span class="built_in">exit</span>();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>如果只有一个线程执行上面的程序的时候(相当于一个窗口售票)，则没有问题。但如果多个线程都执行上面的程序(相当于多个窗口售票)，我们就会出现问题。我们会看到，其<strong>根本原因在于同时发生的各个线程都可以对i读取和写入。</strong></p>
+<p>我们这里的if结构会给CPU两个指令, 一个是判断是否有剩余的票(i != 0)，一个是卖票 (i = i -1)。某个线程会先判断是否有票(比如说此时i为1)，但两个指令之间存在一个时间窗口，其它线程可能在此时间窗口内执行卖票操作(i = i -1)，导致该线程卖票的条件不再成立。但该线程由于已经执行过了判断指令，所以无从知道i发生了变化，所以继续执行卖票指令，以至于卖出不存在的票 (i成为负数)。对于一个真实的售票系统来说，这将成为一个严重的错误 (售出了过多的票，火车爆满)。</p>
+<p>在并发情况下，指令执行的先后顺序由内核决定。同一个线程内部，指令按照先后顺序执行，但不同线程之间的指令很难说清除哪一个会先执行。如果运行的结果依赖于不同线程执行的先后的话，那么就会造成<strong>竞争条件(race condition)</strong>，在这样的状况下，计算机的结果很难预知。我们应该尽量避免竞争条件的形成。<strong>最常见的解决竞争条件的方法是将原先分离的两个指令(读和写)构成不可分隔的一个原子操作(atomic operation)</strong>，而其它任务不能插入到原子操作中。</p>
+<h3 id="2-2-互斥锁"><a href="#2-2-互斥锁" class="headerlink" title="2.2 互斥锁"></a>2.2 互斥锁</h3><blockquote>
+<p>互斥锁是一个特殊的变量，它有锁上(lock)和打开(unlock)两个状态。互斥锁一般被设置成全局变量。打开的互斥锁可以由某个线程获得。一旦获得，这个互斥锁会锁上，此后只有该线程有权打开。其它想要获得互斥锁的线程，会等待直到互斥锁再次打开的时候。</p>
+</blockquote>
+<p>上面的问题很容易使用互斥锁的问题解决，每个线程的程序可以改为:</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/*mu is a global mutex*/</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">while</span> (<span class="number">1</span>) &#123;           <span class="comment">/*infinite loop*/</span></span><br><span class="line">  mutex_lock(mu);     <span class="comment">/*aquire mutex and lock it, if cannot, wait until mutex is unblocked*/</span></span><br><span class="line">  <span class="keyword">if</span> (i != <span class="number">0</span>) i = i - <span class="number">1</span>;</span><br><span class="line">  <span class="keyword">else</span> &#123;</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">"no more tickets"</span>);</span><br><span class="line">    <span class="built_in">exit</span>();</span><br><span class="line">  &#125;</span><br><span class="line">  mutex_unlock(mu);    <span class="comment">/*release mutex, make it unblocked*/</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>第一个执行mutex_lock()的线程会先获得mu。其它想要获得mu的线程必须等待，直到第一个线程执行到mutex_unlock()释放mu，才可以获得mu，并继续执行线程。所以线程在mutex_lock()和mutex_unlock()之间的操作时，不会被其它线程影响，就构成了一个<strong>原子操作</strong>。</p>
+<p>需要注意的时候，如果存在某个线程依然使用原先的程序 (即不尝试获得mu，而直接修改i)，互斥锁不能阻止该程序修改i，互斥锁就失去了保护资源的意义。所以，互斥锁机制需要程序员自己来写出完善的程序来实现互斥锁的功能。下面讲的其它机制也是如此。</p>
+<p>===&gt;&gt;&gt;</p>
+<p>Python中使用<strong>Thread对象的Lock和Rlock（递归锁）</strong>可以实现简单的线程同步，这两个对象都有acquire方法和release方法，对于那些需要每次只允许一个线程操作的数据，可以将其操作放到acquire和release方法之间。</p>
+<ul>
+<li>基本语法：</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 创建锁</span></span><br><span class="line">mutex = threading.Lock()</span><br><span class="line"><span class="comment"># 锁定</span></span><br><span class="line">mutex.acquire([timeout])</span><br><span class="line"><span class="comment"># 释放</span></span><br><span class="line">mutex.release()</span><br></pre></td></tr></table></figure>
+<ul>
+<li><strong>番外：Lock和Rlock（递归锁）的区别</strong></li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> threading  </span><br><span class="line">lock = threading.Lock() <span class="comment">#Lock对象  </span></span><br><span class="line">lock.acquire()  </span><br><span class="line">lock.acquire()  <span class="comment"># 产生了死琐。  </span></span><br><span class="line">lock.release()  </span><br><span class="line">lock.release()  </span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> threading  </span><br><span class="line">rLock = threading.RLock()  <span class="comment"># RLock对象  </span></span><br><span class="line">rLock.acquire()  </span><br><span class="line">rLock.acquire() <span class="comment"># 在同一线程内，程序不会堵塞。  </span></span><br><span class="line">rLock.release()  </span><br><span class="line">rLock.release()</span><br></pre></td></tr></table></figure>
+<p>主要区别是：</p>
+<p>RLock允许在同一线程中被多次acquire。而Lock却不允许这种情况。注意：如果使用RLock，那么acquire和release必须成对出现，即调用了n次acquire，必须调用n次的release才能真正释放所占用的锁。</p>
+<h3 id="2-3-条件变量"><a href="#2-3-条件变量" class="headerlink" title="2.3 条件变量"></a>2.3 条件变量</h3><blockquote>
+<p>条件变量是另一种常用的变量。它也常常被保存为全局变量，并和互斥锁合作。</p>
+</blockquote>
+<p>假设这样一个状况：有100个工人，每人负责装修一个房间。当有10个房间装修完成的时候，老板就通知相应的十个工人一起去喝啤酒。</p>
+<p>我们如何实现呢？老板让工人在装修好房间之后，去检查已经装修好的房间数。但多线程条件下，会有竞争条件的危险。也就是说，其他工人有可能会在该工人装修好房子和检查之间完成工作。采用下面方式解决：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/*mu: global mutex, cond: global codition variable, num: global int*/</span></span><br><span class="line">mutex_lock(mu)</span><br><span class="line"></span><br><span class="line">num = num + <span class="number">1</span>;                 <span class="comment">/*worker build the room*/</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> (num &lt;= <span class="number">10</span>) &#123;               <span class="comment">/*worker is within the first 10 to finish*/</span></span><br><span class="line">    cond_wait(mu, cond);       <span class="comment">/*wait*/</span></span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">"drink beer"</span>);</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">else</span> <span class="keyword">if</span> (num = <span class="number">11</span>) &#123;           <span class="comment">/*worker is the 11th to finish*/</span></span><br><span class="line">  cond_broadcast(mu, cond);    <span class="comment">/*inform the other 9 to wake up*/</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">mutex_unlock(mu);</span><br></pre></td></tr></table></figure>
+<p>上面使用了条件变量。条件变量除了要和互斥锁配合之外，还需要和另一个全局变量配合(这里的num，也就是装修好的房间数)。这个全局变量用来构成各个条件。</p>
+<p>具体思路如下。我们让工人在装修好房间(num = num + 1)之后，去检查已经装修好的房间数( num &lt; 10 )。由于mu被锁上，所以不会有其他工人在此期间装修房间(改变num的值)。如果该工人是前十个完成的人，那么我们就调用cond_wait()函数。</p>
+<p>cond_wait()做两件事情，一个是释放mu，从而让别的工人可以建房。另一个是等待，直到cond的通知。这样的话，符合条件的线程就开始等待。</p>
+<p>当有通知(第十个房间已经修建好)到达的时候，cond_wait()会再次锁上mu。线程的恢复运行，执行下一句prinft(“drink beer”) (喝啤酒！)。从这里开始，直到mutex_unlock()，就构成了另一个互斥锁结构。<font color="red">&lt;为什么还要锁一次，这个地方暂时不是太懂🤔&gt;</font></p>
+<p>那么，前面十个调用cond_wait()的线程如何得到的通知呢？我们注意到elif if，即修建好第11个房间的人，负责调用cond_broadcast()。这个函数会给所有调用cond_wait()的线程放送通知，以便让那些线程恢复运行。</p>
+<p>条件变量特别<strong>适用于多个线程等待某个条件的发生。</strong>如果不使用条件变量，那么每个线程就需要不断尝试获得互斥锁并检查条件是否发生，这样大大浪费了系统的资源。</p>
+<p>===&gt;&gt;&gt;</p>
+<p>Python中使用<strong>threading.Condition</strong>对象实现：</p>
+<p>可以把Condiftion理解为一把高级的锁，它提供了比Lock、RLock更高级的功能，允许我们能够控制复杂的线程同步问题。threadiong.Condition在内部维护一个锁对象（默认是RLock），可以在创建Condigtion对象的时候把锁对象作为参数传入。Condition也提供了acquire、release方法，其含义与锁的acquire、release方法一致，其实它只是简单的调用内部锁对象的对应的方法而已。</p>
+<p>此外的其他方法（特别注意：这些方法只有在占用锁(acquire)之后才能调用，否则将会报RuntimeError异常。）：</p>
+<ul>
+<li><p>wait()</p>
+<p>相当于cond_wait()，wait方法释放内部所占用的锁，同时线程被挂起，直至接收到通知被唤醒或超时（如果提供了timeout参数的话）。当线程被唤醒并重新占有锁的时候，程序才会继续执行下去。</p>
+</li>
+<li><p>notify_all()</p>
+<p>相当于cond_broadcast()，它不会释放所占用的锁。</p>
+</li>
+<li><p>notify()</p>
+<p>与notify_all()功能类似，但默认只唤醒一个等待的线程，而不是全部，它不会释放所占用的锁。</p>
+</li>
+</ul>
+<h3 id="2-4-读写锁"><a href="#2-4-读写锁" class="headerlink" title="2.4 读写锁"></a>2.4 读写锁</h3><blockquote>
+<p>读写锁与互斥锁非常相似。r、RW lock有三种状态：共享读取锁(shared-read)、互斥写入锁(exclusive-write lock)、打开(unlock)。后两种状态与之前的互斥锁两种状态完全相同。一般用在<strong>大量读操作、少量写操作</strong>的情况。</p>
+</blockquote>
+<p>一个unlock的RW lock可以被某个线程获取R锁或者W锁。</p>
+<p>如果被一个线程获得R锁，RW lock可以被其它线程继续获得R锁，而不必等待该线程释放R锁。但是，如果此时有其它线程想要获得W锁，它必须等到所有持有共享读取锁的线程释放掉各自的R锁。</p>
+<p>如果一个锁被一个线程获得W锁，那么其它线程，无论是想要获取R锁还是W锁，都必须等待该线程释放W锁。</p>
+<p>这样，多个线程就可以同时读取共享资源。而具有危险性的写入操作则得到了互斥锁的保护。</p>
+<p>规则整理如下：</p>
+<ul>
+<li>同时只能有一个线程能够获得写锁定。</li>
+<li>同时可以有任意多个线程获得读锁定。</li>
+<li>同时只能存在写锁定或读锁定（读和写互斥）。</li>
+</ul>
+<p>Python好像没有这个！（应该也有🤪）</p>
+<h2 id="3-源码解析"><a href="#3-源码解析" class="headerlink" title="3. 源码解析"></a>3. 源码解析</h2><blockquote>
+<p>主要分析线程的启动执行过程。</p>
+</blockquote>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br></pre></td><td class="code"><pre><span class="line">_start_new_thread = thread.start_new_thread</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Thread</span><span class="params">(_Verbose)</span>:</span></span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">start</span><span class="params">(self)</span>:</span></span><br><span class="line">        <span class="string">"""Start the thread's activity."""</span></span><br><span class="line">        <span class="keyword">if</span> <span class="keyword">not</span> self.__initialized:</span><br><span class="line">            <span class="keyword">raise</span> RuntimeError(<span class="string">"thread.__init__() not called"</span>)</span><br><span class="line">        <span class="keyword">if</span> self.__started.is_set():</span><br><span class="line">            <span class="keyword">raise</span> RuntimeError(<span class="string">"threads can only be started once"</span>)</span><br><span class="line">        <span class="keyword">if</span> __debug__:</span><br><span class="line">            self._note(<span class="string">"%s.start(): starting thread"</span>, self)</span><br><span class="line">        <span class="keyword">with</span> _active_limbo_lock:</span><br><span class="line">            _limbo[self] = self</span><br><span class="line">        <span class="keyword">try</span>:</span><br><span class="line">          	<span class="comment"># 🤪🤪🤪《1.看这里》🤪🤪🤪</span></span><br><span class="line">            _start_new_thread(self.__bootstrap, ())</span><br><span class="line">        <span class="keyword">except</span> Exception:</span><br><span class="line">            <span class="keyword">with</span> _active_limbo_lock:</span><br><span class="line">                <span class="keyword">del</span> _limbo[self]</span><br><span class="line">            <span class="keyword">raise</span></span><br><span class="line">        self.__started.wait()</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">run</span><span class="params">(self)</span>:</span></span><br><span class="line">        <span class="string">"""Method representing the thread's activity.</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">        You may override this method in a subclass. The standard run() method</span></span><br><span class="line"><span class="string">        invokes the callable object passed to the object's constructor as the</span></span><br><span class="line"><span class="string">        target argument, if any, with sequential and keyword arguments taken</span></span><br><span class="line"><span class="string">        from the args and kwargs arguments, respectively.</span></span><br><span class="line"><span class="string">        """</span></span><br><span class="line">        <span class="keyword">try</span>:</span><br><span class="line">            <span class="keyword">if</span> self.__target:</span><br><span class="line">                <span class="comment"># 🤪🤪🤪《4.看这里》🤪🤪🤪</span></span><br><span class="line">                self.__target(*self.__args, **self.__kwargs)</span><br><span class="line">        <span class="keyword">finally</span>:</span><br><span class="line">            <span class="keyword">del</span> self.__target, self.__args, self.__kwargs</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__bootstrap</span><span class="params">(self)</span>:</span></span><br><span class="line">        <span class="keyword">try</span>:</span><br><span class="line">            <span class="comment"># 🤪🤪🤪《2.看这里》🤪🤪🤪</span></span><br><span class="line">            self.__bootstrap_inner()</span><br><span class="line">        <span class="keyword">except</span>:</span><br><span class="line">            <span class="keyword">if</span> self.__daemonic <span class="keyword">and</span> _sys <span class="keyword">is</span> <span class="keyword">None</span>:</span><br><span class="line">                <span class="keyword">return</span></span><br><span class="line">            <span class="keyword">raise</span></span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__bootstrap_inner</span><span class="params">(self)</span>:</span></span><br><span class="line">        <span class="keyword">try</span>:</span><br><span class="line">            &lt;省略...&gt;</span><br><span class="line">            <span class="keyword">try</span>:</span><br><span class="line">                <span class="comment"># 🤪🤪🤪《3.看这里》🤪🤪🤪</span></span><br><span class="line">                self.run()</span><br><span class="line">            <span class="keyword">except</span> SystemExit:</span><br><span class="line">                &lt;省略...&gt;</span><br><span class="line">            <span class="keyword">except</span>:</span><br><span class="line">                &lt;省略...&gt;</span><br><span class="line">            <span class="keyword">else</span>:</span><br><span class="line">                &lt;省略...&gt;</span><br><span class="line">            <span class="keyword">finally</span>:</span><br><span class="line">                &lt;省略...&gt;</span><br><span class="line">        <span class="keyword">finally</span>:</span><br><span class="line">            &lt;省略...&gt;</span><br></pre></td></tr></table></figure>
+<p>面向过程的多线程编程中，线程实例化时传入的target和args参数会在在run()方法中被调用。下面介绍的OOP多线程方式就是通过重写run()方法来定义线程所要执行的命令。</p>
+<h2 id="4-OOP多线程编程示例"><a href="#4-OOP多线程编程示例" class="headerlink" title="4. OOP多线程编程示例"></a>4. OOP多线程编程示例</h2><blockquote>
+<p>面向过程的就不示例了，例如：<code>new_thread = threading.Thread(target=&lt;调用函数&gt;, args=(&lt;参数&gt;, ))</code>就是面向过程的方式。</p>
+</blockquote>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># A program to simulate selling tickets in multi-thread way</span></span><br><span class="line"><span class="keyword">import</span> threading</span><br><span class="line"><span class="keyword">import</span> time</span><br><span class="line"><span class="keyword">import</span> os</span><br><span class="line"></span><br><span class="line"><span class="comment"># This function could be any function to do other chores.</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">doChore</span><span class="params">()</span>:</span></span><br><span class="line">    time.sleep(<span class="number">0.5</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment"># Function for each thread</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">BoothThread</span><span class="params">(threading.Thread)</span>:</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__init__</span><span class="params">(self, tid, monitor)</span>:</span></span><br><span class="line">        self.tid = tid</span><br><span class="line">        self.monitor = monitor</span><br><span class="line">        threading.Thread.__init__(self)</span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">run</span><span class="params">(self)</span>:</span></span><br><span class="line">        <span class="keyword">while</span> <span class="keyword">True</span>:</span><br><span class="line">            <span class="comment"># Lock; or wait if other thread is holding the lock</span></span><br><span class="line">            monitor[<span class="string">'lock'</span>].acquire()</span><br><span class="line">            <span class="keyword">if</span> monitor[<span class="string">'tick'</span>] != <span class="number">0</span>:</span><br><span class="line">                monitor[<span class="string">'tick'</span>] = monitor[<span class="string">'tick'</span>] - <span class="number">1</span></span><br><span class="line">                print(self.tid,<span class="string">':now left:'</span>,monitor[<span class="string">'tick'</span>])</span><br><span class="line">                <span class="comment"># Other critical operations</span></span><br><span class="line">                doChore()</span><br><span class="line">            <span class="keyword">else</span>:</span><br><span class="line">                print(<span class="string">"Thread_id"</span>,self.tid,<span class="string">" No more tickets"</span>)</span><br><span class="line">                <span class="comment"># Exit the whole process immediately</span></span><br><span class="line">                os._exit(<span class="number">0</span>)</span><br><span class="line">            <span class="comment"># Unblock</span></span><br><span class="line">            monitor[<span class="string">'lock'</span>].release()</span><br><span class="line">            <span class="comment"># Non-critical operations</span></span><br><span class="line">            doChore()</span><br><span class="line"></span><br><span class="line"><span class="comment"># Start of the main function</span></span><br><span class="line">monitor = &#123;<span class="string">'tick'</span>:<span class="number">100</span>, <span class="string">'lock'</span>:threading.Lock()&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment"># Start 10 threads</span></span><br><span class="line"><span class="keyword">for</span> k <span class="keyword">in</span> range(<span class="number">10</span>):</span><br><span class="line">    new_thread = BoothThread(k, monitor)</span><br><span class="line">    new_thread.start()</span><br></pre></td></tr></table></figure>
+<p>待学习：</p>
+<ul>
+<li><p><strong>threading.Semaphore对象</strong>：semaphore，也就是计数锁(semaphore传统意义上是一种进程间同步工具，见<a href="http://www.cnblogs.com/vamei/archive/2012/10/10/2715398.html" target="_blank" rel="noopener">Linux进程间通信</a>)，如果说mutex像是一个只能容纳一个人的洗手间，那么semaphore就像是一个能容纳N个人的洗手间，它允许被N个进程获得，当有更多的进程尝试获得semaphore的时候，就必须等待有前面的进程释放锁。创建对象时，可以传递一个整数N作为计数上限 (sema = threading.Semaphore(5))，当N等于1的时候，semaphore与mutex实现的功能就完全相同。它与Lock类似，也有Lock的两个方法。</p>
+</li>
+<li><p><strong>threading.Event对象</strong>：与threading.Condition相类似，相当于没有潜在的Lock保护的condition variable。对象有True和False两个状态。可以多个线程使用wait()等待，直到某个线程调用该对象的set()方法，将对象设置为True。线程可以调用对象的clear()方法来重置对象为False状态。</p>
+</li>
+</ul>
+<p>写完后发现一篇go的goroutine博客（<a href="https://deepzz.com/post/golang-sync-package-usage.html" target="_blank" rel="noopener">浅谈 Golang sync 包的相关使用方法</a>），发现其实和python的多线程是差不多的东西，只是更轻量并且支持高并发，能够充分利用多核性能并更少地占用系统资源。对于锁的实现，它们的api实现模式非常相似，不过go我现在还不是特别熟悉，后面会对比着python写一篇goroutine的相关总结！</p>
+
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+      <div>
+        <div style="padding: 10px 0; margin: 20px auto; width: 90%; text-align: center;">
+  <div>😊打  赏😊</div>
+  <button id="rewardButton" disable="enable" onclick="var qr = document.getElementById('QR'); if (qr.style.display === 'none') {qr.style.display='block';} else {qr.style.display='none'}">
+    <span>打赏</span>
+  </button>
+  <div id="QR" style="display: none;">
+
+    
+      <div id="wechat" style="display: inline-block">
+        <img id="wechat_qr" src="/images/wechatpay500.png" alt="Aifore 微信支付"/>
+        <p>微信支付</p>
+      </div>
+    
+
+    
+
+    
+
+  </div>
+</div>
+
+      </div>
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/python多线程/" rel="tag"># python多线程</a>
+          
+            <a href="/tags/锁/" rel="tag"># 锁</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2019/04/20/Nginx入门学习指北/" rel="next" title="Nginx入门学习指北">
+                <i class="fa fa-chevron-left"></i> Nginx入门学习指北
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2019/05/03/Golang游戏框架Leaf从懵逼到入门/" rel="prev" title="Golang游戏框架Leaf从懵逼到入门">
+                Golang游戏框架Leaf从懵逼到入门 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+  
+    <div class="comments" id="comments">
+      <div id="disqus_thread">
+        <noscript>
+          Please enable JavaScript to view the
+          <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a>
+        </noscript>
+      </div>
+    </div>
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image"
+                src="/images/avatar.jpg"
+                alt="Aifore" />
+            
+              <p class="site-author-name" itemprop="name">Aifore</p>
+              <p class="site-description motion-element" itemprop="description">欢迎来到宇宙最帅Aifore的博客！</p>
+          </div>
+
+          
+            <nav class="site-state motion-element">
+              
+                <div class="site-state-item site-state-posts">
+                
+                  <a href="/archives/">
+                
+                    <span class="site-state-item-count">30</span>
+                    <span class="site-state-item-name">日志</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-categories">
+                  <a href="/categories/index.html">
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">15</span>
+                    <span class="site-state-item-name">分类</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-tags">
+                  <a href="/tags/index.html">
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">40</span>
+                    <span class="site-state-item-name">标签</span>
+                  </a>
+                </div>
+              
+            </nav>
+          
+
+          
+
+          
+            <div class="links-of-author motion-element">
+              
+                <span class="links-of-author-item">
+                  <a href="https://github.com/aifore" target="_blank" title="GitHub"><i class="fa fa-fw fa-github"></i>GitHub</a>
+                  
+                </span>
+              
+            </div>
+          
+
+          
+          
+
+          
+          
+            <div class="links-of-blogroll motion-element links-of-blogroll-inline">
+              <div class="links-of-blogroll-title">
+                <i class="fa  fa-fw fa-link"></i>
+                我的博客
+              </div>
+              <ul class="links-of-blogroll-list">
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://me.csdn.net/aifore" title="我的CSDN" target="_blank">我的CSDN</a>
+                  </li>
+                
+              </ul>
+            </div>
+          
+
+          
+            
+          
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#0-前言"><span class="nav-text">0. 前言</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#1-基本方法"><span class="nav-text">1. 基本方法</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-线程同步"><span class="nav-text">2. 线程同步</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#2-1-产生原因"><span class="nav-text">2.1 产生原因</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-2-互斥锁"><span class="nav-text">2.2 互斥锁</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-3-条件变量"><span class="nav-text">2.3 条件变量</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-4-读写锁"><span class="nav-text">2.4 读写锁</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-源码解析"><span class="nav-text">3. 源码解析</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#4-OOP多线程编程示例"><span class="nav-text">4. OOP多线程编程示例</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2019</span>
+  <span class="with-love" id="animate">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Aifore</span>
+
+  
+
+  
+</div>
+
+
+
+
+
+
+
+
+
+
+
+        
+<div class="busuanzi-count">
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+  
+    <span class="site-uv" title="总访客量">
+      <i class="fa fa-user"></i>
+      <span class="busuanzi-value" id="busuanzi_value_site_uv"></span>
+    </span>
+  
+
+  
+    <span class="site-pv" title="总访问量">
+      <i class="fa fa-eye"></i>
+      <span class="busuanzi-value" id="busuanzi_value_site_pv"></span>
+    </span>
+  
+</div>
+
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=6.3.0"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=6.3.0"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=6.3.0"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=6.3.0"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=6.3.0"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=6.3.0"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=6.3.0"></script>
+
+
+
+  
+
+  
+    <script id="dsq-count-scr" src="https://aifore.disqus.com/count.js" async></script>
+  
+
+  
+    <script type="text/javascript">
+      var disqus_config = function () {
+        this.page.url = 'http://yoursite.com/2019/04/26/Python多线程之一顿操作猛如虎/';
+        this.page.identifier = '2019/04/26/Python多线程之一顿操作猛如虎/';
+        this.page.title = 'Python多线程之一顿操作猛如虎';
+        };
+      function loadComments () {
+        var d = document, s = d.createElement('script');
+        s.src = 'https://aifore.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', '' + +new Date());
+        (d.head || d.body).appendChild(s);
+      }
+      
+        loadComments();
+      
+    </script>
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    var isXml = true;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length === 0) {
+      search_path = "search.xml";
+    } else if (/json$/i.test(search_path)) {
+      isXml = false;
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    var onPopupClose = function (e) {
+      $('.popup').hide();
+      $('#local-search-input').val('');
+      $('.search-result-list').remove();
+      $('#no-result').remove();
+      $(".local-search-pop-overlay").remove();
+      $('body').css('overflow', '');
+    }
+
+    function proceedsearch() {
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay"></div>')
+        .css('overflow', 'hidden');
+      $('.search-popup-overlay').click(onPopupClose);
+      $('.popup').toggle();
+      var $localSearchInput = $('#local-search-input');
+      $localSearchInput.attr("autocapitalize", "none");
+      $localSearchInput.attr("autocorrect", "off");
+      $localSearchInput.focus();
+    }
+
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+
+      // start loading animation
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay">' +
+          '<div id="search-loading-icon">' +
+          '<i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>' +
+          '</div>' +
+          '</div>')
+        .css('overflow', 'hidden');
+      $("#search-loading-icon").css('margin', '20% auto 0 auto').css('text-align', 'center');
+
+      
+
+      $.ajax({
+        url: path,
+        dataType: isXml ? "xml" : "json",
+        async: true,
+        success: function(res) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = isXml ? $("entry", res).map(function() {
+            return {
+              title: $("title", this).text(),
+              content: $("content",this).text(),
+              url: $("url" , this).text()
+            };
+          }).get() : res;
+          var input = document.getElementById(search_id);
+          var resultContent = document.getElementById(content_id);
+          var inputEventFunction = function() {
+            var searchText = input.value.trim().toLowerCase();
+            var keywords = searchText.split(/[\s\-]+/);
+            if (keywords.length > 1) {
+              keywords.push(searchText);
+            }
+            var resultItems = [];
+            if (searchText.length > 0) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var hitCount = 0;
+                var searchTextCount = 0;
+                var title = data.title.trim();
+                var titleInLowerCase = title.toLowerCase();
+                var content = data.content.trim().replace(/<[^>]+>/g,"");
+                
+                var contentInLowerCase = content.toLowerCase();
+                var articleUrl = decodeURIComponent(data.url);
+                var indexOfTitle = [];
+                var indexOfContent = [];
+                // only match articles with not empty titles
+                if(title != '') {
+                  keywords.forEach(function(keyword) {
+                    function getIndexByWord(word, text, caseSensitive) {
+                      var wordLen = word.length;
+                      if (wordLen === 0) {
+                        return [];
+                      }
+                      var startPosition = 0, position = [], index = [];
+                      if (!caseSensitive) {
+                        text = text.toLowerCase();
+                        word = word.toLowerCase();
+                      }
+                      while ((position = text.indexOf(word, startPosition)) > -1) {
+                        index.push({position: position, word: word});
+                        startPosition = position + wordLen;
+                      }
+                      return index;
+                    }
+
+                    indexOfTitle = indexOfTitle.concat(getIndexByWord(keyword, titleInLowerCase, false));
+                    indexOfContent = indexOfContent.concat(getIndexByWord(keyword, contentInLowerCase, false));
+                  });
+                  if (indexOfTitle.length > 0 || indexOfContent.length > 0) {
+                    isMatch = true;
+                    hitCount = indexOfTitle.length + indexOfContent.length;
+                  }
+                }
+
+                // show search results
+
+                if (isMatch) {
+                  // sort index by position of keyword
+
+                  [indexOfTitle, indexOfContent].forEach(function (index) {
+                    index.sort(function (itemLeft, itemRight) {
+                      if (itemRight.position !== itemLeft.position) {
+                        return itemRight.position - itemLeft.position;
+                      } else {
+                        return itemLeft.word.length - itemRight.word.length;
+                      }
+                    });
+                  });
+
+                  // merge hits into slices
+
+                  function mergeIntoSlice(text, start, end, index) {
+                    var item = index[index.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    var hits = [];
+                    var searchTextCountInSlice = 0;
+                    while (position + word.length <= end && index.length != 0) {
+                      if (word === searchText) {
+                        searchTextCountInSlice++;
+                      }
+                      hits.push({position: position, length: word.length});
+                      var wordEnd = position + word.length;
+
+                      // move to next position of hit
+
+                      index.pop();
+                      while (index.length != 0) {
+                        item = index[index.length - 1];
+                        position = item.position;
+                        word = item.word;
+                        if (wordEnd > position) {
+                          index.pop();
+                        } else {
+                          break;
+                        }
+                      }
+                    }
+                    searchTextCount += searchTextCountInSlice;
+                    return {
+                      hits: hits,
+                      start: start,
+                      end: end,
+                      searchTextCount: searchTextCountInSlice
+                    };
+                  }
+
+                  var slicesOfTitle = [];
+                  if (indexOfTitle.length != 0) {
+                    slicesOfTitle.push(mergeIntoSlice(title, 0, title.length, indexOfTitle));
+                  }
+
+                  var slicesOfContent = [];
+                  while (indexOfContent.length != 0) {
+                    var item = indexOfContent[indexOfContent.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    // cut out 100 characters
+                    var start = position - 20;
+                    var end = position + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if (end < position + word.length) {
+                      end = position + word.length;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    slicesOfContent.push(mergeIntoSlice(content, start, end, indexOfContent));
+                  }
+
+                  // sort slices in content by search text's count and hits' count
+
+                  slicesOfContent.sort(function (sliceLeft, sliceRight) {
+                    if (sliceLeft.searchTextCount !== sliceRight.searchTextCount) {
+                      return sliceRight.searchTextCount - sliceLeft.searchTextCount;
+                    } else if (sliceLeft.hits.length !== sliceRight.hits.length) {
+                      return sliceRight.hits.length - sliceLeft.hits.length;
+                    } else {
+                      return sliceLeft.start - sliceRight.start;
+                    }
+                  });
+
+                  // select top N slices in content
+
+                  var upperBound = parseInt('1');
+                  if (upperBound >= 0) {
+                    slicesOfContent = slicesOfContent.slice(0, upperBound);
+                  }
+
+                  // highlight title and content
+
+                  function highlightKeyword(text, slice) {
+                    var result = '';
+                    var prevEnd = slice.start;
+                    slice.hits.forEach(function (hit) {
+                      result += text.substring(prevEnd, hit.position);
+                      var end = hit.position + hit.length;
+                      result += '<b class="search-keyword">' + text.substring(hit.position, end) + '</b>';
+                      prevEnd = end;
+                    });
+                    result += text.substring(prevEnd, slice.end);
+                    return result;
+                  }
+
+                  var resultItem = '';
+
+                  if (slicesOfTitle.length != 0) {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + highlightKeyword(title, slicesOfTitle[0]) + "</a>";
+                  } else {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + title + "</a>";
+                  }
+
+                  slicesOfContent.forEach(function (slice) {
+                    resultItem += "<a href='" + articleUrl + "'>" +
+                      "<p class=\"search-result\">" + highlightKeyword(content, slice) +
+                      "...</p>" + "</a>";
+                  });
+
+                  resultItem += "</li>";
+                  resultItems.push({
+                    item: resultItem,
+                    searchTextCount: searchTextCount,
+                    hitCount: hitCount,
+                    id: resultItems.length
+                  });
+                }
+              })
+            };
+            if (keywords.length === 1 && keywords[0] === "") {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>'
+            } else if (resultItems.length === 0) {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>'
+            } else {
+              resultItems.sort(function (resultLeft, resultRight) {
+                if (resultLeft.searchTextCount !== resultRight.searchTextCount) {
+                  return resultRight.searchTextCount - resultLeft.searchTextCount;
+                } else if (resultLeft.hitCount !== resultRight.hitCount) {
+                  return resultRight.hitCount - resultLeft.hitCount;
+                } else {
+                  return resultRight.id - resultLeft.id;
+                }
+              });
+              var searchResultList = '<ul class=\"search-result-list\">';
+              resultItems.forEach(function (result) {
+                searchResultList += result.item;
+              })
+              searchResultList += "</ul>";
+              resultContent.innerHTML = searchResultList;
+            }
+          }
+
+          if ('auto' === 'auto') {
+            input.addEventListener('input', inputEventFunction);
+          } else {
+            $('.search-icon').click(inputEventFunction);
+            input.addEventListener('keypress', function (event) {
+              if (event.keyCode === 13) {
+                inputEventFunction();
+              }
+            });
+          }
+
+          // remove loading animation
+          $(".local-search-pop-overlay").remove();
+          $('body').css('overflow', '');
+
+          proceedsearch();
+        }
+      });
+    }
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched === false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(onPopupClose);
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+    $(document).on('keyup', function (event) {
+      var shouldDismissSearchPopup = event.which === 27 &&
+        $('.search-popup').is(':visible');
+      if (shouldDismissSearchPopup) {
+        onPopupClose();
+      }
+    });
+  </script>
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  <script type="text/javascript" src="/js/src/love.js"></script>
+</body>
+</html>

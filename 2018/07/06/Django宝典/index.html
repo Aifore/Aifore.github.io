@@ -1,0 +1,1045 @@
+<!DOCTYPE html>
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+<html class="theme-next gemini use-motion" lang="">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=6.3.0" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=6.3.0">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=6.3.0">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=6.3.0">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=6.3.0" color="#222">
+
+
+
+
+
+
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Gemini',
+    version: '6.3.0',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: false,
+    fastclick: false,
+    lazyload: false,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+  
+
+
+
+
+  <meta name="description" content="Django宝典（一）1. 简介： Flask、Django、Tornado、Pyramid、Bottle、Web2py、web.py    MVC：模型-视图-控制器   目标：通过控制器，将数据和显示分离——[模型（数据）和视图（显示）解耦合]  同一个视图可以加载不同的模型，同一个模型也可以显示成不同的视图。稍具规模的系统都会使用MVC架构或者它的变体（MVP、MVVM等），是对面向对象设计">
+<meta name="keywords" content="Django,cookies">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Django学习总结">
+<meta property="og:url" content="http://yoursite.com/2018/07/06/Django宝典/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="Django宝典（一）1. 简介： Flask、Django、Tornado、Pyramid、Bottle、Web2py、web.py    MVC：模型-视图-控制器   目标：通过控制器，将数据和显示分离——[模型（数据）和视图（显示）解耦合]  同一个视图可以加载不同的模型，同一个模型也可以显示成不同的视图。稍具规模的系统都会使用MVC架构或者它的变体（MVP、MVVM等），是对面向对象设计">
+<meta property="og:locale" content="default">
+<meta property="og:image" content="http://yoursite.com/2018/07/06/Django宝典/Django宝典/1527679760858.png">
+<meta property="og:image" content="http://yoursite.com/2018/07/06/Django宝典/Django宝典/1527682139665.png">
+<meta property="og:updated_time" content="2018-06-13T15:34:54.508Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Django学习总结">
+<meta name="twitter:description" content="Django宝典（一）1. 简介： Flask、Django、Tornado、Pyramid、Bottle、Web2py、web.py    MVC：模型-视图-控制器   目标：通过控制器，将数据和显示分离——[模型（数据）和视图（显示）解耦合]  同一个视图可以加载不同的模型，同一个模型也可以显示成不同的视图。稍具规模的系统都会使用MVC架构或者它的变体（MVP、MVVM等），是对面向对象设计">
+<meta name="twitter:image" content="http://yoursite.com/2018/07/06/Django宝典/Django宝典/1527679760858.png">
+
+
+
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2018/07/06/Django宝典/"/>
+
+
+
+<script type="text/javascript" id="page.configurations">
+  CONFIG.page = {
+    sidebar: "",
+  };
+</script>
+
+  <title>Django学习总结 | Hexo</title>
+  
+
+
+
+
+
+
+
+
+
+  <noscript>
+  <style type="text/css">
+    .use-motion .motion-element,
+    .use-motion .brand,
+    .use-motion .menu-item,
+    .sidebar-inner,
+    .use-motion .post-block,
+    .use-motion .pagination,
+    .use-motion .comments,
+    .use-motion .post-header,
+    .use-motion .post-body,
+    .use-motion .collection-title { opacity: initial; }
+
+    .use-motion .logo,
+    .use-motion .site-title,
+    .use-motion .site-subtitle {
+      opacity: initial;
+      top: initial;
+    }
+
+    .use-motion {
+      .logo-line-before i { left: initial; }
+      .logo-line-after i { right: initial; }
+    }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="default">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Hexo</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+    
+  </div>
+
+  <div class="site-nav-toggle">
+    <button aria-label="Toggle navigation bar">
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  
+    <ul id="menu" class="menu">
+      
+        
+        
+        
+          
+          <li class="menu-item menu-item-home">
+    <a href="/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-home"></i> <br />Startseite</a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-about">
+    <a href="/about/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-user"></i> <br />Über</a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-tags">
+    <a href="/tags/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />Tags</a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-categories">
+    <a href="/categories/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-th"></i> <br />Kategorien</a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-archives">
+    <a href="/archives/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />Archiv</a>
+  </li>
+
+      
+      
+    </ul>
+  
+
+  
+
+  
+</nav>
+
+
+
+  
+
+
+
+</div>
+    </header>
+
+    
+
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+            
+
+          
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/07/06/Django宝典/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="John Doe">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Hexo">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">Django学习总结
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Veröffentlicht am</span>
+              
+
+              
+                
+              
+
+              <time title="Post created: 2018-07-06 20:46:37" itemprop="dateCreated datePublished" datetime="2018-07-06T20:46:37+08:00">2018-07-06</time>
+            
+
+            
+              
+
+              
+                
+                <span class="post-meta-divider">|</span>
+                
+
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">Edited on</span>
+                
+                <time title="Updated at: 2018-06-13 23:34:54" itemprop="dateModified" datetime="2018-06-13T23:34:54+08:00">2018-06-13</time>
+              
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">in</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/第三阶段学习笔记/" itemprop="url" rel="index"><span itemprop="name">第三阶段学习笔记</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h1 id="Django宝典（一）"><a href="#Django宝典（一）" class="headerlink" title="Django宝典（一）"></a><center>Django宝典（一）</center></h1><h2 id="1-简介："><a href="#1-简介：" class="headerlink" title="1. 简介："></a>1. 简介：</h2><blockquote>
+<p>Flask、Django、Tornado、Pyramid、Bottle、Web2py、web.py </p>
+</blockquote>
+<blockquote>
+<p>MVC：模型-视图-控制器</p>
+</blockquote>
+<blockquote>
+<p>目标：通过控制器，将数据和显示分离——[模型（数据）和视图（显示）解耦合]</p>
+</blockquote>
+<p>同一个视图可以加载不同的模型，同一个模型也可以显示成不同的视图。稍具规模的系统都会使用MVC架构或者它的变体（MVP、MVVM等），是对面向对象设计原则中迪米特法则的一个最好的践行。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"># ORM - 对象关系映射</span><br><span class="line"></span><br><span class="line"># 对象模型     &lt;---&gt;      关系模型</span><br><span class="line"># 实体类       &lt;---&gt;      二维表</span><br><span class="line"># 属性      	 &lt;---&gt;      列</span><br><span class="line"># 对象      	 &lt;---&gt;      记录</span><br></pre></td></tr></table></figure>
+<hr>
+<h2 id="2-配置步骤"><a href="#2-配置步骤" class="headerlink" title="2. 配置步骤"></a>2. 配置步骤</h2><h3 id="2-1-配置项目环境"><a href="#2-1-配置项目环境" class="headerlink" title="2.1 配置项目环境"></a>2.1 配置项目环境</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">1. pip install virtualenv    # ·安装工具·</span><br><span class="line">2. virtualenv --no-site-package &lt;env_name&gt;    # ·创建纯净虚拟环境·</span><br><span class="line">3. activate/deactivate    # ·激活/退出虚拟环境·</span><br></pre></td></tr></table></figure>
+<p>mkdir hello_django                        创建项目目录</p>
+<p>cd hello_django/                            切换到项目目录</p>
+<ul>
+<li><code>python -m venv hello_django_venv</code>         使用venv模块创建虚拟环境，目录名hd_venv</li>
+</ul>
+<p>cd hello_django_venv/Scripts/</p>
+<ul>
+<li><p><code>activate.bat</code>                         激活虚拟环境</p>
+<p>source hello_django_venv/bin/activate     激活虚拟环境（linux）</p>
+<p>python -m pip install –upgrade pip         更新pip到最新版本</p>
+<p>pip install django                         使用pip安装django</p>
+<p>django-admin –version                 通过安装django时安装的脚本工具django-admin检查django版本</p>
+</li>
+</ul>
+<p>cd ../..</p>
+<ul>
+<li><code>django-admin startproject hello_django .</code>    创建项目文件夹</li>
+</ul>
+<p>cd hello_django</p>
+<ul>
+<li><code>python manage.py startapp hrs</code>              创建服务</li>
+<li><code>python manage.py runserver 0.0.0.0:80</code>       运行服务-自动匹配本机地址</li>
+</ul>
+<h3 id="2-2-实战项目步骤——oa系统为例-一对多"><a href="#2-2-实战项目步骤——oa系统为例-一对多" class="headerlink" title="2.2 实战项目步骤——oa系统为例(一对多)"></a>2.2 实战项目步骤——oa系统为例(一对多)</h3><h4 id="2-2-1-环境配置："><a href="#2-2-1-环境配置：" class="headerlink" title="2.2.1 环境配置："></a>2.2.1 环境配置：</h4><ul>
+<li>创建项目和虚拟环境</li>
+<li>pip install pymysql&gt;&gt;&gt;配置<strong> init </strong></li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> pymysql</span><br><span class="line">pymysql.install_as_MySQLdb()</span><br></pre></td></tr></table></figure>
+<ul>
+<li><p>创建MySQL数据库</p>
+</li>
+<li><p>setting配置</p>
+<ul>
+<li>配置数据库</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">DATABASES = &#123;       <span class="comment"># ·配置MySQL连接·</span></span><br><span class="line">    <span class="string">'default'</span>: &#123;</span><br><span class="line">        <span class="string">'ENGINE'</span>: <span class="string">'django.db.backends.mysql'</span>,</span><br><span class="line">        <span class="string">'NAME'</span>: <span class="string">'oa'</span>,</span><br><span class="line">        <span class="string">'host'</span>: <span class="string">'localhost'</span>,</span><br><span class="line">        <span class="string">'port'</span>: <span class="string">'3306'</span>,</span><br><span class="line">        <span class="string">'USER'</span>: <span class="string">'root'</span>,</span><br><span class="line">        <span class="string">'PASSWORD'</span>: <span class="string">'123456'</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<ul>
+<li>配置语言和时区</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">LANGUAGE_CODE = <span class="string">'zh-hans'</span></span><br><span class="line">TIME_ZONE = <span class="string">'Asia/Chongqing'</span></span><br></pre></td></tr></table></figure>
+<ul>
+<li>配置模板地址和静态资源路径</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"> STATICFILES_DIRS = [os.path.join(BASE_DIR, <span class="string">'static'</span>)]	<span class="comment"># ·配置静态资源路径·</span></span><br><span class="line"><span class="string">'DIRS'</span>: [os.path.join(BASE_DIR, <span class="string">'templates'</span>)],  <span class="comment"># ·配置模板地址·</span></span><br></pre></td></tr></table></figure>
+<ul>
+<li>配置应用</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">INSTALLED_APPS = [</span><br><span class="line">	&lt;...&gt;,</span><br><span class="line">    <span class="string">'hrs.apps.HrsConfig'</span>,       <span class="comment"># ·添加应用hrs·</span></span><br><span class="line">]</span><br></pre></td></tr></table></figure>
+<ul>
+<li>（配置日志输出）</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># ·配置将日志输出到控制台 日志级别为DEBUG (最详细的日志)·</span></span><br><span class="line"><span class="comment"># DEBUG &lt; INFO &lt; WARNING &lt; ERROR &lt; CRITICAL</span></span><br><span class="line">LOGGING = &#123;</span><br><span class="line">    <span class="string">'version'</span>: <span class="number">1</span>,</span><br><span class="line">    <span class="string">'disable_existing_loggers'</span>: <span class="keyword">False</span>,</span><br><span class="line">    <span class="string">'handlers'</span>: &#123;</span><br><span class="line">        <span class="string">'console'</span>: &#123;</span><br><span class="line">            <span class="string">'class'</span>: <span class="string">'logging.StreamHandler'</span>,</span><br><span class="line">        &#125;,</span><br><span class="line">    &#125;,</span><br><span class="line">    <span class="string">'loggers'</span>: &#123;</span><br><span class="line">        <span class="string">'django'</span>: &#123;</span><br><span class="line">            <span class="string">'handlers'</span>: [<span class="string">'console'</span>],</span><br><span class="line">            <span class="string">'level'</span>: os.getenv(<span class="string">'DJANGO_LOG_LEVEL'</span>, <span class="string">'DEBUG'</span>),</span><br><span class="line">        &#125;,</span><br><span class="line">    &#125;,</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<h4 id="2-2-2-项目配置："><a href="#2-2-2-项目配置：" class="headerlink" title="2.2.2 项目配置："></a>2.2.2 项目配置：</h4><ul>
+<li>在urls.py配置URL</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> hrs <span class="keyword">import</span> views</span><br><span class="line"></span><br><span class="line">urlpatterns = [</span><br><span class="line">    path(<span class="string">''</span>, views.index),</span><br><span class="line">    path(<span class="string">'admin/'</span>, admin.site.urls),</span><br><span class="line">    path(<span class="string">'hrs/'</span>,include(<span class="string">'hrs.urls'</span>)),</span><br><span class="line">]</span><br><span class="line"><span class="comment"># ---------------------------------------------------------------</span></span><br><span class="line"><span class="keyword">from</span> django.urls <span class="keyword">import</span> path</span><br><span class="line"><span class="keyword">from</span> hrs <span class="keyword">import</span> views</span><br><span class="line"></span><br><span class="line">urlpatterns = [</span><br><span class="line">    path(<span class="string">'depts'</span>,views.depts, name=<span class="string">'depts'</span>),	<span class="comment"># ·设置name属性，方便在链接跳转的时候引用·</span></span><br><span class="line">    path(<span class="string">'deldept/&lt;int:dno&gt;'</span>,views.del_dept, name=<span class="string">'ddel'</span>),</span><br><span class="line">    <span class="comment"># url('depts/emps/(?p&lt;dno&gt;[0-9]+)',views.emps, name='empsindept'),</span></span><br><span class="line">    path(<span class="string">'depts/emps/&lt;int:dno&gt;'</span>,views.emps, name=<span class="string">'empsindept'</span>)</span><br><span class="line">    <span class="comment"># path('depts/emps',views.emps, name='empsindept'),</span></span><br><span class="line">]</span><br></pre></td></tr></table></figure>
+<ul>
+<li>在templates目录下创建网页模板</li>
+</ul>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">&#123;% load staticfiles %&#125;		&#123;# 加载静态资源 #&#125;</span><br><span class="line"></span><br><span class="line"> &#123;# ·写代码时尽量避免使用硬编码（hard code）· #&#125;</span><br><span class="line"><span class="tag">&lt;<span class="name">a</span> <span class="attr">href</span>=<span class="string">"/hrs/depts/emps?dno=&#123;&#123; dept.no &#125;&#125;"</span>&gt;</span>&#123;&#123; dept.name &#125;&#125;<span class="tag">&lt;/<span class="name">a</span>&gt;</span>	# 硬编码</span><br><span class="line"><span class="tag">&lt;<span class="name">a</span> <span class="attr">href</span>=<span class="string">"&#123;% url 'empsindept' dept.no %&#125;"</span>&gt;</span>&#123;&#123; dept.name &#125;&#125;<span class="tag">&lt;/<span class="name">a</span>&gt;</span></span><br><span class="line"></span><br><span class="line">url(r'app_fxx', include('app_fxx.urls', namespace='app_fxx'))	# 命名空间</span><br><span class="line"><span class="tag">&lt;<span class="name">a</span> <span class="attr">href</span>=<span class="string">"&#123;% url 'app_fxx:grade' %&#125;"</span>&gt;</span>&#123;&#123; dept.name &#125;&#125;<span class="tag">&lt;/<span class="name">a</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<ul>
+<li>在models.py定义数据模型</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Dept</span><span class="params">(models.Model)</span>:</span></span><br><span class="line">    no = models.IntegerField(primary_key=<span class="keyword">True</span>, verbose_name=<span class="string">'部门编号'</span>)</span><br><span class="line">    name = models.CharField(max_length=<span class="number">20</span>, verbose_name=<span class="string">'部门名称'</span>)</span><br><span class="line">    location = models.CharField(max_length=<span class="number">10</span>, verbose_name=<span class="string">'部门地址'</span>)</span><br><span class="line">    excellent = models.BooleanField(default=<span class="number">0</span>, verbose_name=<span class="string">'是否优秀'</span>)</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__str__</span><span class="params">(self)</span>:</span></span><br><span class="line">        <span class="keyword">return</span> self.name    <span class="comment"># ·调用对象时直接返回属性name·</span></span><br><span class="line"></span><br><span class="line">    <span class="class"><span class="keyword">class</span> <span class="title">Meta</span>:</span>     <span class="comment"># ·增加描述, 这样数据库中的表名可以是我们指定的表名·</span></span><br><span class="line">        db_table = <span class="string">'tb_dept'</span></span><br><span class="line">        <span class="comment"># ordering = ('-dno', )		# 排序</span></span><br></pre></td></tr></table></figure>
+<ul>
+<li>生成并执行迁移数据模型&gt;&gt;&gt;迁移完成后执行SQL语句插入数据<ul>
+<li>python manage.py makemigrations [hrs]    生成迁移</li>
+<li>python manage.py migrate                                执行迁移</li>
+</ul>
+</li>
+<li>在admin.py配置管理员界面&gt;&gt;&gt;创建超级管理员账户<ul>
+<li>python manage.py createsuperuser        创建超级用户：aifore 1a2b3c4d</li>
+<li>python manage.py runserver                            启动服务</li>
+</ul>
+</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># ·数据库创建迁移完成后配置管理员显示界面·</span></span><br><span class="line"><span class="keyword">from</span> hrs.models <span class="keyword">import</span> Dept, Emp</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">DeptAdmin</span><span class="params">(admin.ModelAdmin)</span>:</span></span><br><span class="line">    list_display = (<span class="string">'no'</span>, <span class="string">'name'</span>, <span class="string">'location'</span>)</span><br><span class="line">    ordering = (<span class="string">'no'</span>, )		<span class="comment"># 排序</span></span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">EmpAdmin</span><span class="params">(admin.ModelAdmin)</span>:</span></span><br><span class="line">    list_display = (<span class="string">'no'</span>, <span class="string">'name'</span>, <span class="string">'job'</span>, <span class="string">'sal'</span>, <span class="string">'dept'</span>)</span><br><span class="line">    search_fields = (<span class="string">'name'</span>, <span class="string">'job'</span>)		<span class="comment"># 创建搜索</span></span><br><span class="line">    ordering = (<span class="string">'dept'</span>, )</span><br><span class="line"></span><br><span class="line"><span class="comment"># admin.site.register(Dept, DeptAdmin)</span></span><br><span class="line">admin.site.register(Emp, EmpAdmin)</span><br></pre></td></tr></table></figure>
+<ul>
+<li>在views.py配置每个URL的view（视图-控制器函数）</li>
+</ul>
+<hr>
+<h2 id="3-动态获取文件上级目录"><a href="#3-动态获取文件上级目录" class="headerlink" title="3. 动态获取文件上级目录"></a>3. 动态获取文件上级目录</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> os</span><br><span class="line"></span><br><span class="line"><span class="comment"># os.path.abspath(__file__) 获取当前文件的决定路径</span></span><br><span class="line"><span class="comment"># os.path.dirname(__file__) 获取当前文件的目录</span></span><br><span class="line"><span class="comment"># __file__ 这样单独写也代表当前文件的绝对路径</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">print(__file__)		<span class="comment"># E:/hello_django/hello_django/settings.py</span></span><br><span class="line">print(os.path.dirname(__file__))	<span class="comment"># E:/hello_django/hello_django</span></span><br><span class="line">print(os.path.dirname(os.path.dirname(__file__)))	<span class="comment"># E:/hello_django</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># Build paths inside the project like this: os.path.join(BASE_DIR, ...)</span></span><br><span class="line">BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))  <span class="comment"># 项目的分路径</span></span><br><span class="line"><span class="comment"># os.path.join(BASE_DIR, 'templates') 拼接得到模板的路径</span></span><br></pre></td></tr></table></figure>
+<hr>
+<h2 id="4-增删改查"><a href="#4-增删改查" class="headerlink" title="4. 增删改查"></a>4. 增删改查</h2><blockquote>
+<p>[dept]为对象</p>
+</blockquote>
+<p>python manage.py shell                                      进入shell交互式环境</p>
+<p>from oa.models import Dept                             导入要查询的类</p>
+<ul>
+<li><p><strong>增</strong></p>
+<ol>
+<li>Emp.objects.create((name=’小学欣‘, <strong>dept_id=dept.no</strong>)</li>
+</ol>
+<p><img src="Django宝典/1527679760858.png" alt="1527679760858"></p>
+<ol start="2">
+<li><p>Emp.objects.create(name=name, <strong>g=grade</strong>)</p>
+</li>
+<li><p>Emp(name=name, g=grade).save()</p>
+</li>
+</ol>
+</li>
+<li><p><strong>删</strong></p>
+<p>dept.delete()                                                          删除对象</p>
+</li>
+<li><p><strong>改</strong></p>
+<p>dept=Dept.objects.get(no=10)                            更改对象属性</p>
+<p>dept.name=’门诊部’</p>
+<p>dept.save()</p>
+</li>
+<li><p><strong>查</strong></p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">dept = models.ForeignKey(</span><br><span class="line">    Dept, on_delete=models.PROTECT, related_name=<span class="string">'emps'</span>)</span><br><span class="line"><span class="comment"># 创建外键 - dept: 外键属性</span></span><br></pre></td></tr></table></figure>
+<ul>
+<li><p>多查一（外键 - 员工查所在部门）</p>
+<p>e_dept = Emp.objects.filter(name=’小学欣’).first().dept</p>
+</li>
+<li><p>一查多（反查 - 部门查所有员工）</p>
+<p>emps = [dept].emp_set.all()</p>
+<p>emps = [dept].<strong>emps</strong>.all()        # 定义了related_name=‘emps‘属性</p>
+<p>emps = Emp.objects.filter(<strong>dept_id=[dept.no]</strong>)</p>
+</li>
+<li><p>一找一 （假设为一对一关系）</p>
+<p>e_dept = [emp].dept</p>
+<p>emp = [dept].emp.all()        # 反查</p>
+</li>
+<li><p>普通查询</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">Dept.objects.filter(name__contains=<span class="string">'急诊'</span>)</span><br><span class="line">Dept.objects.filter(name__icontains=<span class="string">'诊'</span>)          忽略大小写模糊查询</span><br><span class="line">Dept.objects.filter(no__gt=<span class="number">10</span>)</span><br><span class="line">Dept.objects.filter(no__gte=<span class="number">10</span>)</span><br><span class="line">Dept.objects.all().order_by(<span class="string">'-no'</span>)[<span class="number">0</span>:<span class="number">2</span>]</span><br><span class="line">Dept.objects.filter(no__gt=<span class="number">10</span>).filter(name__contains=<span class="string">'人'</span>).select _related(<span class="string">'***'</span>)</span><br><span class="line"><span class="comment"># all() / filter() 	----&gt;QuerySet使用了惰性查询：- 延迟加载 -</span></span><br><span class="line"><span class="comment"># 只有在用到数据的时候才会发出SQL语句查询，为了节省服务器内存开销</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p>get() 和 filter() 获取对象区别</p>
+<p>使用get()若查找的对象不存在或者有多个会报错，所以推荐使用filter()</p>
+<p><strong>Flask中对象不存在不会报错，返回为None</strong></p>
+</li>
+</ul>
+<p><img src="Django宝典/1527682139665.png" alt="1527682139665"></p>
+<ul>
+<li><p>其他</p>
+<p>last() 最后一个    |    first() 第一个</p>
+</li>
+</ul>
+</li>
+</ul>
+<hr>
+<h2 id="5-创建外键-反查"><a href="#5-创建外键-反查" class="headerlink" title="5. 创建外键 - 反查"></a>5. 创建外键 - 反查</h2><p>定义两个模型，一个是作者，一个是作者出版的书籍，一对多。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Person</span><span class="params">(models.Model)</span>:</span></span><br><span class="line">	name = models.CharField(verbose_name=<span class="string">'作者姓名'</span>, max_length=<span class="number">10</span>)</span><br><span class="line">	age = models.IntegerField(verbose_name=<span class="string">'作者年龄'</span>)</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Book</span><span class="params">(models.Model)</span>:</span></span><br><span class="line">	person = models.ForeignKey(Person, related_name=<span class="string">'person_book'</span>)</span><br><span class="line">	title = models.CharField(verbose_name=<span class="string">'书籍名称'</span>, max_length=<span class="number">10</span>)</span><br><span class="line">	pubtime = models.DateField(verbose_name=<span class="string">'出版时间'</span>)</span><br></pre></td></tr></table></figure>
+<p>查询一个作者出版了哪些书籍？</p>
+<p>先查询到作者的信息：</p>
+<p><code>person = Person.objects.fiter(name__contains=&#39;方霄&#39;)</code></p>
+<p>按照表名使用基于对象的查询方式<strong>反向查询</strong>person关联的所有书籍对象：</p>
+<p><code>book = person.book_set.all()</code> </p>
+<blockquote>
+<p><strong>django 默认每个主表的对象都有一个是外键的属性[person]，可以通过它来查询到所有属于主表的子表的信息。</strong></p>
+<blockquote>
+<p><strong>如person = models.ForeignKey(Person)在数据库中创建的字段不是person而是person_id，该字段数据为主表绑定了子表的主键(一般为自增字段)，可以通过该外键查询书的作者。</strong></p>
+</blockquote>
+</blockquote>
+<p>这个属性的名称默认是以子表的名称小写加上 _ set() 来，默认返回的是一个queryset对象。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># ·pro_fxx项目为例·</span></span><br><span class="line">&gt;&gt;&gt;g = Grade.objects.get(id=<span class="number">1</span>)           <span class="comment"># 获取班级对象</span></span><br><span class="line">&gt;&gt;&gt;students = g.student_set.all()        <span class="comment"># 反查班级所有学生</span></span><br><span class="line">&gt;&gt;&gt;students</span><br><span class="line">&lt;QuerySet [&lt;Student: Student object&gt;, &lt;Student: Student object&gt;]&gt;</span><br></pre></td></tr></table></figure>
+<p>在定义主表的外键的时候，给这个外键定义好一个名称related_name：</p>
+<p><code>person = models.ForeignKey(Person, related_name=&#39;person_books&#39;)</code></p>
+<p>那么实现上面的需求，可以使用person.book_set.all()    ||    person.person_books.all()</p>
+<hr>
+<h2 id="6-身份识别方式"><a href="#6-身份识别方式" class="headerlink" title="6. 身份识别方式"></a>6. 身份识别方式</h2><ul>
+<li>cookies                              身份标识放在请求头里<br>   隐藏域 / 隐式表单域      身份标识放在表单里<br>   url重写                              身份标识放在查询参数里</li>
+</ul>
+
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+      <div>
+        <div style="padding: 10px 0; margin: 20px auto; width: 90%; text-align: center;">
+  <div>😊打  赏😊</div>
+  <button id="rewardButton" disable="enable" onclick="var qr = document.getElementById('QR'); if (qr.style.display === 'none') {qr.style.display='block';} else {qr.style.display='none'}">
+    <span>Donate</span>
+  </button>
+  <div id="QR" style="display: none;">
+
+    
+      <div id="wechat" style="display: inline-block">
+        <img id="wechat_qr" src="/images/wechatpay500.png" alt="John Doe WeChat Pay"/>
+        <p>WeChat Pay</p>
+      </div>
+    
+
+    
+
+    
+
+  </div>
+</div>
+
+      </div>
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Django/" rel="tag"># Django</a>
+          
+            <a href="/tags/cookies/" rel="tag"># cookies</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2018/07/04/Scrapy宝典/" rel="next" title="Scrapy宝典">
+                <i class="fa fa-chevron-left"></i> Scrapy宝典
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2018/07/06/GIt宝典/" rel="prev" title="Git学习总结">
+                Git学习总结 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            Inhaltsverzeichnis
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            Übersicht
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <p class="site-author-name" itemprop="name">John Doe</p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          
+            <nav class="site-state motion-element">
+              
+                <div class="site-state-item site-state-posts">
+                
+                  <a href="/archives/">
+                
+                    <span class="site-state-item-count">13</span>
+                    <span class="site-state-item-name">Artikel</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-categories">
+                  <a href="/categories/index.html">
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">4</span>
+                    <span class="site-state-item-name">Kategorien</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-tags">
+                  <a href="/tags/index.html">
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">15</span>
+                    <span class="site-state-item-name">Tags</span>
+                  </a>
+                </div>
+              
+            </nav>
+          
+
+          
+
+          
+
+          
+          
+
+          
+          
+
+          
+            
+          
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Django宝典（一）"><span class="nav-number">1.</span> <span class="nav-text">Django宝典（一）</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-简介："><span class="nav-number">1.1.</span> <span class="nav-text">1. 简介：</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-配置步骤"><span class="nav-number">1.2.</span> <span class="nav-text">2. 配置步骤</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#2-1-配置项目环境"><span class="nav-number">1.2.1.</span> <span class="nav-text">2.1 配置项目环境</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-2-实战项目步骤——oa系统为例-一对多"><span class="nav-number">1.2.2.</span> <span class="nav-text">2.2 实战项目步骤——oa系统为例(一对多)</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#2-2-1-环境配置："><span class="nav-number">1.2.2.1.</span> <span class="nav-text">2.2.1 环境配置：</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-2-2-项目配置："><span class="nav-number">1.2.2.2.</span> <span class="nav-text">2.2.2 项目配置：</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-动态获取文件上级目录"><span class="nav-number">1.3.</span> <span class="nav-text">3. 动态获取文件上级目录</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#4-增删改查"><span class="nav-number">1.4.</span> <span class="nav-text">4. 增删改查</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#5-创建外键-反查"><span class="nav-number">1.5.</span> <span class="nav-text">5. 创建外键 - 反查</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#6-身份识别方式"><span class="nav-number">1.6.</span> <span class="nav-text">6. 身份识别方式</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2018</span>
+  <span class="with-love" id="animate">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">John Doe</span>
+
+  
+
+  
+</div>
+
+
+
+
+  <div class="powered-by">Erstellt mit  <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> v3.7.1</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">Theme &mdash; <a class="theme-link" target="_blank" href="https://theme-next.org">NexT.Gemini</a> v6.3.0</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=6.3.0"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=6.3.0"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=6.3.0"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=6.3.0"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=6.3.0"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=6.3.0"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=6.3.0"></script>
+
+
+
+  
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

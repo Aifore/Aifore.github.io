@@ -1,0 +1,1519 @@
+<!DOCTYPE html>
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+<html class="theme-next gemini use-motion" lang="zh-CN">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=6.3.0" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/cat.png?v=6.3.0">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=6.3.0">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=6.3.0">
+
+
+  <link rel="mask-icon" href="/images/cat.svg?v=6.3.0" color="#222">
+
+
+
+
+
+
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Gemini',
+    version: '6.3.0',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: false,
+    fastclick: false,
+    lazyload: false,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+  
+
+
+
+
+  <meta name="description" content="1. 参数传递/获取1.1 添加 获取所在班级  12345&amp;lt;select name=&quot;g_id&quot;&amp;gt;&amp;#123;% for grade in grades %&amp;#125;&amp;lt;option value=&quot;&amp;#123;&amp;#123; grade.id &amp;#125;&amp;#125;&quot;&amp;gt;&amp;#123;&amp;#123; grade.g_name &amp;#125;&amp;#125;&amp;lt;/option&amp;gt">
+<meta name="keywords" content="Django,DRF">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Django宝典（二）">
+<meta property="og:url" content="http://yoursite.com/2018/06/05/Django宝典-二/index.html">
+<meta property="og:site_name" content="AiforeのBlog">
+<meta property="og:description" content="1. 参数传递/获取1.1 添加 获取所在班级  12345&amp;lt;select name=&quot;g_id&quot;&amp;gt;&amp;#123;% for grade in grades %&amp;#125;&amp;lt;option value=&quot;&amp;#123;&amp;#123; grade.id &amp;#125;&amp;#125;&quot;&amp;gt;&amp;#123;&amp;#123; grade.g_name &amp;#125;&amp;#125;&amp;lt;/option&amp;gt">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="http://yoursite.com/2018/06/05/Django宝典-二/1535708751027.png">
+<meta property="og:image" content="http://yoursite.com/2018/06/05/Django宝典-二/1535707327577.png">
+<meta property="og:image" content="http://yoursite.com/2018/06/05/Django宝典-二/1533052622869.png">
+<meta property="og:image" content="http://yoursite.com/2018/06/05/Django宝典-二/1533053709729.png">
+<meta property="og:image" content="http://yoursite.com/2018/06/05/Django宝典-二/1533054582542.png">
+<meta property="og:updated_time" content="2019-04-04T17:04:57.362Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Django宝典（二）">
+<meta name="twitter:description" content="1. 参数传递/获取1.1 添加 获取所在班级  12345&amp;lt;select name=&quot;g_id&quot;&amp;gt;&amp;#123;% for grade in grades %&amp;#125;&amp;lt;option value=&quot;&amp;#123;&amp;#123; grade.id &amp;#125;&amp;#125;&quot;&amp;gt;&amp;#123;&amp;#123; grade.g_name &amp;#125;&amp;#125;&amp;lt;/option&amp;gt">
+<meta name="twitter:image" content="http://yoursite.com/2018/06/05/Django宝典-二/1535708751027.png">
+
+
+
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2018/06/05/Django宝典-二/"/>
+
+
+
+<script type="text/javascript" id="page.configurations">
+  CONFIG.page = {
+    sidebar: "",
+  };
+</script>
+
+  <title>Django宝典（二） | AiforeのBlog</title>
+  
+
+
+
+
+
+
+
+
+
+  <noscript>
+  <style type="text/css">
+    .use-motion .motion-element,
+    .use-motion .brand,
+    .use-motion .menu-item,
+    .sidebar-inner,
+    .use-motion .post-block,
+    .use-motion .pagination,
+    .use-motion .comments,
+    .use-motion .post-header,
+    .use-motion .post-body,
+    .use-motion .collection-title { opacity: initial; }
+
+    .use-motion .logo,
+    .use-motion .site-title,
+    .use-motion .site-subtitle {
+      opacity: initial;
+      top: initial;
+    }
+
+    .use-motion {
+      .logo-line-before i { left: initial; }
+      .logo-line-after i { right: initial; }
+    }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-CN">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">AiforeのBlog</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+    
+      
+        <p class="site-subtitle">太陽が輝く限り、希望もまた輝く。</p>
+      
+    
+  </div>
+
+  <div class="site-nav-toggle">
+    <button aria-label="切换导航栏">
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  
+    <ul id="menu" class="menu">
+      
+        
+        
+        
+          
+          <li class="menu-item menu-item-home">
+    <a href="/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-home"></i> <br />首页</a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-about">
+    <a href="/about/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-user"></i> <br />关于</a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-tags">
+    <a href="/tags/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />标签</a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-categories">
+    <a href="/categories/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-th"></i> <br />分类</a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-archives">
+    <a href="/archives/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />归档</a>
+  </li>
+
+      
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br />搜索</a>
+        </li>
+      
+    </ul>
+  
+
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup search-popup local-search-popup">
+  <div class="local-search-header clearfix">
+    <span class="search-icon">
+      <i class="fa fa-search"></i>
+    </span>
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+    <div class="local-search-input-wrapper">
+      <input autocomplete="off"
+             placeholder="搜索..." spellcheck="false"
+             type="text" id="local-search-input">
+    </div>
+  </div>
+  <div id="local-search-result"></div>
+</div>
+
+
+
+    </div>
+  
+</nav>
+
+
+
+  
+
+
+
+</div>
+    </header>
+
+    
+
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+            
+
+          
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/06/05/Django宝典-二/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Aifore">
+      <meta itemprop="description" content="欢迎来到宇宙最帅Aifore的博客！">
+      <meta itemprop="image" content="/images/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="AiforeのBlog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">Django宝典（二）
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+
+              
+                
+              
+
+              <time title="创建时间：2018-06-05 23:46:23" itemprop="dateCreated datePublished" datetime="2018-06-05T23:46:23+07:00">2018-06-05</time>
+            
+
+            
+              
+
+              
+                
+                <span class="post-meta-divider">|</span>
+                
+
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">更新于</span>
+                
+                <time title="修改时间：2019-04-05 00:04:57" itemprop="dateModified" datetime="2019-04-05T00:04:57+07:00">2019-04-05</time>
+              
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/Django/" itemprop="url" rel="index"><span itemprop="name">Django</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2018/06/05/Django宝典-二/#comments" itemprop="discussionUrl">
+                
+                  <span class="post-comments-count disqus-comment-count"
+                        data-disqus-identifier="2018/06/05/Django宝典-二/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+            <span class="post-meta-divider">|</span>
+            <span class="post-meta-item-icon"
+            >
+            <i class="fa fa-eye"></i>
+             阅读次数： 
+            <span class="busuanzi-value" id="busuanzi_value_page_pv" ></span>
+            </span>
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h2 id="1-参数传递-获取"><a href="#1-参数传递-获取" class="headerlink" title="1. 参数传递/获取"></a>1. 参数传递/获取</h2><h3 id="1-1-添加"><a href="#1-1-添加" class="headerlink" title="1.1 添加"></a>1.1 添加</h3><ol>
+<li>获取所在班级</li>
+</ol>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">select</span> <span class="attr">name</span>=<span class="string">"g_id"</span>&gt;</span></span><br><span class="line">&#123;% for grade in grades %&#125;</span><br><span class="line"><span class="tag">&lt;<span class="name">option</span> <span class="attr">value</span>=<span class="string">"&#123;&#123; grade.id &#125;&#125;"</span>&gt;</span>&#123;&#123; grade.g_name &#125;&#125;<span class="tag">&lt;/<span class="name">option</span>&gt;</span></span><br><span class="line">&#123;% endfor %&#125;</span><br><span class="line"><span class="tag">&lt;/<span class="name">select</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<ol start="2">
+<li><strong>创建学生信息</strong></li>
+</ol>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">g_id = request.POST.get(<span class="string">'g_id'</span>)</span><br><span class="line">grade = Grade.objects.filter(id=g_id).first()</span><br><span class="line"><span class="comment"># Student.objects.create(s_name=s_name, g_id=g_id)</span></span><br><span class="line"><span class="comment"># Student.objects.create(s_name=s_name, g=grade)</span></span><br><span class="line">Student(s_name=s_name, g=grade).save()</span><br></pre></td></tr></table></figure>
+<ol start="3">
+<li>重定向    &gt;&gt;&gt;是一个URL的get请求，相当于调用</li>
+</ol>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> django.http <span class="keyword">import</span> HttpResponseRedirect, JsonResponse</span><br><span class="line"><span class="keyword">from</span> django.core.urlresolvers <span class="keyword">import</span> reverse</span><br><span class="line"></span><br><span class="line"><span class="keyword">return</span> HttpResponseRedirect(reverse(<span class="string">'app_fxx:student'</span>))</span><br><span class="line"></span><br><span class="line"><span class="comment"># 返回json字符串</span></span><br><span class="line">data = &#123;</span><br><span class="line">    <span class="string">'code'</span>: <span class="number">200</span>,</span><br><span class="line">    <span class="string">'msg'</span>: <span class="string">'请求成功'</span></span><br><span class="line">    &#125;</span><br><span class="line"><span class="keyword">return</span> JsonResponse(data)</span><br></pre></td></tr></table></figure>
+<a id="more"></a>
+<h3 id="1-2-删除"><a href="#1-2-删除" class="headerlink" title="1.2 删除"></a>1.2 删除</h3><ol>
+<li><strong>传参</strong></li>
+</ol>
+<blockquote>
+<p>第一种不需要给视图函数传递参数，需要request获取才能使用</p>
+<p>第二种解析路径时获取到后作为参数传递给视图函数，在函数中直接使用</p>
+</blockquote>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">Django</span>&gt;</span></span><br><span class="line">1. <span class="tag">&lt;<span class="name">a</span> <span class="attr">href</span>=<span class="string">"&#123;% url 'app_fxx:delstu'%&#125;?s_id=&#123;&#123; stu.id &#125;&#125;"</span>&gt;</span>删除<span class="tag">&lt;/<span class="name">a</span>&gt;</span></span><br><span class="line">   <span class="tag">&lt;<span class="name">a</span> <span class="attr">href</span>=<span class="string">"/app_fxx/delstu/?s_id=&#123;&#123; stu.id &#125;&#125;"</span>&gt;</span>删除<span class="tag">&lt;/<span class="name">a</span>&gt;</span></span><br><span class="line">2. <span class="tag">&lt;<span class="name">a</span> <span class="attr">href</span>=<span class="string">"&#123;% url 'app_fxx:delstu' stu.id %&#125;"</span>&gt;</span>删除<span class="tag">&lt;/<span class="name">a</span>&gt;</span></span><br><span class="line">   <span class="tag">&lt;<span class="name">a</span> <span class="attr">href</span>=<span class="string">"/app_fxx/delstu/&#123;&#123; stu.id &#125;&#125;"</span>&gt;</span>删除<span class="tag">&lt;/<span class="name">a</span>&gt;</span></span><br><span class="line">    </span><br><span class="line">   url(r'^delstu/(\d+)', views.delstu, name='delstu'),</span><br><span class="line">    </span><br><span class="line">   def delstu(request, stu_id):</span><br><span class="line">       <span class="tag">&lt;<span class="name">直接使用stu_id</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;<span class="name">Flask</span>&gt;</span></span><br><span class="line">1. <span class="tag">&lt;<span class="name">a</span> <span class="attr">href</span>=<span class="string">"&#123;&#123; url_for('app_fxx:delstu') &#125;&#125;?s_id=&#123;&#123; stu.id &#125;&#125;"</span>&gt;</span>删除<span class="tag">&lt;/<span class="name">a</span>&gt;</span></span><br><span class="line">   <span class="tag">&lt;<span class="name">a</span> <span class="attr">href</span>=<span class="string">"/app_fxx/delstu/?s_id=&#123;&#123; stu.id &#125;&#125;"</span>&gt;</span>删除<span class="tag">&lt;/<span class="name">a</span>&gt;</span></span><br><span class="line">   例：<span class="tag">&lt;<span class="name">a</span> <span class="attr">href</span>=<span class="string">"/house/detail/?id=&#123;&#123; house.id &#125;&#125;"</span>&gt;</span><span class="tag">&lt;/<span class="name">a</span>&gt;</span> # 会帮我们解析参数</span><br><span class="line">      @house_bp.route('/detail/<span class="tag">&lt;<span class="name">int:id</span>&gt;</span>/', methods=['GET'])</span><br><span class="line">      def house_detail(id):</span><br><span class="line">      </span><br><span class="line">2. <span class="tag">&lt;<span class="name">a</span> <span class="attr">href</span>=<span class="string">"&#123;&#123; url_for('app_fxx:delstu') + stu.id &#125;&#125;"</span>&gt;</span>删除<span class="tag">&lt;/<span class="name">a</span>&gt;</span> → 待验证</span><br><span class="line">   <span class="tag">&lt;<span class="name">a</span> <span class="attr">href</span>=<span class="string">"/app_fxx/delstu/&#123;&#123; stu.id &#125;&#125;"</span>&gt;</span>删除<span class="tag">&lt;/<span class="name">a</span>&gt;</span></span><br><span class="line">   </span><br><span class="line">   @house_bp.route('/detail/<span class="tag">&lt;<span class="name">int:id</span>&gt;</span>/', methods=['GET'])</span><br><span class="line">   def house_detail(id):</span><br><span class="line">       house = House.query.get(id)</span><br></pre></td></tr></table></figure>
+<ol start="2">
+<li><strong>获取删除</strong></li>
+</ol>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">s_id = request.GET.get(<span class="string">'s_id'</span>)</span><br><span class="line">Student.objects.filter(id=s_id).delete()</span><br></pre></td></tr></table></figure>
+<ol start="3">
+<li>重定向：重新请求一个指定的页面</li>
+</ol>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> django.shortcuts <span class="keyword">import</span> redirect</span><br><span class="line"></span><br><span class="line"><span class="number">1.</span> <span class="keyword">return</span> HttpResponseRedirect(reverse(<span class="string">'app_fxx:student'</span>))</span><br><span class="line">   <span class="keyword">return</span> redirect(reverse(<span class="string">'app_fxx:student'</span>))</span><br><span class="line"></span><br><span class="line"><span class="number">2.</span> <span class="keyword">return</span> student(request)    <span class="comment"># ·调用·</span></span><br></pre></td></tr></table></figure>
+<h2 id="2-上传头像"><a href="#2-上传头像" class="headerlink" title="2. 上传头像"></a>2. 上传头像</h2><ul>
+<li>setting配置头像地址</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">MEDIA_URL = <span class="string">'/media/'</span>	<span class="comment"># ·需创建media文件夹·</span></span><br><span class="line">MEDIA_ROOT = os.path.join(BASE_DIR, <span class="string">'media'</span>)</span><br></pre></td></tr></table></figure>
+<ul>
+<li>母urls中配置头像访问路径</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> django.contrib.staticfiles.urls <span class="keyword">import</span> static</span><br><span class="line"><span class="keyword">from</span> pro_fxx.settings <span class="keyword">import</span> MEDIA_ROOT, MEDIA_URL</span><br><span class="line"></span><br><span class="line">urlpatterns += static(MEDIA_URL, document_root=MEDIA_ROOT)</span><br></pre></td></tr></table></figure>
+<ul>
+<li>数据模型增加对应字段 - 储存图片路径</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">icon = models.ImageField(upload_to=<span class="string">'icons'</span>)</span><br><span class="line"><span class="comment"># icon = models.ImageField(upload_to='icons/%Y/%m/%d')</span></span><br></pre></td></tr></table></figure>
+<ul>
+<li>表单增加<code>enctype=&quot;multipart/form-data&quot;</code>属性</li>
+</ul>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">form</span> <span class="attr">method</span>=<span class="string">"post"</span> <span class="attr">action</span>=<span class="string">""</span> <span class="attr">enctype</span>=<span class="string">"multipart/form-data"</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">"file"</span> <span class="attr">name</span>=<span class="string">"icon"</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<ul>
+<li>获取头像保存</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">icon = requset.FILES.get(<span class="string">'icon'</span>)</span><br><span class="line">UserModel.objects.create(username=username, password=password, icon=icon)</span><br></pre></td></tr></table></figure>
+<h2 id="3-中间件"><a href="#3-中间件" class="headerlink" title="3. 中间件"></a>3. 中间件</h2><ul>
+<li><strong>识别用户</strong> &gt;&gt;&gt; 才能查询用户权限访问对应网页</li>
+<li><strong>验证登录</strong> &gt;&gt;&gt; 登录后通过cookies里保存的ticket查找对应用户，判断用户是否登录</li>
+</ul>
+<ol>
+<li>定义中间件</li>
+</ol>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">UserAuthMiddle</span><span class="params">(MiddlewareMixin)</span>:</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">process_request</span><span class="params">(self, request)</span>:</span></span><br><span class="line">        <span class="comment"># 验证cookie中的ticket，验证不通过，跳转到登录</span></span><br><span class="line">        <span class="comment"># 验证通过，request.user当前登录的用户信息</span></span><br><span class="line">        <span class="comment"># return None或者不写return</span></span><br><span class="line">        path = request.path</span><br><span class="line">        s = [<span class="string">'/app_user/_login/'</span>, <span class="string">'/app_user/_register/'</span>]</span><br><span class="line">        <span class="keyword">if</span> path <span class="keyword">in</span> s:</span><br><span class="line">            <span class="keyword">return</span> <span class="keyword">None</span></span><br><span class="line">        <span class="comment"># for i in s:	# ·正则匹配链接·</span></span><br><span class="line">        <span class="comment">#     if re.match(i, path):</span></span><br><span class="line">        <span class="comment">#         return None</span></span><br><span class="line">        </span><br><span class="line">        ticket = request.COOKIES.get(<span class="string">'ticket'</span>)</span><br><span class="line"></span><br><span class="line">        <span class="keyword">if</span> <span class="keyword">not</span> ticket:</span><br><span class="line">            <span class="keyword">return</span> HttpResponseRedirect(reverse(<span class="string">'app_user:_login'</span>))</span><br><span class="line"></span><br><span class="line">        user = Users.objects.filter(ticket=ticket).first()</span><br><span class="line">        <span class="keyword">if</span> <span class="keyword">not</span> user:</span><br><span class="line">            <span class="keyword">return</span> HttpResponseRedirect(reverse(<span class="string">'app_user:_login'</span>))</span><br><span class="line">        request.user = user</span><br></pre></td></tr></table></figure>
+<ol start="2">
+<li>注册中间件</li>
+</ol>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">MIDDLEWARE = [      <span class="comment"># ·中间件·</span></span><br><span class="line">    &lt;...&gt;</span><br><span class="line">    <span class="string">'utils.UserAuthMiddleware.UserAuthMiddle'</span>,   <span class="comment"># ·添加自定义的中间件·</span></span><br><span class="line">]</span><br></pre></td></tr></table></figure>
+<h2 id="4-API接口"><a href="#4-API接口" class="headerlink" title="4. API接口"></a>4. API接口</h2><h3 id="1-基础配置"><a href="#1-基础配置" class="headerlink" title="1. 基础配置"></a>1. 基础配置</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># ·配置接口app·</span></span><br><span class="line">INSTALLED_APPS = [</span><br><span class="line">	&lt;...&gt;</span><br><span class="line">    <span class="string">'rest_framework'</span>]</span><br><span class="line"></span><br><span class="line"><span class="comment"># ·数据库添加删除字段·</span></span><br><span class="line">delete = models.BooleanField(default=<span class="keyword">False</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment"># ·自定配置·</span></span><br><span class="line">REST_FRAMEWORK = &#123;</span><br><span class="line">    <span class="comment"># ·配置分页·</span></span><br><span class="line">    <span class="string">'DEFAULT_PAGINATION_CLASS'</span>: </span><br><span class="line">    <span class="string">'rest_framework.pagination.PageNumberPagination'</span>,</span><br><span class="line">    <span class="string">'PAGE_SIZE'</span>: <span class="number">3</span>,</span><br><span class="line">    </span><br><span class="line">    <span class="comment"># ·设置默认不使用自带的用户验证·</span></span><br><span class="line">    <span class="string">'DEFAULT_AUTHENTICATION_CLASSES'</span>: ()&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="2-配置urls"><a href="#2-配置urls" class="headerlink" title="2. 配置urls"></a>2. <strong>配置urls</strong></h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> rest_framework.routers <span class="keyword">import</span> SimpleRouter</span><br><span class="line">router = SimpleRouter()</span><br><span class="line">router.register(<span class="string">r'^api/student'</span>, views.api_student)</span><br><span class="line"></span><br><span class="line"><span class="number">1.</span>urlpatterns = []  <span class="comment"># [app_test]下的url.py</span></span><br><span class="line">  urlpatterns += router.urls</span><br><span class="line"></span><br><span class="line"><span class="number">2.</span>urlpatterns = [url(<span class="string">r'^'</span>, include(router.urls)),]</span><br><span class="line"></span><br><span class="line"><span class="number">3.</span><span class="keyword">from</span> api_test.urls <span class="keyword">import</span> router  <span class="comment"># 项目主url.py</span></span><br><span class="line">  urlpatterns = [url(<span class="string">r'^api-test/'</span>, include(router.urls)),]</span><br><span class="line">  &gt;http://<span class="number">127.0</span><span class="number">.0</span><span class="number">.1</span>:<span class="number">8000</span>/api-test/grade/<span class="number">1</span>/</span><br></pre></td></tr></table></figure>
+<p><img src="/2018/06/05/Django宝典-二/1535708751027.png" alt="1535708751027"></p>
+<p><img src="/2018/06/05/Django宝典-二/1535707327577.png" alt="1535707327577"></p>
+<h3 id="3-页面改造"><a href="#3-页面改造" class="headerlink" title="3. 页面改造"></a>3. 页面改造</h3><figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">script</span> <span class="attr">type</span>=<span class="string">"text/javascript"</span>&gt;</span><span class="undefined"></span></span><br><span class="line"><span class="undefined">        function delstu(i) &#123;</span></span><br><span class="line"><span class="undefined">            csrf = $('input[name="csrfmiddlewaretoken"]').val()</span></span><br><span class="line"><span class="undefined">            $.ajax(&#123;</span></span><br><span class="line"><span class="undefined">                url:'/app_fxx/api/student/' + i + '/',</span></span><br><span class="line"><span class="undefined">                type:'DELETE',</span></span><br><span class="line"><span class="undefined">                dataType:'json',</span></span><br><span class="line"><span class="undefined">                headers:&#123;'X-CSRFToken':csrf&#125;,</span></span><br><span class="line"><span class="undefined">                success:function (msg) &#123;</span></span><br><span class="line"><span class="undefined">                    location.href='app_fxx/student/'</span></span><br><span class="line"><span class="undefined">                &#125;,</span></span><br><span class="line"><span class="undefined">                error:function (msg) &#123;</span></span><br><span class="line"><span class="undefined">                    alert('删除失败')</span></span><br><span class="line"><span class="undefined">                &#125;</span></span><br><span class="line"><span class="undefined">            &#125;)</span></span><br><span class="line"><span class="undefined">        &#125;</span></span><br><span class="line"><span class="undefined">        $(document).ready(function()&#123;</span></span><br><span class="line"><span class="undefined">            $.get('/app_fxx/api/student/', function(msg)&#123;</span></span><br><span class="line"><span class="undefined">                var tr_html_all = ''</span></span><br><span class="line"><span class="undefined">                for(var i=0; i&lt;msg.results.length; i++)&#123;</span></span><br><span class="line"><span class="undefined">                    var tr_html = ''</span></span><br><span class="line"><span class="xml">                    tr_html += '<span class="tag">&lt;<span class="name">tr</span>&gt;</span>'</span></span><br><span class="line"><span class="xml">                    tr_html += '<span class="tag">&lt;<span class="name">td</span>&gt;</span>' + msg.results[i].id + '<span class="tag">&lt;/<span class="name">td</span>&gt;</span>'</span></span><br><span class="line"><span class="xml">                    tr_html += '<span class="tag">&lt;<span class="name">td</span>&gt;</span>' + msg.results[i].s_name + '<span class="tag">&lt;/<span class="name">td</span>&gt;</span>'</span></span><br><span class="line"><span class="xml">                    tr_html += '<span class="tag">&lt;<span class="name">td</span>&gt;</span>' + msg.results[i].g_name + '<span class="tag">&lt;/<span class="name">td</span>&gt;</span>'</span></span><br><span class="line"><span class="xml">                    tr_html += '<span class="tag">&lt;<span class="name">td</span>&gt;</span><span class="tag">&lt;/<span class="name">td</span>&gt;</span>'</span></span><br><span class="line"><span class="xml">                    tr_html += '<span class="tag">&lt;<span class="name">td</span>&gt;</span><span class="tag">&lt;<span class="name">a</span> <span class="attr">href</span>=<span class="string">"javascript:;"</span> <span class="attr">onclick</span>=<span class="string">"delstu(' +  msg.results[i].id + ');"</span>&gt;</span>删除<span class="tag">&lt;/<span class="name">a</span>&gt;</span><span class="tag">&lt;/<span class="name">td</span>&gt;</span>'</span></span><br><span class="line"><span class="xml">                    tr_html += '<span class="tag">&lt;/<span class="name">tr</span>&gt;</span>'</span></span><br><span class="line"><span class="undefined">                    tr_html_all += tr_html</span></span><br><span class="line"><span class="undefined">                &#125;</span></span><br><span class="line"><span class="undefined">                $('#student_table').append(tr_html_all);</span></span><br><span class="line"><span class="undefined">            &#125;);</span></span><br><span class="line"><span class="undefined">        &#125;);</span></span><br></pre></td></tr></table></figure>
+<h3 id="4-定义API接口类"><a href="#4-定义API接口类" class="headerlink" title="4. 定义API接口类"></a>4. 定义API接口类</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">api_student</span><span class="params">(mixins.ListModelMixin, # get</span></span></span><br><span class="line"><span class="class"><span class="params">                  mixins.UpdateModelMixin, # update/put</span></span></span><br><span class="line"><span class="class"><span class="params">                  mixins.CreateModelMixin, # post</span></span></span><br><span class="line"><span class="class"><span class="params">                  mixins.DestroyModelMixin, # delete</span></span></span><br><span class="line"><span class="class"><span class="params">                  mixins.RetrieveModelMixin,</span></span></span><br><span class="line"><span class="class"><span class="params">                  viewsets.GenericViewSet)</span>:</span></span><br><span class="line">    <span class="comment"># ·获取学生所有信息(被删除的所有学生)·</span></span><br><span class="line">    queryset = Student.objects.all().filter(delete=<span class="keyword">False</span>)</span><br><span class="line">    </span><br><span class="line">    <span class="comment"># ·序列化学生的信息·</span></span><br><span class="line">    serializer_class = StudentSerializer</span><br><span class="line"></span><br><span class="line">    <span class="comment"># ·重构删除方法·</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">perform_destroy</span><span class="params">(self, instance)</span>:</span></span><br><span class="line">        instance.delete = <span class="keyword">True</span></span><br><span class="line">        instance.save()</span><br></pre></td></tr></table></figure>
+<h3 id="5-定义过滤器"><a href="#5-定义过滤器" class="headerlink" title="5. 定义过滤器"></a>5. 定义过滤器</h3><blockquote>
+<p>接口接收到参数后，首先会根据过滤器的规则对数据进行过滤，过滤后的结果再按照序列化器进行序列化，序列化后再按照Json渲染器将数据渲染成想要的Json格式返回到前端。</p>
+</blockquote>
+<ul>
+<li>配置过滤器</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">REST_FRAMEWORK = &#123;</span><br><span class="line">    <span class="comment"># 配置过滤器</span></span><br><span class="line">    <span class="string">'DEFAULT_FILTER_BACKENDS'</span>: (</span><br><span class="line">        <span class="comment"># 'rest_framework.filters.DjangoFilterBackend', v3.4.6</span></span><br><span class="line">        <span class="string">'django_filters.rest_framework.DjangoFilterBackend'</span>, <span class="comment"># v3.8.2</span></span><br><span class="line">        <span class="string">'rest_framework.filters.SearchFilter'</span></span><br><span class="line">    ),</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<ul>
+<li>定义过滤器</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> django_filters</span><br><span class="line"><span class="keyword">from</span> rest_framework <span class="keyword">import</span> filters</span><br><span class="line"><span class="keyword">from</span> app_fxx.models <span class="keyword">import</span> Student</span><br><span class="line"></span><br><span class="line"><span class="comment"># class StudentFilter(filters.FilterSet): v3.4.6</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">StudentFilter</span><span class="params">(django_filters.rest_framework.FilterSet)</span>:</span></span><br><span class="line">    s_name = django_filters.CharFilter(<span class="string">'s_name'</span>, lookup_expr=<span class="string">'contains'</span>)</span><br><span class="line">    s_yuwen_min = django_filters.NumberFilter(<span class="string">'s_yuwen'</span>, lookup_expr=<span class="string">'gte'</span>)</span><br><span class="line">    s_yuwen_max = django_filters.NumberFilter(<span class="string">'s_yuwen'</span>, lookup_expr=<span class="string">'lte'</span>)</span><br><span class="line"></span><br><span class="line">    <span class="class"><span class="keyword">class</span> <span class="title">Meta</span>:</span></span><br><span class="line">        model = Student</span><br><span class="line">        fields = [<span class="string">'s_name'</span>, ]</span><br></pre></td></tr></table></figure>
+<ul>
+<li>使用过滤器</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 定义过滤器过滤信息</span></span><br><span class="line">filter_class = StudentFilter</span><br><span class="line"></span><br><span class="line"><span class="comment"># 重构过滤方法</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">get_queryset</span><span class="params">(self)</span>:</span></span><br><span class="line"></span><br><span class="line">    <span class="comment"># query = self.queryset</span></span><br><span class="line">    <span class="comment"># s_name = self.request.query_params.get('s_name')</span></span><br><span class="line">    <span class="comment"># s_yuwen = self.request.query_params.get('s_yuwen')</span></span><br><span class="line">    <span class="comment"># return query.filter(s_name__contains=s_name, s_yuwen__gte=s_yuwen)</span></span><br><span class="line">    <span class="keyword">return</span> self.queryset.order_by(<span class="string">'-id'</span>)</span><br></pre></td></tr></table></figure>
+<h3 id="6-配置序列化器"><a href="#6-配置序列化器" class="headerlink" title="6. 配置序列化器"></a>6. <strong>配置序列化器</strong></h3><blockquote>
+<p>自定义数据的模型和字段后，再调用父类的<code>to_representation()</code>方法对相应字段进行字典序列化，序列化后还可根据自己需要加入键值，如图：</p>
+</blockquote>
+<p><img src="/2018/06/05/Django宝典-二/1533052622869.png" alt="1533052622869"></p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># ·创建序列化文件&lt;serializer.py&gt;·</span></span><br><span class="line"><span class="keyword">from</span> rest_framework <span class="keyword">import</span> serializers</span><br><span class="line"><span class="keyword">from</span> app_fxx.models <span class="keyword">import</span> Student</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">StudentSerializer</span><span class="params">(serializers.ModelSerializer)</span>:</span></span><br><span class="line">    <span class="comment"># ·定义错误信息·</span></span><br><span class="line">    s_name = serializers.CharField(max_length=<span class="number">20</span>, error_messages=&#123;</span><br><span class="line">        <span class="string">'blank'</span>: <span class="string">'姓名字段不能为空'</span></span><br><span class="line">    &#125;)</span><br><span class="line">    <span class="comment"># ·自定义返回数据的模型和字段·</span></span><br><span class="line">    <span class="class"><span class="keyword">class</span> <span class="title">Meta</span>:</span></span><br><span class="line">        model = Student</span><br><span class="line">        fields = [<span class="string">'s_name'</span>, <span class="string">'s_yuwen'</span>, <span class="string">'g'</span>, <span class="string">'id'</span>]</span><br><span class="line">    <span class="comment"># ·重构方法序列化数据·</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">to_representation</span><span class="params">(self, instance)</span>:</span></span><br><span class="line">        <span class="comment"># data = super(StudentSerializer, self).to_representation(instance)</span></span><br><span class="line">        <span class="comment"># 调用父类的序列化方法</span></span><br><span class="line">        data = super().to_representation(instance)</span><br><span class="line">        <span class="comment"># 自定义加入键值</span></span><br><span class="line">        data[<span class="string">'g_name'</span>] = instance.g.g_name</span><br><span class="line">        data[<span class="string">'test'</span>] = <span class="string">'我是fxx大帅哥!'</span></span><br><span class="line">        <span class="keyword">return</span> data</span><br></pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># ·原代码·</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">to_representation</span><span class="params">(self, instance)</span>:</span></span><br><span class="line">    <span class="string">"""</span></span><br><span class="line"><span class="string">    Object instance -&gt; Dict of primitive datatypes.</span></span><br><span class="line"><span class="string">    """</span></span><br><span class="line">    ret = OrderedDict()</span><br><span class="line">    fields = self._readable_fields</span><br><span class="line"></span><br><span class="line">    <span class="keyword">for</span> field <span class="keyword">in</span> fields:</span><br><span class="line">        <span class="keyword">try</span>:</span><br><span class="line">            attribute = field.get_attribute(instance)</span><br><span class="line">        <span class="keyword">except</span> SkipField:</span><br><span class="line">            <span class="keyword">continue</span></span><br><span class="line"></span><br><span class="line">            <span class="comment"># We skip `to_representation` for `None` values so that fields do</span></span><br><span class="line">            <span class="comment"># not have to explicitly deal with that case.</span></span><br><span class="line">            <span class="comment"># For related fields with `use_pk_only_optimization` we need to</span></span><br><span class="line">            <span class="comment"># resolve the pk value.</span></span><br><span class="line">            check_for_none = attribute.pk <span class="keyword">if</span> isinstance(attribute, </span><br><span class="line">            	PKOnlyObject) <span class="keyword">else</span> attribute</span><br><span class="line">            <span class="keyword">if</span> check_for_none <span class="keyword">is</span> <span class="keyword">None</span>:</span><br><span class="line">                ret[field.field_name] = <span class="keyword">None</span></span><br><span class="line">            <span class="keyword">else</span>:</span><br><span class="line">                ret[field.field_name] = field.to_representation(attribute)</span><br><span class="line"></span><br><span class="line">        <span class="keyword">return</span> ret</span><br></pre></td></tr></table></figure>
+<h3 id="7-配置JSON自定义格式器（重构返回结构）"><a href="#7-配置JSON自定义格式器（重构返回结构）" class="headerlink" title="7. 配置JSON自定义格式器（重构返回结构）"></a>7. 配置JSON自定义格式器（重构返回结构）</h3><ul>
+<li>重写JSONRenderer</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 定义JSON自定义格式器</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">CustomJsonRenderer</span><span class="params">(JSONRenderer)</span>:</span></span><br><span class="line">    <span class="string">'''</span></span><br><span class="line"><span class="string">    返回结果的构造</span></span><br><span class="line"><span class="string">    &#123;</span></span><br><span class="line"><span class="string">        'data':&#123;result&#125;,</span></span><br><span class="line"><span class="string">        'code': 200,</span></span><br><span class="line"><span class="string">        'msg': '请求成功'</span></span><br><span class="line"><span class="string">    &#125;</span></span><br><span class="line"><span class="string">    '''</span></span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">render</span><span class="params">(self, data, accepted_media_type=None, renderer_context=None)</span>:</span></span><br><span class="line">        <span class="keyword">if</span> renderer_context:</span><br><span class="line">            <span class="keyword">if</span> isinstance(data, dict):</span><br><span class="line">                code = data.pop(<span class="string">'code'</span>, <span class="number">200</span>)</span><br><span class="line">                msg = data.pop(<span class="string">'msg'</span>, <span class="string">'请求成功'</span>)</span><br><span class="line">            <span class="keyword">else</span>:</span><br><span class="line">                code = <span class="number">200</span></span><br><span class="line">                msg = <span class="string">'请求成功'</span></span><br><span class="line"></span><br><span class="line">            res = &#123;</span><br><span class="line">                <span class="string">'code'</span>: code,</span><br><span class="line">                <span class="string">'msg'</span>: msg,</span><br><span class="line">                <span class="string">'data'</span>: data</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">return</span> super().render(res, accepted_media_type, renderer_context)</span><br><span class="line">        <span class="keyword">else</span>:</span><br><span class="line">            <span class="keyword">return</span> super().render(data, accepted_media_type, renderer_context)</span><br></pre></td></tr></table></figure>
+<ul>
+<li>配置格式化器</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">REST_FRAMEWORK = &#123;</span><br><span class="line">    <span class="comment"># 配置JSON自定义格式器</span></span><br><span class="line">    <span class="string">'DEFAULT_RENDERER_CLASSES'</span>: (</span><br><span class="line">        <span class="string">'utils.functions.CustomJsonRenderer'</span>,</span><br><span class="line">    ),</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="5-分页"><a href="#5-分页" class="headerlink" title="5. 分页"></a>5. 分页</h2><ol>
+<li>通过渲染</li>
+</ol>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> django.core.paginator <span class="keyword">import</span> Paginator</span><br><span class="line"></span><br><span class="line">page_num = request.GET.get(<span class="string">'page_num'</span>, <span class="number">1</span>)</span><br><span class="line">stus = Student.objects.all().filter(delete=<span class="keyword">False</span>)</span><br><span class="line">PAGE_NUMBERS = <span class="number">5</span></span><br><span class="line">paginator = Paginator(stus, PAGE_NUMBERS) <span class="comment"># 实例化分页对象</span></span><br><span class="line"><span class="comment"># paginator = Paginator(stus, 5, 3) # 如果最后一页数据少3条，合并到上一页  </span></span><br><span class="line">p_stus = paginator.page(int(page_num))    <span class="comment"># 获取某一分页&lt;列表?&gt;</span></span><br><span class="line"><span class="keyword">return</span> render(request, <span class="string">'student.html'</span>, &#123;<span class="string">'p_stus'</span>: p_stus&#125;)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">p_stus.paginator.page_range    &gt;&gt;&gt;一个页码迭代器</span><br><span class="line">p_stus.paginator.num_pages     &gt;&gt;&gt;总页数</span><br><span class="line">p_stus.paginator.count         &gt;&gt;&gt;总记录数</span><br><span class="line"></span><br><span class="line">p_stus.number                  &gt;&gt;&gt;当前页数</span><br><span class="line">p_stus.object_list             &gt;&gt;&gt;当前页元素列表</span><br><span class="line">p_stus.start_index             &gt;&gt;&gt;当前页开始索引</span><br><span class="line">p_stus.end_index               &gt;&gt;&gt;当前页结束索引</span><br><span class="line"></span><br><span class="line">p_stus.previous_page_number    &gt;&gt;&gt;上一页</span><br><span class="line">p_stus.next_page_number        &gt;&gt;&gt;下一页</span><br><span class="line">p_stus.has_other_pages         &gt;&gt;&gt;有其他页:<span class="keyword">True</span></span><br><span class="line">p_stus.has_previous            &gt;&gt;&gt;有上一页:<span class="keyword">True</span></span><br><span class="line">p_stus.has_next                &gt;&gt;&gt;有下一页:<span class="keyword">True</span></span><br></pre></td></tr></table></figure>
+<ol start="2">
+<li>通过Restful风格接口</li>
+</ol>
+<blockquote>
+<p>再setting中配置了REST_FRAMEWORK分页后，在数据序列化后会自动将分页信息加入到返回前端的Json字符串中，如图：</p>
+</blockquote>
+<p><img src="/2018/06/05/Django宝典-二/1533053709729.png" alt="1533053709729"></p>
+<p>配置了Json渲染器后：</p>
+<p><img src="/2018/06/05/Django宝典-二/1533054582542.png" alt="1533054582542"></p>
+
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+      <div>
+        <div style="padding: 10px 0; margin: 20px auto; width: 90%; text-align: center;">
+  <div>😊打  赏😊</div>
+  <button id="rewardButton" disable="enable" onclick="var qr = document.getElementById('QR'); if (qr.style.display === 'none') {qr.style.display='block';} else {qr.style.display='none'}">
+    <span>打赏</span>
+  </button>
+  <div id="QR" style="display: none;">
+
+    
+      <div id="wechat" style="display: inline-block">
+        <img id="wechat_qr" src="/images/wechatpay500.png" alt="Aifore 微信支付"/>
+        <p>微信支付</p>
+      </div>
+    
+
+    
+
+    
+
+  </div>
+</div>
+
+      </div>
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Django/" rel="tag"># Django</a>
+          
+            <a href="/tags/DRF/" rel="tag"># DRF</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2018/05/31/Django宝典（一）/" rel="next" title="Django宝典（一）">
+                <i class="fa fa-chevron-left"></i> Django宝典（一）
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2018/06/11/Flask宝典（一）/" rel="prev" title="Flask宝典（一）">
+                Flask宝典（一） <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+  
+    <div class="comments" id="comments">
+      <div id="disqus_thread">
+        <noscript>
+          Please enable JavaScript to view the
+          <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a>
+        </noscript>
+      </div>
+    </div>
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image"
+                src="/images/avatar.jpg"
+                alt="Aifore" />
+            
+              <p class="site-author-name" itemprop="name">Aifore</p>
+              <p class="site-description motion-element" itemprop="description">欢迎来到宇宙最帅Aifore的博客！</p>
+          </div>
+
+          
+            <nav class="site-state motion-element">
+              
+                <div class="site-state-item site-state-posts">
+                
+                  <a href="/archives/">
+                
+                    <span class="site-state-item-count">30</span>
+                    <span class="site-state-item-name">日志</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-categories">
+                  <a href="/categories/index.html">
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">15</span>
+                    <span class="site-state-item-name">分类</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-tags">
+                  <a href="/tags/index.html">
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">40</span>
+                    <span class="site-state-item-name">标签</span>
+                  </a>
+                </div>
+              
+            </nav>
+          
+
+          
+
+          
+            <div class="links-of-author motion-element">
+              
+                <span class="links-of-author-item">
+                  <a href="https://github.com/aifore" target="_blank" title="GitHub"><i class="fa fa-fw fa-github"></i>GitHub</a>
+                  
+                </span>
+              
+            </div>
+          
+
+          
+          
+
+          
+          
+            <div class="links-of-blogroll motion-element links-of-blogroll-inline">
+              <div class="links-of-blogroll-title">
+                <i class="fa  fa-fw fa-link"></i>
+                我的博客
+              </div>
+              <ul class="links-of-blogroll-list">
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://me.csdn.net/aifore" title="我的CSDN" target="_blank">我的CSDN</a>
+                  </li>
+                
+              </ul>
+            </div>
+          
+
+          
+            
+          
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-参数传递-获取"><span class="nav-text">1. 参数传递/获取</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-1-添加"><span class="nav-text">1.1 添加</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1-2-删除"><span class="nav-text">1.2 删除</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-上传头像"><span class="nav-text">2. 上传头像</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-中间件"><span class="nav-text">3. 中间件</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#4-API接口"><span class="nav-text">4. API接口</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-基础配置"><span class="nav-text">1. 基础配置</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-配置urls"><span class="nav-text">2. 配置urls</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-页面改造"><span class="nav-text">3. 页面改造</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-定义API接口类"><span class="nav-text">4. 定义API接口类</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#5-定义过滤器"><span class="nav-text">5. 定义过滤器</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#6-配置序列化器"><span class="nav-text">6. 配置序列化器</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#7-配置JSON自定义格式器（重构返回结构）"><span class="nav-text">7. 配置JSON自定义格式器（重构返回结构）</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#5-分页"><span class="nav-text">5. 分页</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2019</span>
+  <span class="with-love" id="animate">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Aifore</span>
+
+  
+
+  
+</div>
+
+
+
+
+
+
+
+
+
+
+
+        
+<div class="busuanzi-count">
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+  
+    <span class="site-uv" title="总访客量">
+      <i class="fa fa-user"></i>
+      <span class="busuanzi-value" id="busuanzi_value_site_uv"></span>
+    </span>
+  
+
+  
+    <span class="site-pv" title="总访问量">
+      <i class="fa fa-eye"></i>
+      <span class="busuanzi-value" id="busuanzi_value_site_pv"></span>
+    </span>
+  
+</div>
+
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=6.3.0"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=6.3.0"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=6.3.0"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=6.3.0"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=6.3.0"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=6.3.0"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=6.3.0"></script>
+
+
+
+  
+
+  
+    <script id="dsq-count-scr" src="https://aifore.disqus.com/count.js" async></script>
+  
+
+  
+    <script type="text/javascript">
+      var disqus_config = function () {
+        this.page.url = 'http://yoursite.com/2018/06/05/Django宝典-二/';
+        this.page.identifier = '2018/06/05/Django宝典-二/';
+        this.page.title = 'Django宝典（二）';
+        };
+      function loadComments () {
+        var d = document, s = d.createElement('script');
+        s.src = 'https://aifore.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', '' + +new Date());
+        (d.head || d.body).appendChild(s);
+      }
+      
+        loadComments();
+      
+    </script>
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    var isXml = true;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length === 0) {
+      search_path = "search.xml";
+    } else if (/json$/i.test(search_path)) {
+      isXml = false;
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    var onPopupClose = function (e) {
+      $('.popup').hide();
+      $('#local-search-input').val('');
+      $('.search-result-list').remove();
+      $('#no-result').remove();
+      $(".local-search-pop-overlay").remove();
+      $('body').css('overflow', '');
+    }
+
+    function proceedsearch() {
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay"></div>')
+        .css('overflow', 'hidden');
+      $('.search-popup-overlay').click(onPopupClose);
+      $('.popup').toggle();
+      var $localSearchInput = $('#local-search-input');
+      $localSearchInput.attr("autocapitalize", "none");
+      $localSearchInput.attr("autocorrect", "off");
+      $localSearchInput.focus();
+    }
+
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+
+      // start loading animation
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay">' +
+          '<div id="search-loading-icon">' +
+          '<i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>' +
+          '</div>' +
+          '</div>')
+        .css('overflow', 'hidden');
+      $("#search-loading-icon").css('margin', '20% auto 0 auto').css('text-align', 'center');
+
+      
+
+      $.ajax({
+        url: path,
+        dataType: isXml ? "xml" : "json",
+        async: true,
+        success: function(res) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = isXml ? $("entry", res).map(function() {
+            return {
+              title: $("title", this).text(),
+              content: $("content",this).text(),
+              url: $("url" , this).text()
+            };
+          }).get() : res;
+          var input = document.getElementById(search_id);
+          var resultContent = document.getElementById(content_id);
+          var inputEventFunction = function() {
+            var searchText = input.value.trim().toLowerCase();
+            var keywords = searchText.split(/[\s\-]+/);
+            if (keywords.length > 1) {
+              keywords.push(searchText);
+            }
+            var resultItems = [];
+            if (searchText.length > 0) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var hitCount = 0;
+                var searchTextCount = 0;
+                var title = data.title.trim();
+                var titleInLowerCase = title.toLowerCase();
+                var content = data.content.trim().replace(/<[^>]+>/g,"");
+                
+                var contentInLowerCase = content.toLowerCase();
+                var articleUrl = decodeURIComponent(data.url);
+                var indexOfTitle = [];
+                var indexOfContent = [];
+                // only match articles with not empty titles
+                if(title != '') {
+                  keywords.forEach(function(keyword) {
+                    function getIndexByWord(word, text, caseSensitive) {
+                      var wordLen = word.length;
+                      if (wordLen === 0) {
+                        return [];
+                      }
+                      var startPosition = 0, position = [], index = [];
+                      if (!caseSensitive) {
+                        text = text.toLowerCase();
+                        word = word.toLowerCase();
+                      }
+                      while ((position = text.indexOf(word, startPosition)) > -1) {
+                        index.push({position: position, word: word});
+                        startPosition = position + wordLen;
+                      }
+                      return index;
+                    }
+
+                    indexOfTitle = indexOfTitle.concat(getIndexByWord(keyword, titleInLowerCase, false));
+                    indexOfContent = indexOfContent.concat(getIndexByWord(keyword, contentInLowerCase, false));
+                  });
+                  if (indexOfTitle.length > 0 || indexOfContent.length > 0) {
+                    isMatch = true;
+                    hitCount = indexOfTitle.length + indexOfContent.length;
+                  }
+                }
+
+                // show search results
+
+                if (isMatch) {
+                  // sort index by position of keyword
+
+                  [indexOfTitle, indexOfContent].forEach(function (index) {
+                    index.sort(function (itemLeft, itemRight) {
+                      if (itemRight.position !== itemLeft.position) {
+                        return itemRight.position - itemLeft.position;
+                      } else {
+                        return itemLeft.word.length - itemRight.word.length;
+                      }
+                    });
+                  });
+
+                  // merge hits into slices
+
+                  function mergeIntoSlice(text, start, end, index) {
+                    var item = index[index.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    var hits = [];
+                    var searchTextCountInSlice = 0;
+                    while (position + word.length <= end && index.length != 0) {
+                      if (word === searchText) {
+                        searchTextCountInSlice++;
+                      }
+                      hits.push({position: position, length: word.length});
+                      var wordEnd = position + word.length;
+
+                      // move to next position of hit
+
+                      index.pop();
+                      while (index.length != 0) {
+                        item = index[index.length - 1];
+                        position = item.position;
+                        word = item.word;
+                        if (wordEnd > position) {
+                          index.pop();
+                        } else {
+                          break;
+                        }
+                      }
+                    }
+                    searchTextCount += searchTextCountInSlice;
+                    return {
+                      hits: hits,
+                      start: start,
+                      end: end,
+                      searchTextCount: searchTextCountInSlice
+                    };
+                  }
+
+                  var slicesOfTitle = [];
+                  if (indexOfTitle.length != 0) {
+                    slicesOfTitle.push(mergeIntoSlice(title, 0, title.length, indexOfTitle));
+                  }
+
+                  var slicesOfContent = [];
+                  while (indexOfContent.length != 0) {
+                    var item = indexOfContent[indexOfContent.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    // cut out 100 characters
+                    var start = position - 20;
+                    var end = position + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if (end < position + word.length) {
+                      end = position + word.length;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    slicesOfContent.push(mergeIntoSlice(content, start, end, indexOfContent));
+                  }
+
+                  // sort slices in content by search text's count and hits' count
+
+                  slicesOfContent.sort(function (sliceLeft, sliceRight) {
+                    if (sliceLeft.searchTextCount !== sliceRight.searchTextCount) {
+                      return sliceRight.searchTextCount - sliceLeft.searchTextCount;
+                    } else if (sliceLeft.hits.length !== sliceRight.hits.length) {
+                      return sliceRight.hits.length - sliceLeft.hits.length;
+                    } else {
+                      return sliceLeft.start - sliceRight.start;
+                    }
+                  });
+
+                  // select top N slices in content
+
+                  var upperBound = parseInt('1');
+                  if (upperBound >= 0) {
+                    slicesOfContent = slicesOfContent.slice(0, upperBound);
+                  }
+
+                  // highlight title and content
+
+                  function highlightKeyword(text, slice) {
+                    var result = '';
+                    var prevEnd = slice.start;
+                    slice.hits.forEach(function (hit) {
+                      result += text.substring(prevEnd, hit.position);
+                      var end = hit.position + hit.length;
+                      result += '<b class="search-keyword">' + text.substring(hit.position, end) + '</b>';
+                      prevEnd = end;
+                    });
+                    result += text.substring(prevEnd, slice.end);
+                    return result;
+                  }
+
+                  var resultItem = '';
+
+                  if (slicesOfTitle.length != 0) {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + highlightKeyword(title, slicesOfTitle[0]) + "</a>";
+                  } else {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + title + "</a>";
+                  }
+
+                  slicesOfContent.forEach(function (slice) {
+                    resultItem += "<a href='" + articleUrl + "'>" +
+                      "<p class=\"search-result\">" + highlightKeyword(content, slice) +
+                      "...</p>" + "</a>";
+                  });
+
+                  resultItem += "</li>";
+                  resultItems.push({
+                    item: resultItem,
+                    searchTextCount: searchTextCount,
+                    hitCount: hitCount,
+                    id: resultItems.length
+                  });
+                }
+              })
+            };
+            if (keywords.length === 1 && keywords[0] === "") {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>'
+            } else if (resultItems.length === 0) {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>'
+            } else {
+              resultItems.sort(function (resultLeft, resultRight) {
+                if (resultLeft.searchTextCount !== resultRight.searchTextCount) {
+                  return resultRight.searchTextCount - resultLeft.searchTextCount;
+                } else if (resultLeft.hitCount !== resultRight.hitCount) {
+                  return resultRight.hitCount - resultLeft.hitCount;
+                } else {
+                  return resultRight.id - resultLeft.id;
+                }
+              });
+              var searchResultList = '<ul class=\"search-result-list\">';
+              resultItems.forEach(function (result) {
+                searchResultList += result.item;
+              })
+              searchResultList += "</ul>";
+              resultContent.innerHTML = searchResultList;
+            }
+          }
+
+          if ('auto' === 'auto') {
+            input.addEventListener('input', inputEventFunction);
+          } else {
+            $('.search-icon').click(inputEventFunction);
+            input.addEventListener('keypress', function (event) {
+              if (event.keyCode === 13) {
+                inputEventFunction();
+              }
+            });
+          }
+
+          // remove loading animation
+          $(".local-search-pop-overlay").remove();
+          $('body').css('overflow', '');
+
+          proceedsearch();
+        }
+      });
+    }
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched === false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(onPopupClose);
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+    $(document).on('keyup', function (event) {
+      var shouldDismissSearchPopup = event.which === 27 &&
+        $('.search-popup').is(':visible');
+      if (shouldDismissSearchPopup) {
+        onPopupClose();
+      }
+    });
+  </script>
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  <script type="text/javascript" src="/js/src/love.js"></script>
+</body>
+</html>

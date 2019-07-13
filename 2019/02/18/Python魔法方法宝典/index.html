@@ -1,0 +1,1878 @@
+<!DOCTYPE html>
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+<html class="theme-next gemini use-motion" lang="zh-CN">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=6.3.0" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/cat.png?v=6.3.0">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=6.3.0">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=6.3.0">
+
+
+  <link rel="mask-icon" href="/images/cat.svg?v=6.3.0" color="#222">
+
+
+
+
+
+
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Gemini',
+    version: '6.3.0',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: false,
+    fastclick: false,
+    lazyload: false,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+  
+
+
+
+
+  <meta name="description" content="何为魔法方法： &amp;emsp;&amp;emsp;魔法方法就是有魔法的方法，以__xx__的形式出现，这些方法在进行特定的操作时会自动被调用。也可以重写它们，使它们能在那些特定的场所按照我们的设定执行，省心又省力！🤪">
+<meta name="keywords" content="Python魔法方法">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Python魔法方法宝典">
+<meta property="og:url" content="http://yoursite.com/2019/02/18/Python魔法方法宝典/index.html">
+<meta property="og:site_name" content="AiforeのBlog">
+<meta property="og:description" content="何为魔法方法： &amp;emsp;&amp;emsp;魔法方法就是有魔法的方法，以__xx__的形式出现，这些方法在进行特定的操作时会自动被调用。也可以重写它们，使它们能在那些特定的场所按照我们的设定执行，省心又省力！🤪">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:updated_time" content="2019-04-22T16:58:43.507Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Python魔法方法宝典">
+<meta name="twitter:description" content="何为魔法方法： &amp;emsp;&amp;emsp;魔法方法就是有魔法的方法，以__xx__的形式出现，这些方法在进行特定的操作时会自动被调用。也可以重写它们，使它们能在那些特定的场所按照我们的设定执行，省心又省力！🤪">
+
+
+
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2019/02/18/Python魔法方法宝典/"/>
+
+
+
+<script type="text/javascript" id="page.configurations">
+  CONFIG.page = {
+    sidebar: "",
+  };
+</script>
+
+  <title>Python魔法方法宝典 | AiforeのBlog</title>
+  
+
+
+
+
+
+
+
+
+
+  <noscript>
+  <style type="text/css">
+    .use-motion .motion-element,
+    .use-motion .brand,
+    .use-motion .menu-item,
+    .sidebar-inner,
+    .use-motion .post-block,
+    .use-motion .pagination,
+    .use-motion .comments,
+    .use-motion .post-header,
+    .use-motion .post-body,
+    .use-motion .collection-title { opacity: initial; }
+
+    .use-motion .logo,
+    .use-motion .site-title,
+    .use-motion .site-subtitle {
+      opacity: initial;
+      top: initial;
+    }
+
+    .use-motion {
+      .logo-line-before i { left: initial; }
+      .logo-line-after i { right: initial; }
+    }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-CN">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">AiforeのBlog</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+    
+      
+        <p class="site-subtitle">太陽が輝く限り、希望もまた輝く。</p>
+      
+    
+  </div>
+
+  <div class="site-nav-toggle">
+    <button aria-label="切换导航栏">
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  
+    <ul id="menu" class="menu">
+      
+        
+        
+        
+          
+          <li class="menu-item menu-item-home">
+    <a href="/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-home"></i> <br />首页</a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-about">
+    <a href="/about/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-user"></i> <br />关于</a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-tags">
+    <a href="/tags/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />标签</a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-categories">
+    <a href="/categories/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-th"></i> <br />分类</a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-archives">
+    <a href="/archives/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />归档</a>
+  </li>
+
+      
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br />搜索</a>
+        </li>
+      
+    </ul>
+  
+
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup search-popup local-search-popup">
+  <div class="local-search-header clearfix">
+    <span class="search-icon">
+      <i class="fa fa-search"></i>
+    </span>
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+    <div class="local-search-input-wrapper">
+      <input autocomplete="off"
+             placeholder="搜索..." spellcheck="false"
+             type="text" id="local-search-input">
+    </div>
+  </div>
+  <div id="local-search-result"></div>
+</div>
+
+
+
+    </div>
+  
+</nav>
+
+
+
+  
+
+
+
+</div>
+    </header>
+
+    
+
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+            
+
+          
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/02/18/Python魔法方法宝典/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Aifore">
+      <meta itemprop="description" content="欢迎来到宇宙最帅Aifore的博客！">
+      <meta itemprop="image" content="/images/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="AiforeのBlog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">Python魔法方法宝典
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+
+              
+                
+              
+
+              <time title="创建时间：2019-02-18 23:24:18" itemprop="dateCreated datePublished" datetime="2019-02-18T23:24:18+07:00">2019-02-18</time>
+            
+
+            
+              
+
+              
+                
+                <span class="post-meta-divider">|</span>
+                
+
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">更新于</span>
+                
+                <time title="修改时间：2019-04-22 23:58:43" itemprop="dateModified" datetime="2019-04-22T23:58:43+07:00">2019-04-22</time>
+              
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/Python基础/" itemprop="url" rel="index"><span itemprop="name">Python基础</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2019/02/18/Python魔法方法宝典/#comments" itemprop="discussionUrl">
+                
+                  <span class="post-comments-count disqus-comment-count"
+                        data-disqus-identifier="2019/02/18/Python魔法方法宝典/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+            <span class="post-meta-divider">|</span>
+            <span class="post-meta-item-icon"
+            >
+            <i class="fa fa-eye"></i>
+             阅读次数： 
+            <span class="busuanzi-value" id="busuanzi_value_page_pv" ></span>
+            </span>
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p><strong>何为魔法方法：</strong></p>
+<p>&emsp;&emsp;魔法方法就是有魔法的方法，以<code>__xx__</code>的形式出现，这些方法在进行特定的操作时会自动被调用。也可以重写它们，使它们能在那些特定的场所按照我们的设定执行，省心又省力！🤪</p>
+<a id="more"></a>
+<h3 id="一-魔法大全"><a href="#一-魔法大全" class="headerlink" title="一. 魔法大全"></a>一. 魔法大全</h3><h4 id="1-基本的魔法方法"><a href="#1-基本的魔法方法" class="headerlink" title="1. 基本的魔法方法:"></a>1. 基本的魔法方法:</h4><table>
+<thead>
+<tr>
+<th>魔法方法</th>
+<th>含义</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>__new__</code>(cls[, …])</td>
+<td>1. <code>__new__</code>是在一个对象实例化的时候所调用的第一个方法</td>
+</tr>
+<tr>
+<td></td>
+<td>2. 它的第一个参数是这个类，其他的参数是用来直接传递给 <code>__init__</code> 方法</td>
+</tr>
+<tr>
+<td></td>
+<td>3. 决定是否要使用<code>__init__</code> 方法，它可以调用其他类的构造方法或者直接返回别的实例对象来作为本类的实例，如果没有返回实例对象，则 <code>__init__</code> 不会被调用</td>
+</tr>
+<tr>
+<td></td>
+<td>4. <code>__new__</code> 主要是用于继承一个不可变的类型比如一个 tuple 或者 string</td>
+</tr>
+<tr>
+<td><code>__init__</code>(self[, …])</td>
+<td>构造器，当一个实例被创建的时候调用的初始化方法</td>
+</tr>
+<tr>
+<td><code>__del__</code>(self)</td>
+<td>析构器，当一个实例被销毁的时候调用的方法</td>
+</tr>
+<tr>
+<td><code>__call__</code>(self[, args…])</td>
+<td>允许一个类的实例像函数一样被调用：x(a, b) 调用 x.<code>__call__</code>(a, b)</td>
+</tr>
+<tr>
+<td><code>__len__</code>(self)</td>
+<td>定义当被 len() 调用时的行为</td>
+</tr>
+<tr>
+<td><code>__repr__</code>(self)</td>
+<td>定义当被 repr() 调用时的行为</td>
+</tr>
+<tr>
+<td><code>__str__</code>(self)</td>
+<td>定义当被 str() 调用时的行为</td>
+</tr>
+<tr>
+<td><code>__bytes__</code>(self)</td>
+<td>定义当被 bytes() 调用时的行为</td>
+</tr>
+<tr>
+<td><code>__hash__</code>(self)</td>
+<td>定义当被 hash() 调用时的行为</td>
+</tr>
+<tr>
+<td><code>__bool__</code>(self)</td>
+<td>定义当被 bool() 调用时的行为，应该返回 True 或 False</td>
+</tr>
+<tr>
+<td><code>__format__</code>(self, format_spec)</td>
+<td>定义当被 format() 调用时的行为</td>
+</tr>
+</tbody>
+</table>
+<h4 id="2-有关属性"><a href="#2-有关属性" class="headerlink" title="2. 有关属性:"></a>2. 有关属性:</h4><table>
+<thead>
+<tr>
+<th>魔法方法</th>
+<th>含义</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>__getattr__</code>(self, name)</td>
+<td>定义当用户试图获取一个<strong>不存在的属性</strong>时的行为</td>
+</tr>
+<tr>
+<td><code>__getattribute__</code>(self, name)</td>
+<td>定义当该类的属性被访问时的行为</td>
+</tr>
+<tr>
+<td><code>__setattr__</code>(self, name, value)</td>
+<td>定义当一个属性被设置时的行为</td>
+</tr>
+<tr>
+<td><code>__delattr__</code>(self, name)</td>
+<td>定义当一个属性被删除时的行为</td>
+</tr>
+<tr>
+<td><code>__dir__</code>(self)</td>
+<td>定义当 dir() 被调用时的行为；dir()不带参数时，返回当前范围内的变量、方法和定义的类型列表；带参数时，返回参数的属性、方法列表。</td>
+</tr>
+<tr>
+<td><code>__get__</code>(self, instance, owner)</td>
+<td>定义当描述符的值被取得时的行为</td>
+</tr>
+<tr>
+<td><code>__set__</code>(self, instance, value)</td>
+<td>定义当描述符的值被改变时的行为</td>
+</tr>
+<tr>
+<td><code>__delete__</code>(self, instance)</td>
+<td>定义当描述符的值被删除时的行为</td>
+</tr>
+</tbody>
+</table>
+<h4 id="3-比较操作符"><a href="#3-比较操作符" class="headerlink" title="3. 比较操作符:"></a>3. 比较操作符:</h4><table>
+<thead>
+<tr>
+<th>魔法方法</th>
+<th>含义</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>__lt__</code>(self, other)</td>
+<td>定义小于号的行为：x &lt; y 调用 x.<code>__lt__</code>(y)</td>
+</tr>
+<tr>
+<td><code>__le__</code>(self, other)</td>
+<td>定义小于等于号的行为：x &lt;= y 调用 x.<code>__le__</code>(y)</td>
+</tr>
+<tr>
+<td><code>__eq__</code>(self, other)</td>
+<td>定义等于号的行为：x == y 调用 x.<code>__eq__</code>(y)</td>
+</tr>
+<tr>
+<td><code>__ne__</code>(self, other)</td>
+<td>定义不等号的行为：x != y 调用 x.<code>__ne__</code>(y)</td>
+</tr>
+<tr>
+<td><code>__gt__</code>(self, other)</td>
+<td>定义大于号的行为：x &gt; y 调用 x.<code>__gt__</code>(y)</td>
+</tr>
+<tr>
+<td><code>__ge__</code>(self, other)</td>
+<td>定义大于等于号的行为：x &gt;= y 调用 x.<code>__ge__</code>(y)</td>
+</tr>
+</tbody>
+</table>
+<h4 id="4-算数运算符"><a href="#4-算数运算符" class="headerlink" title="4. 算数运算符:"></a>4. 算数运算符:</h4><table>
+<thead>
+<tr>
+<th>魔法方法</th>
+<th>含义</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>__add__</code>(self, other)</td>
+<td>定义加法的行为：+</td>
+</tr>
+<tr>
+<td><code>__sub__</code>(self, other)</td>
+<td>定义减法的行为：-</td>
+</tr>
+<tr>
+<td><code>__mul__</code>(self, other)</td>
+<td>定义乘法的行为：*</td>
+</tr>
+<tr>
+<td><code>__truediv__</code>(self, other)</td>
+<td>定义真除法的行为：/</td>
+</tr>
+<tr>
+<td><code>__floordiv__</code>(self, other)</td>
+<td>定义整数除法的行为：//</td>
+</tr>
+<tr>
+<td><code>__mod__</code>(self, other)</td>
+<td>定义取模算法的行为：%</td>
+</tr>
+<tr>
+<td><code>__divmod__</code>(self, other)</td>
+<td>定义当被 divmod() 调用时的行为</td>
+</tr>
+<tr>
+<td><code>__pow__</code>(self, other[, modulo])</td>
+<td>定义当被 power() 调用或 ** 运算时的行为</td>
+</tr>
+<tr>
+<td><code>__lshift__</code>(self, other)</td>
+<td>定义按位左移位的行为：&lt;&lt;</td>
+</tr>
+<tr>
+<td><code>__rshift__</code>(self, other)</td>
+<td>定义按位右移位的行为：&gt;&gt;</td>
+</tr>
+<tr>
+<td><code>__and__</code>(self, other)</td>
+<td>定义按位与操作的行为：&amp;</td>
+</tr>
+<tr>
+<td><code>__xor__</code>(self, other)</td>
+<td>定义按位异或操作的行为：^</td>
+</tr>
+<tr>
+<td><code>__or__</code>(self, other)</td>
+<td>定义按位或操作的行为：<code>\</code></td>
+</tr>
+</tbody>
+</table>
+<h4 id="5-反运算"><a href="#5-反运算" class="headerlink" title="5. 反运算:"></a>5. 反运算:</h4><table>
+<thead>
+<tr>
+<th>魔法方法</th>
+<th>含义</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>__radd__</code>(self, other)</td>
+<td>（与上方相同，当左操作数不支持相应的操作时被调用）</td>
+</tr>
+<tr>
+<td><code>__rsub__</code>(self, other)</td>
+<td>（与上方相同，当左操作数不支持相应的操作时被调用）</td>
+</tr>
+<tr>
+<td><code>__rmul__</code>(self, other)</td>
+<td>（与上方相同，当左操作数不支持相应的操作时被调用）</td>
+</tr>
+<tr>
+<td><code>__rtruediv__</code>(self, other)</td>
+<td>（与上方相同，当左操作数不支持相应的操作时被调用）</td>
+</tr>
+<tr>
+<td><code>__rfloordiv__</code>(self, other)</td>
+<td>（与上方相同，当左操作数不支持相应的操作时被调用）</td>
+</tr>
+<tr>
+<td><code>__rmod__</code>(self, other)</td>
+<td>（与上方相同，当左操作数不支持相应的操作时被调用）</td>
+</tr>
+<tr>
+<td><code>__rdivmod__</code>(self, other)</td>
+<td>（与上方相同，当左操作数不支持相应的操作时被调用）</td>
+</tr>
+<tr>
+<td><code>__rpow__</code>(self, other)</td>
+<td>（与上方相同，当左操作数不支持相应的操作时被调用）</td>
+</tr>
+<tr>
+<td><code>__rlshift__</code>(self, other)</td>
+<td>（与上方相同，当左操作数不支持相应的操作时被调用）</td>
+</tr>
+<tr>
+<td><code>__rrshift__</code>(self, other)</td>
+<td>（与上方相同，当左操作数不支持相应的操作时被调用）</td>
+</tr>
+<tr>
+<td><code>__rxor__</code>(self, other)</td>
+<td>（与上方相同，当左操作数不支持相应的操作时被调用）</td>
+</tr>
+<tr>
+<td><code>__ror__</code>(self, other)</td>
+<td>（与上方相同，当左操作数不支持相应的操作时被调用）</td>
+</tr>
+</tbody>
+</table>
+<h4 id="6-增量赋值运算"><a href="#6-增量赋值运算" class="headerlink" title="6. 增量赋值运算:"></a>6. 增量赋值运算:</h4><table>
+<thead>
+<tr>
+<th>魔法方法</th>
+<th>含义</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>__iadd__</code>(self, other)</td>
+<td>定义赋值加法的行为：+=</td>
+</tr>
+<tr>
+<td><code>__isub__</code>(self, other)</td>
+<td>定义赋值减法的行为：-=</td>
+</tr>
+<tr>
+<td><code>__imul__</code>(self, other)</td>
+<td>定义赋值乘法的行为：*=</td>
+</tr>
+<tr>
+<td><code>__itruediv__</code>(self, other)</td>
+<td>定义赋值真除法的行为：/=</td>
+</tr>
+<tr>
+<td><code>__ifloordiv__</code>(self, other)</td>
+<td>定义赋值整数除法的行为：//=</td>
+</tr>
+<tr>
+<td><code>__imod__</code>(self, other)</td>
+<td>定义赋值取模算法的行为：%=</td>
+</tr>
+<tr>
+<td><code>__ipow__</code>(self, other[, modulo])</td>
+<td>定义赋值幂运算的行为：**=</td>
+</tr>
+<tr>
+<td><code>__ilshift__</code>(self, other)</td>
+<td>定义赋值按位左移位的行为：&lt;&lt;=</td>
+</tr>
+<tr>
+<td><code>__irshift__</code>(self, other)</td>
+<td>定义赋值按位右移位的行为：&gt;&gt;=</td>
+</tr>
+<tr>
+<td><code>__iand__</code>(self, other)</td>
+<td>定义赋值按位与操作的行为：&amp;=</td>
+</tr>
+<tr>
+<td><code>__ixor__</code>(self, other)</td>
+<td>定义赋值按位异或操作的行为：^=</td>
+</tr>
+<tr>
+<td><code>__ior__</code>(self, other)</td>
+<td>定义赋值按位或操作的行为：<code>\=</code></td>
+</tr>
+</tbody>
+</table>
+<h4 id="7-一元操作符"><a href="#7-一元操作符" class="headerlink" title="7. 一元操作符:"></a>7. 一元操作符:</h4><table>
+<thead>
+<tr>
+<th>魔法方法</th>
+<th>含义</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>__neg__</code>(self)</td>
+<td>定义正号的行为：+x</td>
+</tr>
+<tr>
+<td><code>__pos__</code>(self)</td>
+<td>定义负号的行为：-x</td>
+</tr>
+<tr>
+<td><code>__abs__</code>(self)</td>
+<td>定义当被 abs() 调用时的行为</td>
+</tr>
+<tr>
+<td><code>__invert__</code>(self)</td>
+<td>定义按位求反的行为：~x</td>
+</tr>
+</tbody>
+</table>
+<h4 id="8-类型转换"><a href="#8-类型转换" class="headerlink" title="8. 类型转换:"></a>8. 类型转换:</h4><table>
+<thead>
+<tr>
+<th>魔法方法</th>
+<th>含义</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>__complex__</code>(self)</td>
+<td>定义当被 complex() 调用时的行为（需要返回恰当的值）</td>
+</tr>
+<tr>
+<td><code>__int__</code>(self)</td>
+<td>定义当被 int() 调用时的行为（需要返回恰当的值）</td>
+</tr>
+<tr>
+<td><code>__float__</code>(self)</td>
+<td>定义当被 float() 调用时的行为（需要返回恰当的值）</td>
+</tr>
+<tr>
+<td><code>__round__</code>(self[, n])</td>
+<td>定义当被 round() 调用时的行为（需要返回恰当的值）</td>
+</tr>
+<tr>
+<td><code>__index__</code>(self)</td>
+<td>1. 当对象是被应用在切片表达式中时，实现整形强制转换</td>
+</tr>
+<tr>
+<td></td>
+<td>2. 如果你定义了一个可能在切片时用到的定制的数值型,你应该定义 <code>__index__</code></td>
+</tr>
+<tr>
+<td></td>
+<td>3. 如果 <code>__index__</code> 被定义，则 <code>__int__</code> 也需要被定义，且返回相同的值</td>
+</tr>
+</tbody>
+</table>
+<h4 id="9-上下文管理（with-语句）"><a href="#9-上下文管理（with-语句）" class="headerlink" title="9. 上下文管理（with 语句）:"></a>9. 上下文管理（with 语句）:</h4><table>
+<thead>
+<tr>
+<th>魔法方法</th>
+<th>含义</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>__enter__</code>(self)</td>
+<td>1. 定义当使用 with 语句时的初始化行为</td>
+</tr>
+<tr>
+<td></td>
+<td>2. <code>__enter__</code> 的返回值被 with 语句的目标或者 as 后的名字绑定</td>
+</tr>
+<tr>
+<td><code>__exit__</code>(self, exc_type, exc_value, traceback)</td>
+<td>1. 定义当一个代码块被执行或者终止后上下文管理器应该做什么</td>
+</tr>
+<tr>
+<td></td>
+<td>2. 一般被用来处理异常，清除工作或者做一些代码块执行完毕之后的日常工作</td>
+</tr>
+</tbody>
+</table>
+<h4 id="10-容器类型"><a href="#10-容器类型" class="headerlink" title="10. 容器类型:"></a>10. 容器类型:</h4><table>
+<thead>
+<tr>
+<th>魔法方法</th>
+<th>含义</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>__len__</code>(self)</td>
+<td>定义当被 len() 调用时的行为（返回容器中元素的个数）</td>
+</tr>
+<tr>
+<td><code>__getitem__</code>(self, key)</td>
+<td>定义获取容器中指定元素的行为，相当于 self[key]</td>
+</tr>
+<tr>
+<td><code>__setitem__</code>(self, key, value)</td>
+<td>定义设置容器中指定元素的行为，相当于 self[key] = value</td>
+</tr>
+<tr>
+<td><code>__delitem__</code>(self, key)</td>
+<td>定义删除容器中指定元素的行为，相当于 del self[key]</td>
+</tr>
+<tr>
+<td><code>__iter__</code>(self)</td>
+<td>定义当迭代容器中的元素的行为</td>
+</tr>
+<tr>
+<td><code>__reversed__</code>(self)</td>
+<td>定义当被 reversed() 调用时的行为</td>
+</tr>
+<tr>
+<td><code>__contains__</code>(self, item)</td>
+<td>定义当使用成员测试运算符（in 或 not in）时的行为</td>
+</tr>
+</tbody>
+</table>
+<hr>
+<h3 id="二-实例讲解"><a href="#二-实例讲解" class="headerlink" title="二. 实例讲解"></a>二. 实例讲解</h3><h4 id="1-enter-和-exit"><a href="#1-enter-和-exit" class="headerlink" title="1.__enter__和__exit__"></a>1.<code>__enter__</code>和<code>__exit__</code></h4><ul>
+<li><code>__enter__</code></li>
+</ul>
+<blockquote>
+<p>定义当使用 with 语句时的初始化行为，<code>__enter__</code> 的返回值将被赋值给as后面的变量。</p>
+</blockquote>
+<p>示例：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Sample</span>:</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__enter__</span><span class="params">(self)</span>:</span></span><br><span class="line">        print(<span class="string">"执行__enter__()..."</span>)</span><br><span class="line">        <span class="keyword">return</span> <span class="string">"fxx"</span></span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__exit__</span><span class="params">(self, type, value, trace)</span>:</span></span><br><span class="line">        print(<span class="string">"执行__exit__()..."</span>)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">with</span> Sample() <span class="keyword">as</span> sample:  <span class="comment"># 返回的'fxx'赋值给了sample</span></span><br><span class="line">    print(<span class="string">"sample:"</span>, sample)  <span class="comment"># 打印结果：fxx</span></span><br></pre></td></tr></table></figure>
+<ul>
+<li><code>__exit__</code></li>
+</ul>
+<blockquote>
+<ol>
+<li>当with后面的代码块全部被执行完之后，将调用对象的<code>__exit__()</code>方法。</li>
+<li>在with后面的代码块抛出任何异常时，将调用对象的<code>__exit__()</code>方法。</li>
+</ol>
+</blockquote>
+<p>示例：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Sample</span>:</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__enter__</span><span class="params">(self)</span>:</span></span><br><span class="line">        <span class="keyword">return</span> self</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__exit__</span><span class="params">(self, type, value, trace)</span>:</span></span><br><span class="line">        print(<span class="string">"type:"</span>, type)</span><br><span class="line">        print(<span class="string">"value:"</span>, value)</span><br><span class="line">        print(<span class="string">"trace:"</span>, trace)</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">do_something</span><span class="params">(self)</span>:</span></span><br><span class="line">        bar = <span class="number">1</span>/<span class="number">0</span></span><br><span class="line">        <span class="keyword">return</span> bar + <span class="number">10</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">with</span> Sample() <span class="keyword">as</span> sample:</span><br><span class="line">    sample.do_something()</span><br><span class="line"></span><br><span class="line"><span class="comment"># 打印结果：</span></span><br><span class="line"><span class="comment"># type: &lt;type 'exceptions.ZeroDivisionError'&gt;</span></span><br><span class="line"><span class="comment"># value: integer division or modulo by zero</span></span><br><span class="line"><span class="comment"># trace: &lt;traceback object at 0x1004a8128&gt;</span></span><br><span class="line"><span class="comment"># 异常抛出时，与之关联的type，value和stack trace传给__exit__()方法，因此抛出的</span></span><br><span class="line"><span class="comment"># ZeroDivisionError异常被打印出来了。开发库时，清理资源，关闭文件等，都可以放在__exit__方法当中。</span></span><br></pre></td></tr></table></figure>
+<hr>
+<h4 id="2-setattr-、-delattr-、-getattr-、-getattribute"><a href="#2-setattr-、-delattr-、-getattr-、-getattribute" class="headerlink" title="2. __setattr__、__delattr__、__getattr__、__getattribute__"></a>2. <code>__setattr__</code>、<code>__delattr__</code>、<code>__getattr__</code>、<code>__getattribute__</code></h4><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Test</span><span class="params">(object)</span>:</span></span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__init__</span><span class="params">(self, fx)</span>:</span></span><br><span class="line">        self.fx = fx  <span class="comment"># 执行了__setattr__</span></span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__setattr__</span><span class="params">(self, name, value)</span>:</span></span><br><span class="line">        <span class="keyword">if</span> name == <span class="string">'fxx'</span>:</span><br><span class="line">            print(<span class="string">'该属性不允许设置。。。'</span>)</span><br><span class="line">        <span class="keyword">else</span>:</span><br><span class="line">            print(<span class="string">'设置属性。。。'</span>)</span><br><span class="line">            object.__setattr__(self, name, value)</span><br><span class="line">            <span class="comment"># 以下下发会造成循环调用的错误</span></span><br><span class="line">            <span class="comment"># self.__setattr__(name, value - 100)</span></span><br><span class="line">            <span class="comment"># self.name = value</span></span><br><span class="line"></span><br><span class="line">    <span class="comment"># __getattribute__找不到时才会执行该方法</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__getattr__</span><span class="params">(self, item)</span>:</span></span><br><span class="line">        <span class="keyword">return</span> <span class="string">'没有该属性。。。'</span></span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__getattribute__</span><span class="params">(self, item)</span>:</span></span><br><span class="line">        print(<span class="string">'查询属性时会无条件执行！'</span>)</span><br><span class="line">        <span class="keyword">return</span> object.__getattribute__(self, item)</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__delattr__</span><span class="params">(self, item)</span>:</span></span><br><span class="line">        print(<span class="string">'执行删除属性。。。'</span>)</span><br><span class="line">        <span class="keyword">return</span> object.__delattr__(self, item)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">x = Test(<span class="string">'帅哥！'</span>)</span><br><span class="line"><span class="comment"># 设置属性。。。</span></span><br><span class="line">print(x.fx)</span><br><span class="line"><span class="comment"># 查询属性时会无条件执行！</span></span><br><span class="line"><span class="comment"># 帅哥！</span></span><br><span class="line"></span><br><span class="line">x.fxx = <span class="string">'帅哥！'</span></span><br><span class="line"><span class="comment"># 该属性不允许设置。。。</span></span><br><span class="line">print(x.fxx)</span><br><span class="line"><span class="comment"># 查询属性时会无条件执行！</span></span><br><span class="line"><span class="comment"># 没有该属性。。。</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">del</span> x.fx</span><br><span class="line"><span class="comment"># 执行删除属性。。。</span></span><br><span class="line">print(x.fx)</span><br><span class="line"><span class="comment"># 查询属性时会无条件执行！</span></span><br><span class="line"><span class="comment"># 没有该属性。。。</span></span><br></pre></td></tr></table></figure>
+<hr>
+<h4 id="4-str-和-repr"><a href="#4-str-和-repr" class="headerlink" title="4. __str__和__repr__"></a>4. <code>__str__</code>和<code>__repr__</code></h4><p>示例：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&gt;&gt;&gt; </span><span class="keyword">import</span> datetime</span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>t = datetime.datetime.now()</span><br><span class="line"></span><br><span class="line"><span class="comment"># 给发开人员看，包含对象的基本信息-也可自定义</span></span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>t</span><br><span class="line">datetime.datetime(<span class="number">2019</span>, <span class="number">2</span>, <span class="number">19</span>, <span class="number">10</span>, <span class="number">47</span>, <span class="number">7</span>, <span class="number">819374</span>)</span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>repr(t)</span><br><span class="line"><span class="string">'datetime.datetime(2019, 2, 19, 10, 47, 7, 819374)'</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 给普通用户看，自定义对象的展示信息</span></span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>print(t)</span><br><span class="line"><span class="number">2019</span><span class="number">-02</span><span class="number">-19</span> <span class="number">10</span>:<span class="number">47</span>:<span class="number">07.819374</span></span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>str(t)</span><br><span class="line"><span class="string">'2019-02-19 10:47:07.819374'</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 同时定义 __repr__ 方法和 __str__ 方法时，print() 方法会调用 __str__ 方法。</span></span><br><span class="line"><span class="comment"># __unicode__在python3中被取消，统一使用__str__.</span></span><br></pre></td></tr></table></figure>
+
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+      <div>
+        <div style="padding: 10px 0; margin: 20px auto; width: 90%; text-align: center;">
+  <div>😊打  赏😊</div>
+  <button id="rewardButton" disable="enable" onclick="var qr = document.getElementById('QR'); if (qr.style.display === 'none') {qr.style.display='block';} else {qr.style.display='none'}">
+    <span>打赏</span>
+  </button>
+  <div id="QR" style="display: none;">
+
+    
+      <div id="wechat" style="display: inline-block">
+        <img id="wechat_qr" src="/images/wechatpay500.png" alt="Aifore 微信支付"/>
+        <p>微信支付</p>
+      </div>
+    
+
+    
+
+    
+
+  </div>
+</div>
+
+      </div>
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Python魔法方法/" rel="tag"># Python魔法方法</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2018/11/06/Python测试之单元测试/" rel="next" title="Python测试之单元测试">
+                <i class="fa fa-chevron-left"></i> Python测试之单元测试
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2019/04/04/Python多个装饰器的执行顺序/" rel="prev" title="Python多个装饰器的执行顺序">
+                Python多个装饰器的执行顺序 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+  
+    <div class="comments" id="comments">
+      <div id="disqus_thread">
+        <noscript>
+          Please enable JavaScript to view the
+          <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a>
+        </noscript>
+      </div>
+    </div>
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image"
+                src="/images/avatar.jpg"
+                alt="Aifore" />
+            
+              <p class="site-author-name" itemprop="name">Aifore</p>
+              <p class="site-description motion-element" itemprop="description">欢迎来到宇宙最帅Aifore的博客！</p>
+          </div>
+
+          
+            <nav class="site-state motion-element">
+              
+                <div class="site-state-item site-state-posts">
+                
+                  <a href="/archives/">
+                
+                    <span class="site-state-item-count">30</span>
+                    <span class="site-state-item-name">日志</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-categories">
+                  <a href="/categories/index.html">
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">15</span>
+                    <span class="site-state-item-name">分类</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-tags">
+                  <a href="/tags/index.html">
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">40</span>
+                    <span class="site-state-item-name">标签</span>
+                  </a>
+                </div>
+              
+            </nav>
+          
+
+          
+
+          
+            <div class="links-of-author motion-element">
+              
+                <span class="links-of-author-item">
+                  <a href="https://github.com/aifore" target="_blank" title="GitHub"><i class="fa fa-fw fa-github"></i>GitHub</a>
+                  
+                </span>
+              
+            </div>
+          
+
+          
+          
+
+          
+          
+            <div class="links-of-blogroll motion-element links-of-blogroll-inline">
+              <div class="links-of-blogroll-title">
+                <i class="fa  fa-fw fa-link"></i>
+                我的博客
+              </div>
+              <ul class="links-of-blogroll-list">
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://me.csdn.net/aifore" title="我的CSDN" target="_blank">我的CSDN</a>
+                  </li>
+                
+              </ul>
+            </div>
+          
+
+          
+            
+          
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#一-魔法大全"><span class="nav-text">一. 魔法大全</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#1-基本的魔法方法"><span class="nav-text">1. 基本的魔法方法:</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-有关属性"><span class="nav-text">2. 有关属性:</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#3-比较操作符"><span class="nav-text">3. 比较操作符:</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#4-算数运算符"><span class="nav-text">4. 算数运算符:</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#5-反运算"><span class="nav-text">5. 反运算:</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#6-增量赋值运算"><span class="nav-text">6. 增量赋值运算:</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#7-一元操作符"><span class="nav-text">7. 一元操作符:</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#8-类型转换"><span class="nav-text">8. 类型转换:</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#9-上下文管理（with-语句）"><span class="nav-text">9. 上下文管理（with 语句）:</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#10-容器类型"><span class="nav-text">10. 容器类型:</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#二-实例讲解"><span class="nav-text">二. 实例讲解</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#1-enter-和-exit"><span class="nav-text">1.__enter__和__exit__</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-setattr-、-delattr-、-getattr-、-getattribute"><span class="nav-text">2. __setattr__、__delattr__、__getattr__、__getattribute__</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#4-str-和-repr"><span class="nav-text">4. __str__和__repr__</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2019</span>
+  <span class="with-love" id="animate">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Aifore</span>
+
+  
+
+  
+</div>
+
+
+
+
+
+
+
+
+
+
+
+        
+<div class="busuanzi-count">
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+  
+    <span class="site-uv" title="总访客量">
+      <i class="fa fa-user"></i>
+      <span class="busuanzi-value" id="busuanzi_value_site_uv"></span>
+    </span>
+  
+
+  
+    <span class="site-pv" title="总访问量">
+      <i class="fa fa-eye"></i>
+      <span class="busuanzi-value" id="busuanzi_value_site_pv"></span>
+    </span>
+  
+</div>
+
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=6.3.0"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=6.3.0"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=6.3.0"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=6.3.0"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=6.3.0"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=6.3.0"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=6.3.0"></script>
+
+
+
+  
+
+  
+    <script id="dsq-count-scr" src="https://aifore.disqus.com/count.js" async></script>
+  
+
+  
+    <script type="text/javascript">
+      var disqus_config = function () {
+        this.page.url = 'http://yoursite.com/2019/02/18/Python魔法方法宝典/';
+        this.page.identifier = '2019/02/18/Python魔法方法宝典/';
+        this.page.title = 'Python魔法方法宝典';
+        };
+      function loadComments () {
+        var d = document, s = d.createElement('script');
+        s.src = 'https://aifore.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', '' + +new Date());
+        (d.head || d.body).appendChild(s);
+      }
+      
+        loadComments();
+      
+    </script>
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    var isXml = true;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length === 0) {
+      search_path = "search.xml";
+    } else if (/json$/i.test(search_path)) {
+      isXml = false;
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    var onPopupClose = function (e) {
+      $('.popup').hide();
+      $('#local-search-input').val('');
+      $('.search-result-list').remove();
+      $('#no-result').remove();
+      $(".local-search-pop-overlay").remove();
+      $('body').css('overflow', '');
+    }
+
+    function proceedsearch() {
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay"></div>')
+        .css('overflow', 'hidden');
+      $('.search-popup-overlay').click(onPopupClose);
+      $('.popup').toggle();
+      var $localSearchInput = $('#local-search-input');
+      $localSearchInput.attr("autocapitalize", "none");
+      $localSearchInput.attr("autocorrect", "off");
+      $localSearchInput.focus();
+    }
+
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+
+      // start loading animation
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay">' +
+          '<div id="search-loading-icon">' +
+          '<i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>' +
+          '</div>' +
+          '</div>')
+        .css('overflow', 'hidden');
+      $("#search-loading-icon").css('margin', '20% auto 0 auto').css('text-align', 'center');
+
+      
+
+      $.ajax({
+        url: path,
+        dataType: isXml ? "xml" : "json",
+        async: true,
+        success: function(res) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = isXml ? $("entry", res).map(function() {
+            return {
+              title: $("title", this).text(),
+              content: $("content",this).text(),
+              url: $("url" , this).text()
+            };
+          }).get() : res;
+          var input = document.getElementById(search_id);
+          var resultContent = document.getElementById(content_id);
+          var inputEventFunction = function() {
+            var searchText = input.value.trim().toLowerCase();
+            var keywords = searchText.split(/[\s\-]+/);
+            if (keywords.length > 1) {
+              keywords.push(searchText);
+            }
+            var resultItems = [];
+            if (searchText.length > 0) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var hitCount = 0;
+                var searchTextCount = 0;
+                var title = data.title.trim();
+                var titleInLowerCase = title.toLowerCase();
+                var content = data.content.trim().replace(/<[^>]+>/g,"");
+                
+                var contentInLowerCase = content.toLowerCase();
+                var articleUrl = decodeURIComponent(data.url);
+                var indexOfTitle = [];
+                var indexOfContent = [];
+                // only match articles with not empty titles
+                if(title != '') {
+                  keywords.forEach(function(keyword) {
+                    function getIndexByWord(word, text, caseSensitive) {
+                      var wordLen = word.length;
+                      if (wordLen === 0) {
+                        return [];
+                      }
+                      var startPosition = 0, position = [], index = [];
+                      if (!caseSensitive) {
+                        text = text.toLowerCase();
+                        word = word.toLowerCase();
+                      }
+                      while ((position = text.indexOf(word, startPosition)) > -1) {
+                        index.push({position: position, word: word});
+                        startPosition = position + wordLen;
+                      }
+                      return index;
+                    }
+
+                    indexOfTitle = indexOfTitle.concat(getIndexByWord(keyword, titleInLowerCase, false));
+                    indexOfContent = indexOfContent.concat(getIndexByWord(keyword, contentInLowerCase, false));
+                  });
+                  if (indexOfTitle.length > 0 || indexOfContent.length > 0) {
+                    isMatch = true;
+                    hitCount = indexOfTitle.length + indexOfContent.length;
+                  }
+                }
+
+                // show search results
+
+                if (isMatch) {
+                  // sort index by position of keyword
+
+                  [indexOfTitle, indexOfContent].forEach(function (index) {
+                    index.sort(function (itemLeft, itemRight) {
+                      if (itemRight.position !== itemLeft.position) {
+                        return itemRight.position - itemLeft.position;
+                      } else {
+                        return itemLeft.word.length - itemRight.word.length;
+                      }
+                    });
+                  });
+
+                  // merge hits into slices
+
+                  function mergeIntoSlice(text, start, end, index) {
+                    var item = index[index.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    var hits = [];
+                    var searchTextCountInSlice = 0;
+                    while (position + word.length <= end && index.length != 0) {
+                      if (word === searchText) {
+                        searchTextCountInSlice++;
+                      }
+                      hits.push({position: position, length: word.length});
+                      var wordEnd = position + word.length;
+
+                      // move to next position of hit
+
+                      index.pop();
+                      while (index.length != 0) {
+                        item = index[index.length - 1];
+                        position = item.position;
+                        word = item.word;
+                        if (wordEnd > position) {
+                          index.pop();
+                        } else {
+                          break;
+                        }
+                      }
+                    }
+                    searchTextCount += searchTextCountInSlice;
+                    return {
+                      hits: hits,
+                      start: start,
+                      end: end,
+                      searchTextCount: searchTextCountInSlice
+                    };
+                  }
+
+                  var slicesOfTitle = [];
+                  if (indexOfTitle.length != 0) {
+                    slicesOfTitle.push(mergeIntoSlice(title, 0, title.length, indexOfTitle));
+                  }
+
+                  var slicesOfContent = [];
+                  while (indexOfContent.length != 0) {
+                    var item = indexOfContent[indexOfContent.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    // cut out 100 characters
+                    var start = position - 20;
+                    var end = position + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if (end < position + word.length) {
+                      end = position + word.length;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    slicesOfContent.push(mergeIntoSlice(content, start, end, indexOfContent));
+                  }
+
+                  // sort slices in content by search text's count and hits' count
+
+                  slicesOfContent.sort(function (sliceLeft, sliceRight) {
+                    if (sliceLeft.searchTextCount !== sliceRight.searchTextCount) {
+                      return sliceRight.searchTextCount - sliceLeft.searchTextCount;
+                    } else if (sliceLeft.hits.length !== sliceRight.hits.length) {
+                      return sliceRight.hits.length - sliceLeft.hits.length;
+                    } else {
+                      return sliceLeft.start - sliceRight.start;
+                    }
+                  });
+
+                  // select top N slices in content
+
+                  var upperBound = parseInt('1');
+                  if (upperBound >= 0) {
+                    slicesOfContent = slicesOfContent.slice(0, upperBound);
+                  }
+
+                  // highlight title and content
+
+                  function highlightKeyword(text, slice) {
+                    var result = '';
+                    var prevEnd = slice.start;
+                    slice.hits.forEach(function (hit) {
+                      result += text.substring(prevEnd, hit.position);
+                      var end = hit.position + hit.length;
+                      result += '<b class="search-keyword">' + text.substring(hit.position, end) + '</b>';
+                      prevEnd = end;
+                    });
+                    result += text.substring(prevEnd, slice.end);
+                    return result;
+                  }
+
+                  var resultItem = '';
+
+                  if (slicesOfTitle.length != 0) {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + highlightKeyword(title, slicesOfTitle[0]) + "</a>";
+                  } else {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + title + "</a>";
+                  }
+
+                  slicesOfContent.forEach(function (slice) {
+                    resultItem += "<a href='" + articleUrl + "'>" +
+                      "<p class=\"search-result\">" + highlightKeyword(content, slice) +
+                      "...</p>" + "</a>";
+                  });
+
+                  resultItem += "</li>";
+                  resultItems.push({
+                    item: resultItem,
+                    searchTextCount: searchTextCount,
+                    hitCount: hitCount,
+                    id: resultItems.length
+                  });
+                }
+              })
+            };
+            if (keywords.length === 1 && keywords[0] === "") {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>'
+            } else if (resultItems.length === 0) {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>'
+            } else {
+              resultItems.sort(function (resultLeft, resultRight) {
+                if (resultLeft.searchTextCount !== resultRight.searchTextCount) {
+                  return resultRight.searchTextCount - resultLeft.searchTextCount;
+                } else if (resultLeft.hitCount !== resultRight.hitCount) {
+                  return resultRight.hitCount - resultLeft.hitCount;
+                } else {
+                  return resultRight.id - resultLeft.id;
+                }
+              });
+              var searchResultList = '<ul class=\"search-result-list\">';
+              resultItems.forEach(function (result) {
+                searchResultList += result.item;
+              })
+              searchResultList += "</ul>";
+              resultContent.innerHTML = searchResultList;
+            }
+          }
+
+          if ('auto' === 'auto') {
+            input.addEventListener('input', inputEventFunction);
+          } else {
+            $('.search-icon').click(inputEventFunction);
+            input.addEventListener('keypress', function (event) {
+              if (event.keyCode === 13) {
+                inputEventFunction();
+              }
+            });
+          }
+
+          // remove loading animation
+          $(".local-search-pop-overlay").remove();
+          $('body').css('overflow', '');
+
+          proceedsearch();
+        }
+      });
+    }
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched === false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(onPopupClose);
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+    $(document).on('keyup', function (event) {
+      var shouldDismissSearchPopup = event.which === 27 &&
+        $('.search-popup').is(':visible');
+      if (shouldDismissSearchPopup) {
+        onPopupClose();
+      }
+    });
+  </script>
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  <script type="text/javascript" src="/js/src/love.js"></script>
+</body>
+</html>

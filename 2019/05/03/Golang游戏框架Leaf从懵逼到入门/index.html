@@ -1,0 +1,1446 @@
+<!DOCTYPE html>
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+<html class="theme-next gemini use-motion" lang="zh-CN">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=6.3.0" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/cat.png?v=6.3.0">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=6.3.0">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=6.3.0">
+
+
+  <link rel="mask-icon" href="/images/cat.svg?v=6.3.0" color="#222">
+
+
+
+
+
+
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Gemini',
+    version: '6.3.0',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: false,
+    fastclick: false,
+    lazyload: false,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+  
+
+
+
+
+  <meta name="description" content="&amp;emsp;&amp;emsp;这是关于go语言的第一篇总结，大概从去年十一二月份开始断断续续地学习go的语法，年初差不多看完了菜鸟教程，只能说了解它基本的写法（能看懂而已，甚至创建变量都还搞不撑透），它的特性、用法什么的完全还是懵逼的，依然局限在python的语法思维中（虽然python也是半斤八两😂），根本无法产出（虽然go的语法现在看确实非常简洁），简直蠢哭。 &amp;emsp;&amp;emsp;然鹅就在我还">
+<meta name="keywords" content="Leaf框架">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Golang游戏框架Leaf从懵逼到入门">
+<meta property="og:url" content="http://yoursite.com/2019/05/03/Golang游戏框架Leaf从懵逼到入门/index.html">
+<meta property="og:site_name" content="AiforeのBlog">
+<meta property="og:description" content="&amp;emsp;&amp;emsp;这是关于go语言的第一篇总结，大概从去年十一二月份开始断断续续地学习go的语法，年初差不多看完了菜鸟教程，只能说了解它基本的写法（能看懂而已，甚至创建变量都还搞不撑透），它的特性、用法什么的完全还是懵逼的，依然局限在python的语法思维中（虽然python也是半斤八两😂），根本无法产出（虽然go的语法现在看确实非常简洁），简直蠢哭。 &amp;emsp;&amp;emsp;然鹅就在我还">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:updated_time" content="2019-06-07T16:55:33.948Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Golang游戏框架Leaf从懵逼到入门">
+<meta name="twitter:description" content="&amp;emsp;&amp;emsp;这是关于go语言的第一篇总结，大概从去年十一二月份开始断断续续地学习go的语法，年初差不多看完了菜鸟教程，只能说了解它基本的写法（能看懂而已，甚至创建变量都还搞不撑透），它的特性、用法什么的完全还是懵逼的，依然局限在python的语法思维中（虽然python也是半斤八两😂），根本无法产出（虽然go的语法现在看确实非常简洁），简直蠢哭。 &amp;emsp;&amp;emsp;然鹅就在我还">
+
+
+
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2019/05/03/Golang游戏框架Leaf从懵逼到入门/"/>
+
+
+
+<script type="text/javascript" id="page.configurations">
+  CONFIG.page = {
+    sidebar: "",
+  };
+</script>
+
+  <title>Golang游戏框架Leaf从懵逼到入门 | AiforeのBlog</title>
+  
+
+
+
+
+
+
+
+
+
+  <noscript>
+  <style type="text/css">
+    .use-motion .motion-element,
+    .use-motion .brand,
+    .use-motion .menu-item,
+    .sidebar-inner,
+    .use-motion .post-block,
+    .use-motion .pagination,
+    .use-motion .comments,
+    .use-motion .post-header,
+    .use-motion .post-body,
+    .use-motion .collection-title { opacity: initial; }
+
+    .use-motion .logo,
+    .use-motion .site-title,
+    .use-motion .site-subtitle {
+      opacity: initial;
+      top: initial;
+    }
+
+    .use-motion {
+      .logo-line-before i { left: initial; }
+      .logo-line-after i { right: initial; }
+    }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-CN">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">AiforeのBlog</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+    
+      
+        <p class="site-subtitle">太陽が輝く限り、希望もまた輝く。</p>
+      
+    
+  </div>
+
+  <div class="site-nav-toggle">
+    <button aria-label="切换导航栏">
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  
+    <ul id="menu" class="menu">
+      
+        
+        
+        
+          
+          <li class="menu-item menu-item-home">
+    <a href="/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-home"></i> <br />首页</a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-about">
+    <a href="/about/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-user"></i> <br />关于</a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-tags">
+    <a href="/tags/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />标签</a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-categories">
+    <a href="/categories/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-th"></i> <br />分类</a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-archives">
+    <a href="/archives/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />归档</a>
+  </li>
+
+      
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br />搜索</a>
+        </li>
+      
+    </ul>
+  
+
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup search-popup local-search-popup">
+  <div class="local-search-header clearfix">
+    <span class="search-icon">
+      <i class="fa fa-search"></i>
+    </span>
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+    <div class="local-search-input-wrapper">
+      <input autocomplete="off"
+             placeholder="搜索..." spellcheck="false"
+             type="text" id="local-search-input">
+    </div>
+  </div>
+  <div id="local-search-result"></div>
+</div>
+
+
+
+    </div>
+  
+</nav>
+
+
+
+  
+
+
+
+</div>
+    </header>
+
+    
+
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+            
+
+          
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/05/03/Golang游戏框架Leaf从懵逼到入门/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Aifore">
+      <meta itemprop="description" content="欢迎来到宇宙最帅Aifore的博客！">
+      <meta itemprop="image" content="/images/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="AiforeのBlog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">Golang游戏框架Leaf从懵逼到入门
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+
+              
+                
+              
+
+              <time title="创建时间：2019-05-03 21:40:00" itemprop="dateCreated datePublished" datetime="2019-05-03T21:40:00+07:00">2019-05-03</time>
+            
+
+            
+              
+
+              
+                
+                <span class="post-meta-divider">|</span>
+                
+
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">更新于</span>
+                
+                <time title="修改时间：2019-06-07 23:55:33" itemprop="dateModified" datetime="2019-06-07T23:55:33+07:00">2019-06-07</time>
+              
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/Golang基础/" itemprop="url" rel="index"><span itemprop="name">Golang基础</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2019/05/03/Golang游戏框架Leaf从懵逼到入门/#comments" itemprop="discussionUrl">
+                
+                  <span class="post-comments-count disqus-comment-count"
+                        data-disqus-identifier="2019/05/03/Golang游戏框架Leaf从懵逼到入门/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+            <span class="post-meta-divider">|</span>
+            <span class="post-meta-item-icon"
+            >
+            <i class="fa fa-eye"></i>
+             阅读次数： 
+            <span class="busuanzi-value" id="busuanzi_value_page_pv" ></span>
+            </span>
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>&emsp;&emsp;这是关于go语言的第一篇总结，大概从去年十一二月份开始断断续续地学习go的语法，年初差不多看完了菜鸟教程，只能说了解它基本的写法（能看懂而已，甚至创建变量都还搞不撑透），它的特性、用法什么的完全还是懵逼的，依然局限在python的语法思维中（虽然python也是半斤八两😂），根本无法产出（虽然go的语法现在看确实非常简洁），简直蠢哭。</p>
+<p>&emsp;&emsp;然鹅就在我还是懵逼的情况下，就赶鸭子上架要用go的游戏框架了。研究折腾了一周（主要是熟悉go语法特性这些），算是慢慢能理解框架中的操作了，当然还是很浅，以后再看自己的总结估计会心想着说的是些什么💩，但这就是成长不是吗？所以还是粗浅地把目前的认识总结写下来🤪。</p>
+<a id="more"></a>
+<blockquote>
+<p>具体框架结构就不说了，下面的官方地址说得比较详细，结构很简单，主要写一下流程逻辑，并且注意是<strong>websocket</strong>长连接。</p>
+<p>参考资料：</p>
+<ul>
+<li><p><a href="https://github.com/name5566/leaf/blob/master/TUTORIAL_ZH.md" target="_blank" rel="noopener">Github：leaf中文文档</a></p>
+</li>
+<li><p><a href="https://blog.csdn.net/lengyuezuixue/article/details/79696681" target="_blank" rel="noopener">golang leaf 游戏玩家注册、登录</a></p>
+</li>
+</ul>
+</blockquote>
+<h3 id="1-定义并注册消息"><a href="#1-定义并注册消息" class="headerlink" title="1. 定义并注册消息"></a>1. 定义并注册消息</h3><p>定义消息的结构，也就是客户端发送过来的数据结构。服务端定义好数据的结构，比如有什么字段、字段名字叫什么等，客户端按照该结构发送消息。</p>
+<p>将定义好的消息(message)结构注册进leaf框架，当服务端收到客户端发送的消息(简称msg)后，会与注册的消息匹配，根据消息的不同，框架调用不同的函数来执行不同的逻辑。就像http的API一样，框架会根据API的不同去匹配不同的执行函数并调用执行。一种消息和一个API类似，比如发送用户注册的消息类似于请求一个用户注册的API接口。</p>
+<p>定义并注册<strong>登录(Login)</strong>消息，如下：</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// common/msg/msg.proto  定义proto文件</span></span><br><span class="line">message Login &#123;</span><br><span class="line">    <span class="keyword">string</span> PassWord = <span class="number">1</span>;</span><br><span class="line">    <span class="keyword">uint64</span> UserID = <span class="number">2</span>;</span><br><span class="line">    <span class="keyword">string</span> Info = <span class="number">3</span>；</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// common/msg/msg.proto.go  自动生成</span></span><br><span class="line"><span class="keyword">package</span> msg</span><br><span class="line"></span><br><span class="line"><span class="keyword">type</span> Hello <span class="keyword">struct</span> &#123;</span><br><span class="line">    PassWord <span class="keyword">string</span>  <span class="comment">// 登录密码</span></span><br><span class="line">    UserID   <span class="keyword">uint64</span>  <span class="comment">// 登录ID</span></span><br><span class="line">    Info     <span class="keyword">string</span>  <span class="comment">// 登录信息</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// common/msg/msg.go</span></span><br><span class="line"><span class="keyword">package</span> msg</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">init</span><span class="params">()</span></span> &#123;</span><br><span class="line">    p := leaf.MsgProcessor   <span class="comment">// protobuf 消息处理器</span></span><br><span class="line">    p.Register(&amp;Login&#123;&#125;, <span class="number">1</span>)  <span class="comment">// 注册消息</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="2-注册消息路由"><a href="#2-注册消息路由" class="headerlink" title="2. 注册消息路由"></a>2. 注册消息路由</h3><p>客户端发送到服务器的消息匹配成功后，需要通过 gate 模块路由，简而言之，<strong>gate 模块决定了某个消息具体交给内部的哪个模块来处理。</strong></p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// modules/gate/router.go</span></span><br><span class="line"><span class="keyword">package</span> gate</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">init</span><span class="params">()</span></span> &#123;</span><br><span class="line">    p := leaf.MsgProcessor</span><br><span class="line">    <span class="comment">// 登录消息(Login)由login模块处理，此处类似于django的urls.py</span></span><br><span class="line">    <span class="comment">// 模块间使用 ChanRPC 通讯，消息路由也不例外</span></span><br><span class="line">    p.SetRouter(&amp;msg.Login&#123;&#125;, login.ChanRPC)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="3-注册消息处理函数"><a href="#3-注册消息处理函数" class="headerlink" title="3. 注册消息处理函数"></a>3. 注册消息处理函数</h3><p>意思就是<strong>决定gate路由过来的消息，交给哪个处理函数来处理。</strong>函数中我们定义了该消息的处理逻辑，相当于django的API视图函数，一个是处理路由过来的消息，一个是处理路由过来的http请求。</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// modules/login/internal/handler.go</span></span><br><span class="line"><span class="keyword">package</span> internal</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">init</span><span class="params">()</span></span> &#123;</span><br><span class="line">    <span class="comment">// 向当前模块（login 模块）注册 Login 消息的消息处理函数 handleLogin</span></span><br><span class="line">    handler(&amp;msg.Login&#123;&#125;, handleLogin)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">handler</span><span class="params">(m <span class="keyword">interface</span>&#123;&#125;, h <span class="keyword">interface</span>&#123;&#125;)</span></span> &#123;</span><br><span class="line">    skeleton.RegisterChanRPC(reflect.TypeOf(m), h)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">handleLogin</span><span class="params">(args []<span class="keyword">interface</span>&#123;&#125;)</span></span> &#123;</span><br><span class="line">    <span class="comment">// 收到的 Login 消息</span></span><br><span class="line">    m := args[<span class="number">0</span>].(*msg.Login)</span><br><span class="line">    <span class="comment">// 消息的发送者</span></span><br><span class="line">    a := args[<span class="number">1</span>].(gate.Agent)</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 输出收到的消息的内容</span></span><br><span class="line">    log.Debug(<span class="string">"UserId: %v PassWord: %v"</span>, m.UserID, m.PassWord)</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 给发送者回应登录消息</span></span><br><span class="line">    a.WriteMsg(&amp;msg.Login&#123;</span><br><span class="line">        UserID: <span class="string">"1"</span>,</span><br><span class="line">        Info: <span class="string">"Login Success!"</span></span><br><span class="line">    &#125;)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="4-组件"><a href="#4-组件" class="headerlink" title="4. 组件"></a>4. 组件</h3><p>Leaf 提供了定时器的<a href="https://github.com/name5566/leaf/blob/master/timer/timer.go#L51" target="_blank" rel="noopener">创建</a>和<a href="https://github.com/name5566/leaf/blob/master/timer/timer.go#L27" target="_blank" rel="noopener">停止</a>接口：</p>
+<p>按时间间隔执行某个函数：</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">wrapper</span><span class="params">()</span></span> &#123;</span><br><span class="line">    <span class="comment">// 以 d 作为时间间隔</span></span><br><span class="line">    <span class="comment">// 可以通过修改 d 的值来改变下一次执行的时间间隔</span></span><br><span class="line">  </span><br><span class="line">    <span class="comment">// 通过 timer 变量可以停止定时器的执行</span></span><br><span class="line">    timer := skeleton.AfterFunc(d, <span class="function"><span class="keyword">func</span><span class="params">()</span></span> &#123;</span><br><span class="line">        wrapper()</span><br><span class="line">        <span class="comment">// 或者：</span></span><br><span class="line">        <span class="keyword">defer</span> wrapper()</span><br><span class="line"></span><br><span class="line">        <span class="comment">// 具体执行内容</span></span><br><span class="line">        ...</span><br><span class="line">    &#125;)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="5-Leaf-ChanRPC服务底层实现解析"><a href="#5-Leaf-ChanRPC服务底层实现解析" class="headerlink" title="5. Leaf ChanRPC服务底层实现解析"></a>5. Leaf ChanRPC服务底层实现解析</h3><p>2019-06-04  18:23:45更新</p>
+<p>使用Leaf差不多有个把月了，趁着日常划水的时候读了一点框架的底层实现，读完后对它又有了一些新的认识。</p>
+<p>主要是对于其各模块间的ChanRPC机制以及消息如何逐层转发（长连接监听到消息 ➜ gate模块 ➜ 其他主模块 ➜ 子逻辑）并返回消息有了更深一点的理解，通过执行逻辑来总结下：</p>
+<h4 id="1-程序入口："><a href="#1-程序入口：" class="headerlink" title="1. 程序入口："></a>1. 程序入口：</h4><figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// main.go</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 启动Leaf</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// Leaf 首先会在同一个 goroutine 中按模块注册顺序执行模块的 OnInit 方法；</span></span><br><span class="line"><span class="comment">// 等到所有模块 OnInit 方法执行完成后则为每一个模块启动一个 goroutine 并执行模块的 Run 方法；</span></span><br><span class="line"><span class="comment">// 最后，服务器关闭时(Ctrl+C)将按模块注册相反顺序在同一个 goroutine 中执行模块的 OnDestroy 方法。</span></span><br><span class="line">leaf.Run(</span><br><span class="line">    gate.Module,</span><br><span class="line">    game.Module</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment">// 模块接口  每个模块都需要实现以下三个接口</span></span><br><span class="line"><span class="keyword">type</span> Module <span class="keyword">interface</span> &#123;</span><br><span class="line">    OnInit()</span><br><span class="line">    OnDestroy()</span><br><span class="line">    Run(closeSig <span class="keyword">chan</span> <span class="keyword">bool</span>)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h4 id="2-初始化模块"><a href="#2-初始化模块" class="headerlink" title="2. 初始化模块"></a>2. 初始化模块</h4><figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">module.Init()</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">Init</span><span class="params">()</span></span> &#123;</span><br><span class="line">    <span class="keyword">for</span> i := <span class="number">0</span>; i &lt; <span class="built_in">len</span>(mods); i++ &#123;</span><br><span class="line">        <span class="comment">// 依次执行每个模块的OnInit()方法</span></span><br><span class="line">        mods[i].mi.OnInit()</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">for</span> i := <span class="number">0</span>; i &lt; <span class="built_in">len</span>(mods); i++ &#123;</span><br><span class="line">        m := mods[i]</span><br><span class="line">        m.wg.Add(<span class="number">1</span>)</span><br><span class="line">        <span class="comment">// 新开协程执行每个模块的Run()方法</span></span><br><span class="line">        <span class="keyword">go</span> run(m)</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">run</span><span class="params">(m *module)</span></span> &#123;</span><br><span class="line">    <span class="comment">// 执行模块的Run()方法</span></span><br><span class="line">    m.mi.Run(m.closeSig)</span><br><span class="line">    m.wg.Done()</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h4 id="3-单独的协程执行每个模块的Run-方法（此处只贴gate模块的）"><a href="#3-单独的协程执行每个模块的Run-方法（此处只贴gate模块的）" class="headerlink" title="3. 单独的协程执行每个模块的Run()方法（此处只贴gate模块的）"></a>3. 单独的协程执行每个模块的Run()方法（此处只贴gate模块的）</h4><figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 运行gate</span></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="params">(gate *Gate)</span> <span class="title">Run</span><span class="params">(closeSig <span class="keyword">chan</span> <span class="keyword">bool</span>)</span></span> &#123;</span><br><span class="line">    <span class="keyword">var</span> wsServer *network.WSServer</span><br><span class="line">    <span class="keyword">if</span> gate.WSAddr != <span class="string">""</span> &#123;</span><br><span class="line">        wsServer = <span class="built_in">new</span>(network.WSServer)</span><br><span class="line">        wsServer.Addr = gate.WSAddr</span><br><span class="line">        wsServer.MaxConnNum = gate.MaxConnNum</span><br><span class="line">        wsServer.PendingWriteNum = gate.PendingWriteNum</span><br><span class="line">        wsServer.MaxMsgLen = gate.MaxMsgLen</span><br><span class="line">        wsServer.HTTPTimeout = gate.HTTPTimeout</span><br><span class="line">        wsServer.CertFile = gate.CertFile</span><br><span class="line">        wsServer.KeyFile = gate.KeyFile</span><br><span class="line">        <span class="comment">// 💯 这里是一个关键点</span></span><br><span class="line">        wsServer.NewAgent = <span class="function"><span class="keyword">func</span><span class="params">(conn *network.WSConn)</span> <span class="title">network</span>.<span class="title">Agent</span></span> &#123;</span><br><span class="line">            a := &amp;agent&#123;conn: conn, gate: gate&#125;</span><br><span class="line">            <span class="keyword">if</span> gate.AgentChanRPC != <span class="literal">nil</span> &#123;</span><br><span class="line">                <span class="comment">// 每次用户连入就会新建一个agent对象</span></span><br><span class="line">                <span class="comment">// 如果定义了"NewAgent"对应的处理函数，每次连入都会执行该函数</span></span><br><span class="line">                gate.AgentChanRPC.Go(<span class="string">"NewAgent"</span>, a)</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">return</span> a</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">var</span> tcpServer *network.TCPServer</span><br><span class="line">    <span class="keyword">if</span> gate.TCPAddr != <span class="string">""</span> &#123;</span><br><span class="line">        tcpServer = <span class="built_in">new</span>(network.TCPServer)</span><br><span class="line">        tcpServer.Addr = gate.TCPAddr</span><br><span class="line">        tcpServer.MaxConnNum = gate.MaxConnNum</span><br><span class="line">        tcpServer.PendingWriteNum = gate.PendingWriteNum</span><br><span class="line">        tcpServer.LenMsgLen = gate.LenMsgLen</span><br><span class="line">        tcpServer.MaxMsgLen = gate.MaxMsgLen</span><br><span class="line">        tcpServer.LittleEndian = gate.LittleEndian</span><br><span class="line">        tcpServer.NewAgent = <span class="function"><span class="keyword">func</span><span class="params">(conn *network.TCPConn)</span> <span class="title">network</span>.<span class="title">Agent</span></span> &#123;</span><br><span class="line">            a := &amp;agent&#123;conn: conn, gate: gate&#125;</span><br><span class="line">            <span class="keyword">if</span> gate.AgentChanRPC != <span class="literal">nil</span> &#123;</span><br><span class="line">                gate.AgentChanRPC.Go(<span class="string">"NewAgent"</span>, a)</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">return</span> a</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> wsServer != <span class="literal">nil</span> &#123;</span><br><span class="line">        wsServer.Start() <span class="comment">// 💯 开启长连接服务</span></span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">if</span> tcpServer != <span class="literal">nil</span> &#123;</span><br><span class="line">        tcpServer.Start() <span class="comment">// 开启短链接服务</span></span><br><span class="line">    &#125;</span><br><span class="line">    &lt;-closeSig</span><br><span class="line">    <span class="keyword">if</span> wsServer != <span class="literal">nil</span> &#123;</span><br><span class="line">        wsServer.Close()</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">if</span> tcpServer != <span class="literal">nil</span> &#123;</span><br><span class="line">        tcpServer.Close()</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h4 id="4-开启长连接服务，消息交由Handler处理"><a href="#4-开启长连接服务，消息交由Handler处理" class="headerlink" title="4. 开启长连接服务，消息交由Handler处理"></a>4. 开启长连接服务，消息交由Handler处理</h4><figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">func</span> <span class="params">(server *WSServer)</span> <span class="title">Start</span><span class="params">()</span></span> &#123;</span><br><span class="line">    ln, err := net.Listen(<span class="string">"tcp"</span>, server.Addr)</span><br><span class="line">    <span class="keyword">if</span> err != <span class="literal">nil</span> &#123;</span><br><span class="line">        log.Fatal(<span class="string">"%v"</span>, err)</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> server.MaxConnNum &lt;= <span class="number">0</span> &#123;</span><br><span class="line">        server.MaxConnNum = <span class="number">100</span></span><br><span class="line">        log.Release(<span class="string">"invalid MaxConnNum, reset to %v"</span>, server.MaxConnNum)</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">if</span> server.PendingWriteNum &lt;= <span class="number">0</span> &#123;</span><br><span class="line">        server.PendingWriteNum = <span class="number">100</span></span><br><span class="line">        log.Release(<span class="string">"invalid PendingWriteNum, reset to %v"</span>, server.PendingWriteNum)</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">if</span> server.MaxMsgLen &lt;= <span class="number">0</span> &#123;</span><br><span class="line">        server.MaxMsgLen = <span class="number">4096</span></span><br><span class="line">        log.Release(<span class="string">"invalid MaxMsgLen, reset to %v"</span>, server.MaxMsgLen)</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">if</span> server.HTTPTimeout &lt;= <span class="number">0</span> &#123;</span><br><span class="line">        server.HTTPTimeout = <span class="number">10</span> * time.Second</span><br><span class="line">        log.Release(<span class="string">"invalid HTTPTimeout, reset to %v"</span>, server.HTTPTimeout)</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">if</span> server.NewAgent == <span class="literal">nil</span> &#123;</span><br><span class="line">        log.Fatal(<span class="string">"NewAgent must not be nil"</span>)</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> server.CertFile != <span class="string">""</span> || server.KeyFile != <span class="string">""</span> &#123;</span><br><span class="line">        config := &amp;tls.Config&#123;&#125;</span><br><span class="line">        config.NextProtos = []<span class="keyword">string</span>&#123;<span class="string">"http/1.1"</span>&#125;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">var</span> err error</span><br><span class="line">        config.Certificates = <span class="built_in">make</span>([]tls.Certificate, <span class="number">1</span>)</span><br><span class="line">        config.Certificates[<span class="number">0</span>], err = tls.LoadX509KeyPair(server.CertFile, server.KeyFile)</span><br><span class="line">        <span class="keyword">if</span> err != <span class="literal">nil</span> &#123;</span><br><span class="line">            log.Fatal(<span class="string">"%v"</span>, err)</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        ln = tls.NewListener(ln, config)</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    server.ln = ln</span><br><span class="line">    <span class="comment">// 长连接消息处理器(需要实现接口)</span></span><br><span class="line">    <span class="comment">// type Handler interface &#123;</span></span><br><span class="line">	  <span class="comment">//     ServeHTTP(ResponseWriter, *Request)</span></span><br><span class="line">    <span class="comment">// &#125;</span></span><br><span class="line">    server.handler = &amp;WSHandler&#123;</span><br><span class="line">        maxConnNum:      server.MaxConnNum,</span><br><span class="line">        pendingWriteNum: server.PendingWriteNum,</span><br><span class="line">        maxMsgLen:       server.MaxMsgLen,</span><br><span class="line">        newAgent:        server.NewAgent, <span class="comment">// 第三步里的wsServer.NewAgent</span></span><br><span class="line">        conns:           <span class="built_in">make</span>(WebsocketConnSet),</span><br><span class="line">        upgrader: websocket.Upgrader&#123;</span><br><span class="line">            HandshakeTimeout: server.HTTPTimeout,</span><br><span class="line">            CheckOrigin:      <span class="function"><span class="keyword">func</span><span class="params">(_ *http.Request)</span> <span class="title">bool</span></span> &#123; <span class="keyword">return</span> <span class="literal">true</span> &#125;,</span><br><span class="line">        &#125;,</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    httpServer := &amp;http.Server&#123;</span><br><span class="line">        Addr:           server.Addr,</span><br><span class="line">        Handler:        server.handler, <span class="comment">// 💯 这里是一个关键点</span></span><br><span class="line">        ReadTimeout:    server.HTTPTimeout,</span><br><span class="line">        WriteTimeout:   server.HTTPTimeout,</span><br><span class="line">        MaxHeaderBytes: <span class="number">1024</span>,</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">// ✅ 启动服务，将消息交由Handler处理</span></span><br><span class="line">    <span class="keyword">go</span> httpServer.Serve(ln)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h4 id="5-长连接消息处理器，至于具体消息怎么交给它处理的不再分析"><a href="#5-长连接消息处理器，至于具体消息怎么交给它处理的不再分析" class="headerlink" title="5. 长连接消息处理器，至于具体消息怎么交给它处理的不再分析"></a>5. 长连接消息处理器，至于具体消息怎么交给它处理的不再分析</h4><figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">type</span> WSHandler <span class="keyword">struct</span> &#123;</span><br><span class="line">    maxConnNum      <span class="keyword">int</span></span><br><span class="line">    pendingWriteNum <span class="keyword">int</span></span><br><span class="line">    maxMsgLen       <span class="keyword">uint32</span></span><br><span class="line">    newAgent        <span class="function"><span class="keyword">func</span><span class="params">(*WSConn)</span> <span class="title">Agent</span></span></span><br><span class="line"><span class="function">    <span class="title">upgrader</span>        <span class="title">websocket</span>.<span class="title">Upgrader</span></span></span><br><span class="line"><span class="function">    <span class="title">conns</span>           <span class="title">WebsocketConnSet</span></span></span><br><span class="line"><span class="function">    <span class="title">mutexConns</span>      <span class="title">sync</span>.<span class="title">Mutex</span></span></span><br><span class="line"><span class="function">    <span class="title">wg</span>              <span class="title">sync</span>.<span class="title">WaitGroup</span></span></span><br><span class="line"><span class="function">&#125;</span></span><br><span class="line"><span class="function"></span></span><br><span class="line"><span class="function">// 实现上一步的<span class="title">ServeHTTP</span>接口，看看是怎么处理消息的</span></span><br><span class="line"><span class="function"><span class="title">func</span> <span class="params">(handler *WSHandler)</span> <span class="title">ServeHTTP</span><span class="params">(w http.ResponseWriter, r *http.Request)</span></span> &#123;</span><br><span class="line">    <span class="keyword">if</span> r.Method != <span class="string">"GET"</span> &#123;</span><br><span class="line">        http.Error(w, <span class="string">"Method not allowed"</span>, <span class="number">405</span>)</span><br><span class="line">        <span class="keyword">return</span></span><br><span class="line">    &#125;</span><br><span class="line">    conn, err := handler.upgrader.Upgrade(w, r, <span class="literal">nil</span>)</span><br><span class="line">    <span class="keyword">if</span> err != <span class="literal">nil</span> &#123;</span><br><span class="line">        log.Debug(<span class="string">"upgrade error: %v"</span>, err)</span><br><span class="line">        <span class="keyword">return</span></span><br><span class="line">    &#125;</span><br><span class="line">    conn.SetReadLimit(<span class="keyword">int64</span>(handler.maxMsgLen))</span><br><span class="line"></span><br><span class="line">    handler.wg.Add(<span class="number">1</span>)</span><br><span class="line">    <span class="keyword">defer</span> handler.wg.Done()</span><br><span class="line"></span><br><span class="line">    handler.mutexConns.Lock()</span><br><span class="line">    <span class="keyword">if</span> handler.conns == <span class="literal">nil</span> &#123;</span><br><span class="line">        handler.mutexConns.Unlock()</span><br><span class="line">        conn.Close()</span><br><span class="line">		<span class="keyword">return</span></span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">if</span> <span class="built_in">len</span>(handler.conns) &gt;= handler.maxConnNum &#123;</span><br><span class="line">        handler.mutexConns.Unlock()</span><br><span class="line">        conn.Close()</span><br><span class="line">        log.Debug(<span class="string">"too many connections"</span>)</span><br><span class="line">        <span class="keyword">return</span></span><br><span class="line">    &#125;</span><br><span class="line">    handler.conns[conn] = <span class="keyword">struct</span>&#123;&#125;&#123;&#125;</span><br><span class="line">    handler.mutexConns.Unlock()</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 新建一个长连接，新建的同时开启一个协程监听wsConn.writeChan，将chan内的数据返回给客户端</span></span><br><span class="line">    wsConn := newWSConn(conn, handler.pendingWriteNum, handler.maxMsgLen)</span><br><span class="line">    <span class="comment">// 第三步里的wsServer.NewAgent，传入一个长连接对象，返回一个agent对象</span></span><br><span class="line">    agent := handler.newAgent(wsConn)</span><br><span class="line">    <span class="comment">// 💯 执行agent的Run()方法</span></span><br><span class="line">    agent.Run()</span><br><span class="line"></span><br><span class="line">    <span class="comment">// cleanup</span></span><br><span class="line">    wsConn.Close()</span><br><span class="line">    handler.mutexConns.Lock()</span><br><span class="line">    <span class="built_in">delete</span>(handler.conns, conn)</span><br><span class="line">    handler.mutexConns.Unlock()</span><br><span class="line">    agent.OnClose()</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 创建长连接对象</span></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">newWSConn</span><span class="params">(conn *websocket.Conn, pendingWriteNum <span class="keyword">int</span>, maxMsgLen <span class="keyword">uint32</span>)</span> *<span class="title">WSConn</span></span> &#123;</span><br><span class="line">    wsConn := <span class="built_in">new</span>(WSConn)</span><br><span class="line">    wsConn.conn = conn</span><br><span class="line">    wsConn.writeChan = <span class="built_in">make</span>(<span class="keyword">chan</span> []<span class="keyword">byte</span>, pendingWriteNum)</span><br><span class="line">    wsConn.maxMsgLen = maxMsgLen</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 新开一个协程将响应消息的二进制数据返回给客户端</span></span><br><span class="line">    <span class="keyword">go</span> <span class="function"><span class="keyword">func</span><span class="params">()</span></span> &#123;</span><br><span class="line">        <span class="keyword">for</span> b := <span class="keyword">range</span> wsConn.writeChan &#123;</span><br><span class="line">            <span class="keyword">if</span> b == <span class="literal">nil</span> &#123;</span><br><span class="line">            <span class="keyword">break</span></span><br><span class="line">            &#125;</span><br><span class="line"></span><br><span class="line">            <span class="comment">// 具体的发送是由"github.com/gorilla/websocket"这个包完成的，可作参考</span></span><br><span class="line">            err := conn.WriteMessage(websocket.BinaryMessage, b)</span><br><span class="line">            <span class="keyword">if</span> err != <span class="literal">nil</span> &#123;</span><br><span class="line">                <span class="keyword">break</span></span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        conn.Close()</span><br><span class="line">        wsConn.Lock()</span><br><span class="line">        wsConn.closeFlag = <span class="literal">true</span></span><br><span class="line">        wsConn.Unlock()</span><br><span class="line">    &#125;()</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> wsConn</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h4 id="6-执行agent的Run-方法"><a href="#6-执行agent的Run-方法" class="headerlink" title="6. 执行agent的Run()方法"></a>6. 执行agent的Run()方法</h4><figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">func</span> <span class="params">(a *agent)</span> <span class="title">Run</span><span class="params">()</span></span> &#123;</span><br><span class="line">    <span class="keyword">for</span> &#123;</span><br><span class="line">        <span class="comment">// conn为第五步传入的wsConn长连接对象，读取出其中的data</span></span><br><span class="line">        data, err := a.conn.ReadMsg()</span><br><span class="line">        <span class="keyword">if</span> err != <span class="literal">nil</span> &#123;</span><br><span class="line">            log.Debug(<span class="string">"read message: %v"</span>, err)</span><br><span class="line">            <span class="keyword">break</span></span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">if</span> a.gate.Processor != <span class="literal">nil</span> &#123;</span><br><span class="line">          <span class="comment">// 解析出data中的消息(msg)</span></span><br><span class="line">            msg, err := a.gate.Processor.Unmarshal(data)</span><br><span class="line">        <span class="keyword">if</span> err != <span class="literal">nil</span> &#123;</span><br><span class="line">            log.Debug(<span class="string">"unmarshal message error: %v"</span>, err)</span><br><span class="line">            <span class="keyword">break</span></span><br><span class="line">        &#125;</span><br><span class="line">        <span class="comment">// 💯 将消息交给gate模块的处理器去匹配路由，转发给对应模块的ChanRPC</span></span><br><span class="line">        err = a.gate.Processor.Route(msg, a)</span><br><span class="line">        <span class="keyword">if</span> err != <span class="literal">nil</span> &#123;</span><br><span class="line">            log.Debug(<span class="string">"route message error: %v"</span>, err)</span><br><span class="line">            <span class="keyword">break</span></span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h4 id="7-路由消息到对应的模块（将消息塞到对应模块的ChanRPC中-）"><a href="#7-路由消息到对应的模块（将消息塞到对应模块的ChanRPC中-）" class="headerlink" title="7. 路由消息到对应的模块（将消息塞到对应模块的ChanRPC中 ）"></a>7. 路由消息到对应的模块（将消息塞到对应模块的ChanRPC中 ）</h4><figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// -------------------------</span></span><br><span class="line"><span class="comment">// | id | protobuf message |</span></span><br><span class="line"><span class="comment">// -------------------------</span></span><br><span class="line"><span class="comment">// 💯 这个processor是个全局对象：var MsgProcessor = newGameProcessor()</span></span><br><span class="line"><span class="comment">// 注册消息和实例化gate(leaf.NewGate())使用的是同一个leaf.MsgProcessor</span></span><br><span class="line"><span class="keyword">type</span> processor <span class="keyword">struct</span> &#123;</span><br><span class="line">    littleEndian <span class="keyword">bool</span></span><br><span class="line">    msgInfo      <span class="keyword">map</span>[<span class="keyword">uint16</span>]*msgInfoST</span><br><span class="line">    msgID        <span class="keyword">map</span>[reflect.Type]<span class="keyword">uint16</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">type</span> msgInfoST <span class="keyword">struct</span> &#123;</span><br><span class="line">    msgType       reflect.Type</span><br><span class="line">    msgRouter     *chanrpc.Server <span class="comment">// ✅可见是一个chanrpc</span></span><br><span class="line">    msgHandler    msgHandlerST</span><br><span class="line">    msgRawHandler msgHandlerST</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment">// 由最上面第二步的注册消息路由，每个proto消息，都对应一个模块的chanrpc</span></span><br><span class="line"><span class="comment">// It's dangerous to call the method on routing or marshaling (unmarshaling)</span></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="params">(p *processor)</span> <span class="title">SetRouter</span><span class="params">(msg proto.Message, msgRouter *chanrpc.Server)</span></span> &#123;</span><br><span class="line">    msgType := reflect.TypeOf(msg)</span><br><span class="line">    id, ok := p.msgID[msgType]</span><br><span class="line">    <span class="keyword">if</span> !ok &#123;</span><br><span class="line">        log.Fatal(<span class="string">"message %s not registered"</span>, msgType)</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    p.msgInfo[id].msgRouter = msgRouter <span class="comment">// ✅可见模块的chanrpc就是msgRouter</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 路由消息就是将长连接接收到的消息与注册到processor的消息匹配，毕竟消息转发给对应匹配成功的chanrpc</span></span><br><span class="line"><span class="comment">// goroutine safe</span></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="params">(p *processor)</span> <span class="title">Route</span><span class="params">(msg <span class="keyword">interface</span>&#123;&#125;, userData <span class="keyword">interface</span>&#123;&#125;)</span> <span class="title">error</span></span> &#123;</span><br><span class="line">    <span class="comment">// raw</span></span><br><span class="line">    <span class="keyword">if</span> msgRaw, ok := msg.(msgRawST); ok &#123;</span><br><span class="line">        <span class="keyword">if</span> msgRaw.msgID &gt;= <span class="keyword">uint16</span>(<span class="built_in">len</span>(p.msgInfo)) &#123;</span><br><span class="line">            <span class="keyword">return</span> fmt.Errorf(<span class="string">"message id %v not registered"</span>, msgRaw.msgID)</span><br><span class="line">        &#125;</span><br><span class="line">        i := p.msgInfo[msgRaw.msgID]</span><br><span class="line">        <span class="keyword">if</span> i.msgRawHandler != <span class="literal">nil</span> &#123;</span><br><span class="line">            i.msgRawHandler([]<span class="keyword">interface</span>&#123;&#125;&#123;msgRaw.msgID, msgRaw.msgRawData, userData&#125;)</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> <span class="literal">nil</span></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// protobuf</span></span><br><span class="line">    msgType := reflect.TypeOf(msg)</span><br><span class="line">    <span class="comment">// 取到该proto消息类型对应的id</span></span><br><span class="line">    id, ok := p.msgID[msgType]</span><br><span class="line">    <span class="keyword">if</span> !ok &#123;</span><br><span class="line">        <span class="keyword">return</span> fmt.Errorf(<span class="string">"message %s not registered"</span>, msgType)</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">// 取到该proto消息类型id对应的消息对象</span></span><br><span class="line">    i := p.msgInfo[id]</span><br><span class="line">    <span class="keyword">if</span> i.msgHandler != <span class="literal">nil</span> &#123;</span><br><span class="line">        i.msgHandler([]<span class="keyword">interface</span>&#123;&#125;&#123;msg, userData&#125;)</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">if</span> i.msgRouter != <span class="literal">nil</span> &#123;</span><br><span class="line">        <span class="comment">// ✅ 可见新开协程异步给chanrpc里塞入消息(msg, userData两个参数)</span></span><br><span class="line">        <span class="comment">// userData是agent，可见也印证了如下代码：</span></span><br><span class="line">       	<span class="comment">// m := args[0].(*msg.Login)  收到的 Login 消息</span></span><br><span class="line">	      <span class="comment">// a := args[1].(gate.Agent)  消息的发送者</span></span><br><span class="line">        i.msgRouter.Go(msgType, msg, userData)</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> <span class="literal">nil</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h4 id="8-将消息塞入对应模块的chanrpc中"><a href="#8-将消息塞入对应模块的chanrpc中" class="headerlink" title="8. 将消息塞入对应模块的chanrpc中"></a>8. 将消息塞入对应模块的chanrpc中</h4><figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 先看看chanrpc.Server的结构</span></span><br><span class="line"><span class="keyword">type</span> Server <span class="keyword">struct</span> &#123;</span><br><span class="line">	<span class="comment">// id -&gt; function</span></span><br><span class="line">	<span class="comment">// function:</span></span><br><span class="line">	<span class="comment">// func(args []interface&#123;&#125;)</span></span><br><span class="line">	<span class="comment">// func(args []interface&#123;&#125;) interface&#123;&#125;</span></span><br><span class="line">	<span class="comment">// func(args []interface&#123;&#125;) []interface&#123;&#125;</span></span><br><span class="line">	functions <span class="keyword">map</span>[<span class="keyword">interface</span>&#123;&#125;]<span class="keyword">interface</span>&#123;&#125; <span class="comment">// 注册的对应消息的处理函数都是放在这个map里面的</span></span><br><span class="line">	ChanCall  <span class="keyword">chan</span> *CallInfo</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// goroutine safe</span></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="params">(s *Server)</span> <span class="title">Go</span><span class="params">(id <span class="keyword">interface</span>&#123;&#125;, args ...<span class="keyword">interface</span>&#123;&#125;)</span></span> &#123;</span><br><span class="line">    <span class="comment">// 取出该消息id对应的处理函数</span></span><br><span class="line">    f := s.functions[id]</span><br><span class="line">    <span class="keyword">if</span> f == <span class="literal">nil</span> &#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="comment">// 未定义消息的处理函数，直接返回</span></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">defer</span> <span class="function"><span class="keyword">func</span><span class="params">()</span></span> &#123;</span><br><span class="line">        <span class="built_in">recover</span>()</span><br><span class="line">    &#125;()</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 将msg, userData两个参数组装成CallInfo塞入ChanCall中</span></span><br><span class="line">    s.ChanCall &lt;- &amp;CallInfo&#123;</span><br><span class="line">        f:    f,    <span class="comment">// 消息的处理函数</span></span><br><span class="line">        args: args, <span class="comment">// 消息的参数</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h4 id="9-处理chanrpc中的消息（可参见第三条）"><a href="#9-处理chanrpc中的消息（可参见第三条）" class="headerlink" title="9. 处理chanrpc中的消息（可参见第三条）"></a>9. 处理chanrpc中的消息（可参见第三条）</h4><figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// game模块的是一个实例化骨架（Skeleton），Run()方法由它实现的</span></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="params">(s *Skeleton)</span> <span class="title">Run</span><span class="params">(closeSig <span class="keyword">chan</span> <span class="keyword">bool</span>)</span></span> &#123;</span><br><span class="line">    <span class="keyword">for</span> &#123; <span class="comment">// for循环相当于开启对chanrpc的监听</span></span><br><span class="line">        <span class="keyword">select</span> &#123;</span><br><span class="line">        <span class="keyword">case</span> &lt;-closeSig:</span><br><span class="line">            s.commandServer.Close()</span><br><span class="line">            s.server.Close()</span><br><span class="line">            <span class="keyword">for</span> !s.g.Idle() || !s.client.Idle() &#123;</span><br><span class="line">                s.g.Close()</span><br><span class="line">                s.client.Close()</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span></span><br><span class="line">        <span class="keyword">case</span> ri := &lt;-s.client.ChanAsynRet:</span><br><span class="line">            s.client.Cb(ri)</span><br><span class="line">        <span class="comment">// 从第八步中塞入了数据的ChanCall中取出数据</span></span><br><span class="line">        <span class="keyword">case</span> ci := &lt;-s.server.ChanCall:</span><br><span class="line">            <span class="comment">// 取出数据进行处理</span></span><br><span class="line">            s.server.Exec(ci)</span><br><span class="line">        <span class="keyword">case</span> ci := &lt;-s.commandServer.ChanCall:</span><br><span class="line">            s.commandServer.Exec(ci)</span><br><span class="line">        <span class="keyword">case</span> cb := &lt;-s.g.ChanCb:</span><br><span class="line">            s.g.Cb(cb)</span><br><span class="line">        <span class="keyword">case</span> t := &lt;-s.dispatcher.ChanTimer:</span><br><span class="line">            t.Cb()</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h4 id="10-处理从chanrpc中取出的消息"><a href="#10-处理从chanrpc中取出的消息" class="headerlink" title="10. 处理从chanrpc中取出的消息"></a>10. 处理从chanrpc中取出的消息</h4><figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">func</span> <span class="params">(s *Server)</span> <span class="title">exec</span><span class="params">(ci *CallInfo)</span> <span class="params">(err error)</span></span> &#123;</span><br><span class="line">    <span class="keyword">defer</span> <span class="function"><span class="keyword">func</span><span class="params">()</span></span> &#123;</span><br><span class="line">        <span class="keyword">if</span> r := <span class="built_in">recover</span>(); r != <span class="literal">nil</span> &#123;</span><br><span class="line">            <span class="keyword">if</span> conf.LenStackBuf &gt; <span class="number">0</span> &#123;</span><br><span class="line">                buf := <span class="built_in">make</span>([]<span class="keyword">byte</span>, conf.LenStackBuf)</span><br><span class="line">                l := runtime.Stack(buf, <span class="literal">false</span>)</span><br><span class="line">                err = fmt.Errorf(<span class="string">"%v: %s"</span>, r, buf[:l])</span><br><span class="line">            &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">                err = fmt.Errorf(<span class="string">"%v"</span>, r)</span><br><span class="line">            &#125;</span><br><span class="line"></span><br><span class="line">            s.ret(ci, &amp;RetInfo&#123;err: fmt.Errorf(<span class="string">"%v"</span>, r)&#125;)</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;()</span><br><span class="line"></span><br><span class="line">    <span class="comment">// execute 执行消息的处理函数，从这里开始框架做的前期工作就完了，后面就是自己写的处理逻辑。</span></span><br><span class="line">    <span class="keyword">switch</span> ci.f.(<span class="keyword">type</span>) &#123;</span><br><span class="line">    <span class="keyword">case</span> <span class="function"><span class="keyword">func</span><span class="params">([]<span class="keyword">interface</span>&#123;&#125;)</span>:</span></span><br><span class="line"><span class="function">        <span class="title">ci</span>.<span class="title">f</span>.<span class="params">(<span class="keyword">func</span>([]<span class="keyword">interface</span>&#123;&#125;)</span>)<span class="params">(ci.args)</span></span></span><br><span class="line"><span class="function">        <span class="title">return</span> <span class="title">s</span>.<span class="title">ret</span><span class="params">(ci, &amp;RetInfo&#123;&#125;)</span></span></span><br><span class="line"><span class="function">    <span class="title">case</span> <span class="title">func</span><span class="params">([]<span class="keyword">interface</span>&#123;&#125;)</span> <span class="title">interface</span></span>&#123;&#125;:</span><br><span class="line">        ret := ci.f.(<span class="function"><span class="keyword">func</span><span class="params">([]<span class="keyword">interface</span>&#123;&#125;)</span> <span class="title">interface</span></span>&#123;&#125;)(ci.args)</span><br><span class="line">        <span class="keyword">return</span> s.ret(ci, &amp;RetInfo&#123;ret: ret&#125;)</span><br><span class="line">    <span class="keyword">case</span> <span class="function"><span class="keyword">func</span><span class="params">([]<span class="keyword">interface</span>&#123;&#125;)</span> []<span class="title">interface</span></span>&#123;&#125;:</span><br><span class="line">        ret := ci.f.(<span class="function"><span class="keyword">func</span><span class="params">([]<span class="keyword">interface</span>&#123;&#125;)</span> []<span class="title">interface</span></span>&#123;&#125;)(ci.args)</span><br><span class="line">        <span class="keyword">return</span> s.ret(ci, &amp;RetInfo&#123;ret: ret&#125;)</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="built_in">panic</span>(<span class="string">"bug"</span>)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h4 id="11-返回客户端消息"><a href="#11-返回客户端消息" class="headerlink" title="11. 返回客户端消息"></a>11. 返回客户端消息</h4><figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// Leaf 的agent对象实现接口</span></span><br><span class="line"><span class="keyword">type</span> Agent <span class="keyword">interface</span> &#123;</span><br><span class="line">    WriteMsg(msg <span class="keyword">interface</span>&#123;&#125;)</span><br><span class="line">    LocalAddr() net.Addr</span><br><span class="line">    RemoteAddr() net.Addr</span><br><span class="line">    Close()</span><br><span class="line">    Destroy()</span><br><span class="line">    UserData() <span class="keyword">interface</span>&#123;&#125;</span><br><span class="line">    SetUserData(data <span class="keyword">interface</span>&#123;&#125;)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 看看agent的具体实现</span></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="params">(a *agent)</span> <span class="title">WriteMsg</span><span class="params">(msg <span class="keyword">interface</span>&#123;&#125;)</span></span> &#123;</span><br><span class="line">    <span class="keyword">if</span> a.gate.Processor != <span class="literal">nil</span> &#123;</span><br><span class="line">        data, err := a.gate.Processor.Marshal(msg)</span><br><span class="line">        <span class="keyword">if</span> err != <span class="literal">nil</span> &#123;</span><br><span class="line">            log.Error(<span class="string">"marshal message %v error: %v"</span>, reflect.TypeOf(msg), err)</span><br><span class="line">            <span class="keyword">return</span></span><br><span class="line">        &#125;</span><br><span class="line">        <span class="comment">// 调用conn对象的WriteMsg()方法</span></span><br><span class="line">        err = a.conn.WriteMsg(data...)</span><br><span class="line">        <span class="keyword">if</span> err != <span class="literal">nil</span> &#123;</span><br><span class="line">            log.Error(<span class="string">"write message %v error: %v"</span>, reflect.TypeOf(msg), err)</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment">// agent conn属性实现的方法</span></span><br><span class="line"><span class="keyword">type</span> Conn <span class="keyword">interface</span> &#123;</span><br><span class="line">    ReadMsg() ([]<span class="keyword">byte</span>, error)</span><br><span class="line">    WriteMsg(args ...[]<span class="keyword">byte</span>) error</span><br><span class="line">    LocalAddr() net.Addr</span><br><span class="line">    RemoteAddr() net.Addr</span><br><span class="line">    Close()</span><br><span class="line">    Destroy()</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 看看conn的具体实现</span></span><br><span class="line"><span class="comment">// args must not be modified by the others goroutines</span></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="params">(wsConn *WSConn)</span> <span class="title">WriteMsg</span><span class="params">(args ...[]<span class="keyword">byte</span>)</span> <span class="title">error</span></span> &#123;</span><br><span class="line">    wsConn.Lock()</span><br><span class="line">    <span class="keyword">defer</span> wsConn.Unlock()</span><br><span class="line">    <span class="keyword">if</span> wsConn.closeFlag &#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="literal">nil</span></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// get len</span></span><br><span class="line">    <span class="keyword">var</span> msgLen <span class="keyword">uint32</span></span><br><span class="line">    <span class="keyword">for</span> i := <span class="number">0</span>; i &lt; <span class="built_in">len</span>(args); i++ &#123;</span><br><span class="line">        msgLen += <span class="keyword">uint32</span>(<span class="built_in">len</span>(args[i]))</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// check len</span></span><br><span class="line">    <span class="keyword">if</span> msgLen &gt; wsConn.maxMsgLen &#123;</span><br><span class="line">        <span class="keyword">return</span> errors.New(<span class="string">"message too long"</span>)</span><br><span class="line">    &#125; <span class="keyword">else</span> <span class="keyword">if</span> msgLen &lt; <span class="number">1</span> &#123;</span><br><span class="line">        <span class="keyword">return</span> errors.New(<span class="string">"message too short"</span>)</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// don't copy</span></span><br><span class="line">    <span class="keyword">if</span> <span class="built_in">len</span>(args) == <span class="number">1</span> &#123;</span><br><span class="line">        wsConn.doWrite(args[<span class="number">0</span>])</span><br><span class="line">        <span class="keyword">return</span> <span class="literal">nil</span></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// merge the args</span></span><br><span class="line">    msg := <span class="built_in">make</span>([]<span class="keyword">byte</span>, msgLen)</span><br><span class="line">    l := <span class="number">0</span></span><br><span class="line">    <span class="keyword">for</span> i := <span class="number">0</span>; i &lt; <span class="built_in">len</span>(args); i++ &#123;</span><br><span class="line">        <span class="built_in">copy</span>(msg[l:], args[i])</span><br><span class="line">        l += <span class="built_in">len</span>(args[i])</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    wsConn.doWrite(msg)</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> <span class="literal">nil</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="params">(wsConn *WSConn)</span> <span class="title">doWrite</span><span class="params">(b []<span class="keyword">byte</span>)</span></span> &#123;</span><br><span class="line">    <span class="keyword">if</span> <span class="built_in">len</span>(wsConn.writeChan) == <span class="built_in">cap</span>(wsConn.writeChan) &#123;</span><br><span class="line">        log.Debug(<span class="string">"close conn: channel full"</span>)</span><br><span class="line">        wsConn.doDestroy()</span><br><span class="line">        <span class="keyword">return</span></span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">// 其实就是把响应消息的二进制数据塞入writeChan这个channel里面</span></span><br><span class="line">    <span class="comment">// 看到上面第五步的wsConn := newWSConn()位置，</span></span><br><span class="line">    <span class="comment">// newWSConn()会起一个协程监听writeChan，从而将塞入的数据返回给客户端</span></span><br><span class="line">    wsConn.writeChan &lt;- b</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>总结：Leaf框架的核心主要是：</p>
+<ul>
+<li><strong>Skeleton(骨架)对象</strong>：和它的名字一样，它将模块在结构上统一组织起来，就像一个骨架一样，模块的其他功能及服务都是在它的基础上搭建；</li>
+<li><strong>agent对象</strong>：agent对象主要涉及与用户的行为相关的功能，用户连接服务端、给服务端发送消息、服务端给用户发送消息等都是通过agent对象来实现；</li>
+<li><strong>ChanRPC</strong>：ChanRPC则是不同模块之间信息交互的提供服务，它是通过go的channel数据结构实现的，而它又集成在Skeleton对象中，所以只要不断将消息塞入Skeleton对象的ChanRPC中，模块就能不断从ChanRPC中获取消息，具体是通过Skeleton对象的Run()方法开启一个for循环来监听ChanRPC实现的，因为go的channel是阻塞的，如果channel里面没有消息，会一直等待，而不会一直循环消耗资源。</li>
+</ul>
+
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+      <div>
+        <div style="padding: 10px 0; margin: 20px auto; width: 90%; text-align: center;">
+  <div>😊打  赏😊</div>
+  <button id="rewardButton" disable="enable" onclick="var qr = document.getElementById('QR'); if (qr.style.display === 'none') {qr.style.display='block';} else {qr.style.display='none'}">
+    <span>打赏</span>
+  </button>
+  <div id="QR" style="display: none;">
+
+    
+      <div id="wechat" style="display: inline-block">
+        <img id="wechat_qr" src="/images/wechatpay500.png" alt="Aifore 微信支付"/>
+        <p>微信支付</p>
+      </div>
+    
+
+    
+
+    
+
+  </div>
+</div>
+
+      </div>
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Leaf框架/" rel="tag"># Leaf框架</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2019/04/26/Python多线程之一顿操作猛如虎/" rel="next" title="Python多线程之一顿操作猛如虎">
+                <i class="fa fa-chevron-left"></i> Python多线程之一顿操作猛如虎
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2019/05/21/Golang Rand模块简单使用/" rel="prev" title="Golang Rand模块简单使用">
+                Golang Rand模块简单使用 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+  
+    <div class="comments" id="comments">
+      <div id="disqus_thread">
+        <noscript>
+          Please enable JavaScript to view the
+          <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a>
+        </noscript>
+      </div>
+    </div>
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image"
+                src="/images/avatar.jpg"
+                alt="Aifore" />
+            
+              <p class="site-author-name" itemprop="name">Aifore</p>
+              <p class="site-description motion-element" itemprop="description">欢迎来到宇宙最帅Aifore的博客！</p>
+          </div>
+
+          
+            <nav class="site-state motion-element">
+              
+                <div class="site-state-item site-state-posts">
+                
+                  <a href="/archives/">
+                
+                    <span class="site-state-item-count">30</span>
+                    <span class="site-state-item-name">日志</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-categories">
+                  <a href="/categories/index.html">
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">15</span>
+                    <span class="site-state-item-name">分类</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-tags">
+                  <a href="/tags/index.html">
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">40</span>
+                    <span class="site-state-item-name">标签</span>
+                  </a>
+                </div>
+              
+            </nav>
+          
+
+          
+
+          
+            <div class="links-of-author motion-element">
+              
+                <span class="links-of-author-item">
+                  <a href="https://github.com/aifore" target="_blank" title="GitHub"><i class="fa fa-fw fa-github"></i>GitHub</a>
+                  
+                </span>
+              
+            </div>
+          
+
+          
+          
+
+          
+          
+            <div class="links-of-blogroll motion-element links-of-blogroll-inline">
+              <div class="links-of-blogroll-title">
+                <i class="fa  fa-fw fa-link"></i>
+                我的博客
+              </div>
+              <ul class="links-of-blogroll-list">
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://me.csdn.net/aifore" title="我的CSDN" target="_blank">我的CSDN</a>
+                  </li>
+                
+              </ul>
+            </div>
+          
+
+          
+            
+          
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-定义并注册消息"><span class="nav-text">1. 定义并注册消息</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-注册消息路由"><span class="nav-text">2. 注册消息路由</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-注册消息处理函数"><span class="nav-text">3. 注册消息处理函数</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-组件"><span class="nav-text">4. 组件</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#5-Leaf-ChanRPC服务底层实现解析"><span class="nav-text">5. Leaf ChanRPC服务底层实现解析</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#1-程序入口："><span class="nav-text">1. 程序入口：</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-初始化模块"><span class="nav-text">2. 初始化模块</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#3-单独的协程执行每个模块的Run-方法（此处只贴gate模块的）"><span class="nav-text">3. 单独的协程执行每个模块的Run()方法（此处只贴gate模块的）</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#4-开启长连接服务，消息交由Handler处理"><span class="nav-text">4. 开启长连接服务，消息交由Handler处理</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#5-长连接消息处理器，至于具体消息怎么交给它处理的不再分析"><span class="nav-text">5. 长连接消息处理器，至于具体消息怎么交给它处理的不再分析</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#6-执行agent的Run-方法"><span class="nav-text">6. 执行agent的Run()方法</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#7-路由消息到对应的模块（将消息塞到对应模块的ChanRPC中-）"><span class="nav-text">7. 路由消息到对应的模块（将消息塞到对应模块的ChanRPC中 ）</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#8-将消息塞入对应模块的chanrpc中"><span class="nav-text">8. 将消息塞入对应模块的chanrpc中</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#9-处理chanrpc中的消息（可参见第三条）"><span class="nav-text">9. 处理chanrpc中的消息（可参见第三条）</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#10-处理从chanrpc中取出的消息"><span class="nav-text">10. 处理从chanrpc中取出的消息</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#11-返回客户端消息"><span class="nav-text">11. 返回客户端消息</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2019</span>
+  <span class="with-love" id="animate">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Aifore</span>
+
+  
+
+  
+</div>
+
+
+
+
+
+
+
+
+
+
+
+        
+<div class="busuanzi-count">
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+  
+    <span class="site-uv" title="总访客量">
+      <i class="fa fa-user"></i>
+      <span class="busuanzi-value" id="busuanzi_value_site_uv"></span>
+    </span>
+  
+
+  
+    <span class="site-pv" title="总访问量">
+      <i class="fa fa-eye"></i>
+      <span class="busuanzi-value" id="busuanzi_value_site_pv"></span>
+    </span>
+  
+</div>
+
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=6.3.0"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=6.3.0"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=6.3.0"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=6.3.0"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=6.3.0"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=6.3.0"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=6.3.0"></script>
+
+
+
+  
+
+  
+    <script id="dsq-count-scr" src="https://aifore.disqus.com/count.js" async></script>
+  
+
+  
+    <script type="text/javascript">
+      var disqus_config = function () {
+        this.page.url = 'http://yoursite.com/2019/05/03/Golang游戏框架Leaf从懵逼到入门/';
+        this.page.identifier = '2019/05/03/Golang游戏框架Leaf从懵逼到入门/';
+        this.page.title = 'Golang游戏框架Leaf从懵逼到入门';
+        };
+      function loadComments () {
+        var d = document, s = d.createElement('script');
+        s.src = 'https://aifore.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', '' + +new Date());
+        (d.head || d.body).appendChild(s);
+      }
+      
+        loadComments();
+      
+    </script>
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    var isXml = true;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length === 0) {
+      search_path = "search.xml";
+    } else if (/json$/i.test(search_path)) {
+      isXml = false;
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    var onPopupClose = function (e) {
+      $('.popup').hide();
+      $('#local-search-input').val('');
+      $('.search-result-list').remove();
+      $('#no-result').remove();
+      $(".local-search-pop-overlay").remove();
+      $('body').css('overflow', '');
+    }
+
+    function proceedsearch() {
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay"></div>')
+        .css('overflow', 'hidden');
+      $('.search-popup-overlay').click(onPopupClose);
+      $('.popup').toggle();
+      var $localSearchInput = $('#local-search-input');
+      $localSearchInput.attr("autocapitalize", "none");
+      $localSearchInput.attr("autocorrect", "off");
+      $localSearchInput.focus();
+    }
+
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+
+      // start loading animation
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay">' +
+          '<div id="search-loading-icon">' +
+          '<i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>' +
+          '</div>' +
+          '</div>')
+        .css('overflow', 'hidden');
+      $("#search-loading-icon").css('margin', '20% auto 0 auto').css('text-align', 'center');
+
+      
+
+      $.ajax({
+        url: path,
+        dataType: isXml ? "xml" : "json",
+        async: true,
+        success: function(res) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = isXml ? $("entry", res).map(function() {
+            return {
+              title: $("title", this).text(),
+              content: $("content",this).text(),
+              url: $("url" , this).text()
+            };
+          }).get() : res;
+          var input = document.getElementById(search_id);
+          var resultContent = document.getElementById(content_id);
+          var inputEventFunction = function() {
+            var searchText = input.value.trim().toLowerCase();
+            var keywords = searchText.split(/[\s\-]+/);
+            if (keywords.length > 1) {
+              keywords.push(searchText);
+            }
+            var resultItems = [];
+            if (searchText.length > 0) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var hitCount = 0;
+                var searchTextCount = 0;
+                var title = data.title.trim();
+                var titleInLowerCase = title.toLowerCase();
+                var content = data.content.trim().replace(/<[^>]+>/g,"");
+                
+                var contentInLowerCase = content.toLowerCase();
+                var articleUrl = decodeURIComponent(data.url);
+                var indexOfTitle = [];
+                var indexOfContent = [];
+                // only match articles with not empty titles
+                if(title != '') {
+                  keywords.forEach(function(keyword) {
+                    function getIndexByWord(word, text, caseSensitive) {
+                      var wordLen = word.length;
+                      if (wordLen === 0) {
+                        return [];
+                      }
+                      var startPosition = 0, position = [], index = [];
+                      if (!caseSensitive) {
+                        text = text.toLowerCase();
+                        word = word.toLowerCase();
+                      }
+                      while ((position = text.indexOf(word, startPosition)) > -1) {
+                        index.push({position: position, word: word});
+                        startPosition = position + wordLen;
+                      }
+                      return index;
+                    }
+
+                    indexOfTitle = indexOfTitle.concat(getIndexByWord(keyword, titleInLowerCase, false));
+                    indexOfContent = indexOfContent.concat(getIndexByWord(keyword, contentInLowerCase, false));
+                  });
+                  if (indexOfTitle.length > 0 || indexOfContent.length > 0) {
+                    isMatch = true;
+                    hitCount = indexOfTitle.length + indexOfContent.length;
+                  }
+                }
+
+                // show search results
+
+                if (isMatch) {
+                  // sort index by position of keyword
+
+                  [indexOfTitle, indexOfContent].forEach(function (index) {
+                    index.sort(function (itemLeft, itemRight) {
+                      if (itemRight.position !== itemLeft.position) {
+                        return itemRight.position - itemLeft.position;
+                      } else {
+                        return itemLeft.word.length - itemRight.word.length;
+                      }
+                    });
+                  });
+
+                  // merge hits into slices
+
+                  function mergeIntoSlice(text, start, end, index) {
+                    var item = index[index.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    var hits = [];
+                    var searchTextCountInSlice = 0;
+                    while (position + word.length <= end && index.length != 0) {
+                      if (word === searchText) {
+                        searchTextCountInSlice++;
+                      }
+                      hits.push({position: position, length: word.length});
+                      var wordEnd = position + word.length;
+
+                      // move to next position of hit
+
+                      index.pop();
+                      while (index.length != 0) {
+                        item = index[index.length - 1];
+                        position = item.position;
+                        word = item.word;
+                        if (wordEnd > position) {
+                          index.pop();
+                        } else {
+                          break;
+                        }
+                      }
+                    }
+                    searchTextCount += searchTextCountInSlice;
+                    return {
+                      hits: hits,
+                      start: start,
+                      end: end,
+                      searchTextCount: searchTextCountInSlice
+                    };
+                  }
+
+                  var slicesOfTitle = [];
+                  if (indexOfTitle.length != 0) {
+                    slicesOfTitle.push(mergeIntoSlice(title, 0, title.length, indexOfTitle));
+                  }
+
+                  var slicesOfContent = [];
+                  while (indexOfContent.length != 0) {
+                    var item = indexOfContent[indexOfContent.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    // cut out 100 characters
+                    var start = position - 20;
+                    var end = position + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if (end < position + word.length) {
+                      end = position + word.length;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    slicesOfContent.push(mergeIntoSlice(content, start, end, indexOfContent));
+                  }
+
+                  // sort slices in content by search text's count and hits' count
+
+                  slicesOfContent.sort(function (sliceLeft, sliceRight) {
+                    if (sliceLeft.searchTextCount !== sliceRight.searchTextCount) {
+                      return sliceRight.searchTextCount - sliceLeft.searchTextCount;
+                    } else if (sliceLeft.hits.length !== sliceRight.hits.length) {
+                      return sliceRight.hits.length - sliceLeft.hits.length;
+                    } else {
+                      return sliceLeft.start - sliceRight.start;
+                    }
+                  });
+
+                  // select top N slices in content
+
+                  var upperBound = parseInt('1');
+                  if (upperBound >= 0) {
+                    slicesOfContent = slicesOfContent.slice(0, upperBound);
+                  }
+
+                  // highlight title and content
+
+                  function highlightKeyword(text, slice) {
+                    var result = '';
+                    var prevEnd = slice.start;
+                    slice.hits.forEach(function (hit) {
+                      result += text.substring(prevEnd, hit.position);
+                      var end = hit.position + hit.length;
+                      result += '<b class="search-keyword">' + text.substring(hit.position, end) + '</b>';
+                      prevEnd = end;
+                    });
+                    result += text.substring(prevEnd, slice.end);
+                    return result;
+                  }
+
+                  var resultItem = '';
+
+                  if (slicesOfTitle.length != 0) {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + highlightKeyword(title, slicesOfTitle[0]) + "</a>";
+                  } else {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + title + "</a>";
+                  }
+
+                  slicesOfContent.forEach(function (slice) {
+                    resultItem += "<a href='" + articleUrl + "'>" +
+                      "<p class=\"search-result\">" + highlightKeyword(content, slice) +
+                      "...</p>" + "</a>";
+                  });
+
+                  resultItem += "</li>";
+                  resultItems.push({
+                    item: resultItem,
+                    searchTextCount: searchTextCount,
+                    hitCount: hitCount,
+                    id: resultItems.length
+                  });
+                }
+              })
+            };
+            if (keywords.length === 1 && keywords[0] === "") {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>'
+            } else if (resultItems.length === 0) {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>'
+            } else {
+              resultItems.sort(function (resultLeft, resultRight) {
+                if (resultLeft.searchTextCount !== resultRight.searchTextCount) {
+                  return resultRight.searchTextCount - resultLeft.searchTextCount;
+                } else if (resultLeft.hitCount !== resultRight.hitCount) {
+                  return resultRight.hitCount - resultLeft.hitCount;
+                } else {
+                  return resultRight.id - resultLeft.id;
+                }
+              });
+              var searchResultList = '<ul class=\"search-result-list\">';
+              resultItems.forEach(function (result) {
+                searchResultList += result.item;
+              })
+              searchResultList += "</ul>";
+              resultContent.innerHTML = searchResultList;
+            }
+          }
+
+          if ('auto' === 'auto') {
+            input.addEventListener('input', inputEventFunction);
+          } else {
+            $('.search-icon').click(inputEventFunction);
+            input.addEventListener('keypress', function (event) {
+              if (event.keyCode === 13) {
+                inputEventFunction();
+              }
+            });
+          }
+
+          // remove loading animation
+          $(".local-search-pop-overlay").remove();
+          $('body').css('overflow', '');
+
+          proceedsearch();
+        }
+      });
+    }
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched === false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(onPopupClose);
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+    $(document).on('keyup', function (event) {
+      var shouldDismissSearchPopup = event.which === 27 &&
+        $('.search-popup').is(':visible');
+      if (shouldDismissSearchPopup) {
+        onPopupClose();
+      }
+    });
+  </script>
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  <script type="text/javascript" src="/js/src/love.js"></script>
+</body>
+</html>

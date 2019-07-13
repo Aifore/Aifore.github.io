@@ -1,0 +1,1522 @@
+<!DOCTYPE html>
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+<html class="theme-next gemini use-motion" lang="zh-CN">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=6.3.0" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/cat.png?v=6.3.0">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=6.3.0">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=6.3.0">
+
+
+  <link rel="mask-icon" href="/images/cat.svg?v=6.3.0" color="#222">
+
+
+
+
+
+
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Gemini',
+    version: '6.3.0',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: false,
+    fastclick: false,
+    lazyload: false,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+  
+
+
+
+
+  <meta name="description" content="本文解析Proto2版本 参考博客：Protocol Buffer的使用和原理  Protocol Buffer Basics: Python本教程提供了一个Python程序员使用protocol buffers的基本的入门教程。">
+<meta name="keywords" content="Protocol">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Protocol简介及在Python中的常规使用">
+<meta property="og:url" content="http://yoursite.com/2019/04/12/Protocol简介及常规使用/index.html">
+<meta property="og:site_name" content="AiforeのBlog">
+<meta property="og:description" content="本文解析Proto2版本 参考博客：Protocol Buffer的使用和原理  Protocol Buffer Basics: Python本教程提供了一个Python程序员使用protocol buffers的基本的入门教程。">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:updated_time" content="2019-04-15T17:42:13.075Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Protocol简介及在Python中的常规使用">
+<meta name="twitter:description" content="本文解析Proto2版本 参考博客：Protocol Buffer的使用和原理  Protocol Buffer Basics: Python本教程提供了一个Python程序员使用protocol buffers的基本的入门教程。">
+
+
+
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2019/04/12/Protocol简介及常规使用/"/>
+
+
+
+<script type="text/javascript" id="page.configurations">
+  CONFIG.page = {
+    sidebar: "",
+  };
+</script>
+
+  <title>Protocol简介及在Python中的常规使用 | AiforeのBlog</title>
+  
+
+
+
+
+
+
+
+
+
+  <noscript>
+  <style type="text/css">
+    .use-motion .motion-element,
+    .use-motion .brand,
+    .use-motion .menu-item,
+    .sidebar-inner,
+    .use-motion .post-block,
+    .use-motion .pagination,
+    .use-motion .comments,
+    .use-motion .post-header,
+    .use-motion .post-body,
+    .use-motion .collection-title { opacity: initial; }
+
+    .use-motion .logo,
+    .use-motion .site-title,
+    .use-motion .site-subtitle {
+      opacity: initial;
+      top: initial;
+    }
+
+    .use-motion {
+      .logo-line-before i { left: initial; }
+      .logo-line-after i { right: initial; }
+    }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-CN">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">AiforeのBlog</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+    
+      
+        <p class="site-subtitle">太陽が輝く限り、希望もまた輝く。</p>
+      
+    
+  </div>
+
+  <div class="site-nav-toggle">
+    <button aria-label="切换导航栏">
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  
+    <ul id="menu" class="menu">
+      
+        
+        
+        
+          
+          <li class="menu-item menu-item-home">
+    <a href="/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-home"></i> <br />首页</a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-about">
+    <a href="/about/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-user"></i> <br />关于</a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-tags">
+    <a href="/tags/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />标签</a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-categories">
+    <a href="/categories/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-th"></i> <br />分类</a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-archives">
+    <a href="/archives/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />归档</a>
+  </li>
+
+      
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br />搜索</a>
+        </li>
+      
+    </ul>
+  
+
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup search-popup local-search-popup">
+  <div class="local-search-header clearfix">
+    <span class="search-icon">
+      <i class="fa fa-search"></i>
+    </span>
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+    <div class="local-search-input-wrapper">
+      <input autocomplete="off"
+             placeholder="搜索..." spellcheck="false"
+             type="text" id="local-search-input">
+    </div>
+  </div>
+  <div id="local-search-result"></div>
+</div>
+
+
+
+    </div>
+  
+</nav>
+
+
+
+  
+
+
+
+</div>
+    </header>
+
+    
+
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+            
+
+          
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/04/12/Protocol简介及常规使用/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Aifore">
+      <meta itemprop="description" content="欢迎来到宇宙最帅Aifore的博客！">
+      <meta itemprop="image" content="/images/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="AiforeのBlog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">Protocol简介及在Python中的常规使用
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+
+              
+                
+              
+
+              <time title="创建时间：2019-04-12 18:00:00" itemprop="dateCreated datePublished" datetime="2019-04-12T18:00:00+07:00">2019-04-12</time>
+            
+
+            
+              
+
+              
+                
+                <span class="post-meta-divider">|</span>
+                
+
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">更新于</span>
+                
+                <time title="修改时间：2019-04-16 00:42:13" itemprop="dateModified" datetime="2019-04-16T00:42:13+07:00">2019-04-16</time>
+              
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/数据传输/" itemprop="url" rel="index"><span itemprop="name">数据传输</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2019/04/12/Protocol简介及常规使用/#comments" itemprop="discussionUrl">
+                
+                  <span class="post-comments-count disqus-comment-count"
+                        data-disqus-identifier="2019/04/12/Protocol简介及常规使用/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+            <span class="post-meta-divider">|</span>
+            <span class="post-meta-item-icon"
+            >
+            <i class="fa fa-eye"></i>
+             阅读次数： 
+            <span class="busuanzi-value" id="busuanzi_value_page_pv" ></span>
+            </span>
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <blockquote>
+<p>本文解析Proto2版本</p>
+<p>参考博客：<a href="https://www.ibm.com/developerworks/cn/linux/l-cn-gpb/index.html" target="_blank" rel="noopener">Protocol Buffer的使用和原理</a></p>
+</blockquote>
+<h1 id="Protocol-Buffer-Basics-Python"><a href="#Protocol-Buffer-Basics-Python" class="headerlink" title="Protocol Buffer Basics: Python"></a>Protocol Buffer Basics: Python</h1><p>本教程提供了一个Python程序员使用protocol buffers的基本的入门教程。</p>
+<a id="more"></a>
+<p>通过创建一个简单的示例应用程序,它向您展示了如何</p>
+<ul>
+<li><p>在一个<code>.proto</code>文件中定义Message的格式。</p>
+</li>
+<li><p>使用protocol buffer 编译器。</p>
+</li>
+<li><p>使用Python protocol buffer API去读写Message。</p>
+</li>
+</ul>
+<p>这不是一个在Python中使用protocol buffers的一个全面的指南。有关更详细的参考信息，请阅读 <a href="https://developers.google.com/protocol-buffers/docs/proto" target="_blank" rel="noopener">Protocol Buffer Language Guide</a>，<a href="https://developers.google.com/protocol-buffers/docs/reference/python/index.html" target="_blank" rel="noopener">Python API Reference</a>，<a href="https://developers.google.com/protocol-buffers/docs/reference/python-generated" target="_blank" rel="noopener">Python Generated Code Guide</a>和<a href="https://developers.google.com/protocol-buffers/docs/encoding" target="_blank" rel="noopener">Encoding Reference</a>。</p>
+<h2 id="1-Why-Use-Protocol-Buffers"><a href="#1-Why-Use-Protocol-Buffers" class="headerlink" title="1. Why Use Protocol Buffers?"></a>1. Why Use Protocol Buffers?</h2><p>我们将使用的示例是一个非常简单的“地址簿”应用程序，可以从一个文件中读写人们的联系方式。地址簿中的每个人都有名字、ID、电子邮件地址和电话号码。</p>
+<p>你如何序列化和检索这样的结构化数据？这里有一些办法可以解决这个问题：</p>
+<ul>
+<li><p>使用Python处理。这是默认方法，因为它内置于语言中，但它不能很好地处理模式演变，如果需要与使用C ++或Java编写的应用程序共享数据，也不能很好地工作。</p>
+</li>
+<li><p>你可以发明一种特别的方式将数据项编码为一个字符串，如将4个int编码为“12:3:23:67”。这是一个简单的和灵活的方法，尽管它需要一次性编写编码和解析的代码，并为解析产生一定的运行成本。这最适合编码非常简单的数据。</p>
+</li>
+<li><p>用XML序列化数据。这种方法非常有吸引力，因为XML具有易读性，还有了许多库，用来支持各种语言。如果你想和其它应用/工程共享数据，这是一个不错的选择。但是，XML也是出了名的耗空间，还有，编码/解码会令应用程序性能产生巨大的损失。加上操纵一个XML DOM树通常会比操纵类中的字段复杂。</p>
+</li>
+</ul>
+<p>Protocol buffers是灵活，高效，自动化的解决方案，可以解决这个问题。有了它，你就可以编写一个<code>.proto</code>文件用来描述你想存储的数据结构。因此，protocol buffer编译器会创建一个类，该类使用高效的二进制格式实现协议缓冲区数据的自动编码和解析。生成的类为构成Protocol buffers的字段提供getter和setter，并负责将Protocol buffers作为一个单元读取和写入的细节。重要的是， the protocol buffer format（协议缓冲区格式）支持随着时间的推移扩展格式的想法，使得代码仍然可以读取用旧格式编码的数据。</p>
+<h2 id="2-Defining-Your-Protocol-Format"><a href="#2-Defining-Your-Protocol-Format" class="headerlink" title="2. Defining Your Protocol Format"></a>2. Defining Your Protocol Format</h2><p>为了创建你的“地址簿”应用，你会用到一个<code>.proto</code>文件。<code>.proto</code>文件的定义很简单：你可以为你想序列化的每个数据结构添加一条Message，然后在Message中为每个字段指定名称和类型。</p>
+<p>以下是你想为你的Message定义的<code>.proto</code>文件：</p>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line"># addressbook.proto</span><br><span class="line"></span><br><span class="line">package tutorial;</span><br><span class="line"></span><br><span class="line">message <span class="type">Person</span> &#123;</span><br><span class="line">    <span class="keyword">required</span> string name = <span class="number">1</span>;</span><br><span class="line">    <span class="keyword">required</span> int32 id = <span class="number">2</span>;</span><br><span class="line">    <span class="keyword">optional</span> string email = <span class="number">3</span>;</span><br><span class="line"></span><br><span class="line">    <span class="class"><span class="keyword">enum</span> <span class="title">PhoneType</span> </span>&#123;</span><br><span class="line">        <span class="type">MOBILE</span> = <span class="number">0</span>;</span><br><span class="line">        <span class="type">HOME</span> = <span class="number">1</span>;</span><br><span class="line">        <span class="type">WORK</span> = <span class="number">2</span>;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">    message <span class="type">PhoneNumber</span> &#123;</span><br><span class="line">        <span class="keyword">required</span> string number = <span class="number">1</span>;</span><br><span class="line">        <span class="keyword">optional</span> <span class="type">PhoneType</span> type = <span class="number">2</span> [<span class="keyword">default</span> = <span class="type">HOME</span>];</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">    repeated <span class="type">PhoneNumber</span> phone = <span class="number">4</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">message <span class="type">AddressBook</span> &#123;</span><br><span class="line">    repeated <span class="type">Person</span> person = <span class="number">1</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>如你所见，在语法上很像C++和Java。</p>
+<p>让我们来看看每个部分的作用：</p>
+<ul>
+<li>包的声明：这个<code>.proto</code>文件开头是包的声明，为了帮助防止在不同的工程中命名冲突。在Python中，包通常由目录结构决定的，所以这个由你的<code>.proto</code>文件定义的包，在你生成你代码中是没有效果的。但是，你应该坚持声明这条语句，为了在protocol Buffers的命名空间中防止名子的冲突，就像其它非Python的语言那样。</li>
+<li>Message：一个Message是一个包含一组类型字段的集合。有许多简单的标准的数据类型可以用在类型字段中，包括bool，int32，float，double和string。<ul>
+<li>你也可以使用更加多的结构来定义你的Message，例如用其它Message类型当作类型字段（在上面的例子PersonMessage中就包含了PhoneNumberMessage，还有AddressBookMessage包含PersonMessage）。</li>
+<li>你也可以定义Message嵌入其它的Message——PhoneNumber类型就是在Person类型中定义的。</li>
+<li>你也可以定义一个枚举类型，如果你想你其中一个字段有一个预设的类型列表——你可以将你的电话号码列举为MOBILE，HOME或者WORK。</li>
+</ul>
+</li>
+<li>元素标签：那个“＝1”，“＝2”标记每个元素的识别，作为二进制编码中字段的唯一的标签。标签号1-15需要少于一个字节来编码而不是更高的数字，所以，作为最优化的方案，您可以决定将这些标签用于常用或重复的元素，把16或最高的数字留给不常用的optional元素。每个重复的字段里的元素要求重新编码它的标签数字，所以重复的字段特别适合使用这种优化。</li>
+</ul>
+<p>每个字段一定要被以下的修饰语修饰：</p>
+<ul>
+<li><strong>required</strong>：必须提供该字段的值，否则这条Message会被认为“未初始化”。序列化未初始化的Message会出现异常。 解析一条没有初始化的Message会失败。除此之外，必填字段的行为与可选字段完全相同。</li>
+<li><strong>optional</strong>：可选字段可以设置也可以不设置 。如果没有设置值，会使用默认值。<ul>
+<li>对于简单类型，您可以指定自己的默认值，就像我们<code>type</code>在示例中为电话号码所做的那样。如果不指定则使用系统默认值：数字类型为0，字符串为空字符串，bools为false。</li>
+<li>对于嵌入式消息，默认值始终是消息的“default instance”或“prototype”，其中没有设置其字段。如果调用访问器获取尚未显式设置的optional（或required）字段的值，将始终返回该字段的默认值。</li>
+</ul>
+</li>
+<li><strong>repeated</strong>：这个字段会重复几次一些号码（包括0次）。重复值的顺序将保留在协议缓冲区中。重复的字段会被认为是动态大小的数组。</li>
+</ul>
+<blockquote>
+<p><strong>Required Is Forever</strong> 你应该非常小心地把字段标记为required。如果在某一时刻你希望停止写或发送一个必填字段，则将字段更改为可选字段会有问题——老的阅读器会认为没有这个字段Message是不完整的,而且可能会无意中拒绝或删除它们。你应该考虑为你的buffer编写特定于应用程序的自定义验证例程。一些Google工程师的结论是使用required弊大于利；他们更愿意只用optional和repeated。但是，这一观点并不普遍。</p>
+</blockquote>
+<p>您<code>.proto</code>可以在<a href="https://developers.google.com/protocol-buffers/docs/proto" target="_blank" rel="noopener">Protocol Buffer Language Guide中</a>找到编写文件的完整指南- 包括所有可能的字段类型。不要去寻找类继承类似的工具，但协议缓冲区不会这样做。</p>
+<h2 id="3-Compiling-Your-Protocol-Buffers"><a href="#3-Compiling-Your-Protocol-Buffers" class="headerlink" title="3. Compiling Your Protocol Buffers"></a>3. Compiling Your Protocol Buffers</h2><p>现在你有一个<code>.proto</code>文件，下一件你需要去做的事就是生成你需要读写AddressBook（带有Person和PhoneNumber）的Message的类。为了完成这件工作，你需要运行protocol buffer 编译器protoc去编译你的<code>.proto</code>文件：</p>
+<p>1.如果你没有安装编译器，<a href="http://code.google.com/p/protobuf/downloads/" target="_blank" rel="noopener">download the package</a>，按照在README的说明去做。</p>
+<p>2.现在运行编译器，指定源目录（你的应用程序源码目录——如果你不提供这个目录，默认就是当前目录），目标目录（你的应用程序编译后生成的代码的目录；通常用$SRC_DIR），还有你<code>.proto</code>文件的目录路径。在这种情况下，你可以：</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">protoc -I=$SRC_DIR --python_out=$DST_DIR $SRC_DIR/addressbook.proto</span><br></pre></td></tr></table></figure>
+<p>因为你想生成Python的类，所以你要用<code>--python_out</code>选项——也有类似的选项支持其它语言。</p>
+<p>这样<code>addressbook_pb2.py</code>就会生成在你指定的目标目录中。</p>
+<h2 id="4-The-Protocol-Buffer-API"><a href="#4-The-Protocol-Buffer-API" class="headerlink" title="4. The Protocol Buffer API"></a>4. The Protocol Buffer API</h2><p>与生成Java和C ++Protocol Buffers代码不同，Python protocol buffer编译器不会直接生成你可以数据访问的代码。反而它会为你的Message、枚举、字段生成指定的描述符，还有一些难以理解的空类，其中一段Message类型：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># addressbook_pd2.py</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Person</span><span class="params">(message.Message)</span>:</span></span><br><span class="line">    __metaclass__ = reflection.GeneratedProtocolMessageType</span><br><span class="line"></span><br><span class="line">    <span class="class"><span class="keyword">class</span> <span class="title">PhoneNumber</span><span class="params">(message.Message)</span>:</span></span><br><span class="line">      	__metaclass__ = reflection.GeneratedProtocolMessageType</span><br><span class="line">      	DESCRIPTOR = _PERSON_PHONENUMBER</span><br><span class="line">    DESCRIPTOR = _PERSON</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">AddressBook</span><span class="params">(message.Message)</span>:</span></span><br><span class="line">  	__metaclass__ = reflection.GeneratedProtocolMessageType</span><br><span class="line">  	DESCRIPTOR = _ADDRESSBOOK</span><br></pre></td></tr></table></figure>
+<p>每个类中都有一些重要的语句：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">__metaclass__ = reflection.GeneratedProtocolMessageType</span><br></pre></td></tr></table></figure>
+<p>尽管Python中metaclasses（元类）是如何工作的详细信息超出了本教程的范围，你可以把它们看作是创建类的模板。在加载时，元类GeneratedProtocolMessageType会用指定的描述符创建所有你需要用到的Message类型的Python方法和添加和这些方法相关的类。然后你就可以在你的代码中使用这些类。</p>
+<p>这一切的最终效果是，你可以使用Person类就像你定义的Message的基类，将它当作常规的字段。例如，你可以这样写：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> addressbook_pb2</span><br><span class="line">person = addressbook_pb2.Person()</span><br><span class="line">person.id = <span class="number">1234</span></span><br><span class="line">person.name = <span class="string">"John Doe"</span></span><br><span class="line">person.email = <span class="string">"jdoe@example.com"</span></span><br><span class="line">phone = person.phone.add()</span><br><span class="line">phone.number = <span class="string">"555-4321"</span></span><br><span class="line">phone.type = addressbook_pb2.Person.HOME</span><br></pre></td></tr></table></figure>
+<p>注意，这些赋值不仅仅是向通用Python对象中添加任意新字段。如果你尝试赋值到<code>.proto</code>文件没有定义的字段，会发生<code>AttributeError</code> 异常。如果你赋给一个字段错误的类型的值，会发生<code>TypeError</code> 异常。此外，在设置字段之前读取字段的值将返回默认值。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">person.no_such_field = <span class="number">1</span>  <span class="comment"># raises AttributeError</span></span><br><span class="line">person.id = <span class="string">"1234"</span>        <span class="comment"># raises TypeError</span></span><br></pre></td></tr></table></figure>
+<p>如果想知道更多关于protocol 编译器为特定定义字段生成的成员，请看<a href="https://developers.google.com/protocol-buffers/docs/reference/python-generated" target="_blank" rel="noopener">Python generated code reference</a>。</p>
+<h3 id="4-1-Enums：枚举"><a href="#4-1-Enums：枚举" class="headerlink" title="4.1 Enums：枚举"></a>4.1 Enums：枚举</h3><p>Enums是由metaclass扩展成的一组具有整数值的符号常量。例如常量<code>addressbook_pb2.Person.WORK</code>的值为2。</p>
+<h3 id="4-2-Standard-Message-Methods"><a href="#4-2-Standard-Message-Methods" class="headerlink" title="4.2 Standard Message Methods"></a>4.2 Standard Message Methods</h3><p>每个Message类都包含一些其它方法，让你检查或操作整个message，包括：</p>
+<ul>
+<li><p><code>IsInitialized()</code>: 检查required字段是否都设置了值。 </p>
+</li>
+<li><p><code>__str__()</code>: 返回一个可读的message,对于调试尤其有用。(通常调用<code>str(message)</code>或<code>print message</code>。) </p>
+</li>
+<li><p><code>CopyFrom(other_msg)</code>: 用给出的message的值覆盖这个message </p>
+</li>
+<li><p><code>Clear()</code>: 清除所有元素，回到空状态。</p>
+</li>
+</ul>
+<p>这些方法实现了<code>Message</code>接口。想了解更多，可以看<a href="https://developers.google.com/protocol-buffers/docs/reference/python/google.protobuf.message.Message-class" target="_blank" rel="noopener">Message完整的API文档</a>。</p>
+<h3 id="4-3-Parsing-and-Serialization"><a href="#4-3-Parsing-and-Serialization" class="headerlink" title="4.3 Parsing and Serialization"></a>4.3 Parsing and Serialization</h3><p>最后，每个protocol buffer类都有通过<a href="https://developers.google.com/protocol-buffers/docs/encoding" target="_blank" rel="noopener">二进制格式</a>读/写message的方法，包括：</p>
+<ul>
+<li><code>SerializeToString()</code>: 序列化消息并以字符串的方式返回。 注意，字节是二进制的，而不是文本； 我们只使用str类型作为一个方便的容器。</li>
+<li><code>ParseFromString(data)</code>: 从给出的字符串中解析一条message。</li>
+</ul>
+<p>这些只是解析和序列化提供的几个选项。再次，请参阅<a href="https://developers.google.com/protocol-buffers/docs/reference/python/google.protobuf.message.Message-class" target="_blank" rel="noopener">Message API参考</a>以获取完整列表。</p>
+<blockquote>
+<p>Protocol Buffers和O-O Design Protocol buffer 类基本上是dumb data holders（类似于C++的structs）；它们在对象模型中没有成为first class citizens。如果你想为已生成的类添加丰富的行为，更好的方法是把已生成的protocol buffer类封装在一个特定于应用程序的类中。如果您无法控制<code>.proto</code>文件的设计（例如，如果您正在重用另一个项目中的一个），则封装Protocol Buffers也是一个好主意。在这种情况下，您可以使用封装类去制作更适合应用程序独特环境的接口：隐藏一些数据和方法，公开便利的函数等等。<strong>您永远不应该通过继承它们来向生成的类添加行为</strong>。这将打破内部机制，无论如何都不是良好的面向对象的实践。</p>
+</blockquote>
+<h2 id="5-Writing-A-Message"><a href="#5-Writing-A-Message" class="headerlink" title="5. Writing A Message"></a>5. Writing A Message</h2><p>现在可以尝试用你的protocol buffer类了。您希望地址簿应用程序能够做的第一件事是将个人详细信息写入您的地址簿文件。为此，你创建和填写你的protocol buffer类的实例，然后把它们写到输出流。</p>
+<p>以下是一个程序，它从一个文件中读取一个<code>AddressBook</code>，并基于我们的输入添加一个<code>Person</code>，然后重新写回到那个文件。直接调用或者引用由protocol编译器生成的代码将高亮显示：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#! /usr/bin/python</span></span><br><span class="line"><span class="keyword">import</span> addressbook_pb2</span><br><span class="line"><span class="keyword">import</span> sys</span><br><span class="line"></span><br><span class="line"><span class="comment"># This function fills in a Person message based on user input.</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">PromptForAddress</span><span class="params">(person)</span>:</span></span><br><span class="line">    person.id = int(raw_input(<span class="string">"Enter person ID number: "</span>))</span><br><span class="line">    person.name = raw_input(<span class="string">"Enter name: "</span>)</span><br><span class="line"></span><br><span class="line">    email = raw_input(<span class="string">"Enter email address (blank for none): "</span>)</span><br><span class="line">    <span class="keyword">if</span> email != <span class="string">""</span>:</span><br><span class="line">        person.email = email</span><br><span class="line"></span><br><span class="line">    <span class="keyword">while</span> <span class="keyword">True</span>:</span><br><span class="line">      number = raw_input(<span class="string">"Enter a phone number (or leave blank to finish): "</span>)</span><br><span class="line">      <span class="keyword">if</span> number == <span class="string">""</span>:</span><br><span class="line">          <span class="keyword">break</span></span><br><span class="line"></span><br><span class="line">      phone_number = person.phone.add()</span><br><span class="line">      phone_number.number = number</span><br><span class="line"></span><br><span class="line">      type = raw_input(<span class="string">"Is this a mobile, home, or work phone? "</span>)</span><br><span class="line">      <span class="keyword">if</span> type == <span class="string">"mobile"</span>:</span><br><span class="line">          phone_number.type = addressbook_pb2.Person.MOBILE</span><br><span class="line">      <span class="keyword">elif</span> type == <span class="string">"home"</span>:</span><br><span class="line">          phone_number.type = addressbook_pb2.Person.HOME</span><br><span class="line">      <span class="keyword">elif</span> type == <span class="string">"work"</span>:</span><br><span class="line">          phone_number.type = addressbook_pb2.Person.WORK</span><br><span class="line">      <span class="keyword">else</span>:</span><br><span class="line">          <span class="keyword">print</span> <span class="string">"Unknown phone type; leaving as default value."</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># Main procedure:  Reads the entire address book from a file,</span></span><br><span class="line"><span class="comment">#   adds one person based on user input, then writes it back out to the same</span></span><br><span class="line"><span class="comment">#   file.</span></span><br><span class="line"><span class="keyword">if</span> len(sys.argv) != <span class="number">2</span>:</span><br><span class="line">    <span class="keyword">print</span> <span class="string">"Usage:"</span>, sys.argv[<span class="number">0</span>], <span class="string">"ADDRESS_BOOK_FILE"</span></span><br><span class="line">    sys.exit(<span class="number">-1</span>)</span><br><span class="line"></span><br><span class="line">address_book = addressbook_pb2.AddressBook()</span><br><span class="line"></span><br><span class="line"><span class="comment"># Read the existing address book.</span></span><br><span class="line"><span class="keyword">try</span>:</span><br><span class="line">    f = open(sys.argv[<span class="number">1</span>], <span class="string">"rb"</span>)</span><br><span class="line">    address_book.ParseFromString(f.read())</span><br><span class="line">    f.close()</span><br><span class="line"><span class="keyword">except</span> IOError:</span><br><span class="line">    <span class="keyword">print</span> sys.argv[<span class="number">1</span>] + <span class="string">": Could not open file.  Creating a new one."</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># Add an address.</span></span><br><span class="line">PromptForAddress(address_book.person.add())</span><br><span class="line"></span><br><span class="line"><span class="comment"># Write the new address book back to disk.</span></span><br><span class="line">f = open(sys.argv[<span class="number">1</span>], <span class="string">"wb"</span>)</span><br><span class="line">f.write(address_book.SerializeToString())</span><br><span class="line">f.close()</span><br></pre></td></tr></table></figure>
+<h2 id="6-Reading-A-Message"><a href="#6-Reading-A-Message" class="headerlink" title="6. Reading A Message"></a>6. Reading A Message</h2><p>当然一个地址簿，如果你不能从中得到任何信息就废了！此示例读取上面示例创建的文件并打印其中的所有信息。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#! /usr/bin/python</span></span><br><span class="line"><span class="keyword">import</span> addressbook_pb2</span><br><span class="line"><span class="keyword">import</span> sys</span><br><span class="line"></span><br><span class="line"><span class="comment"># Iterates though all people in the AddressBook and prints info about them.</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">ListPeople</span><span class="params">(address_book)</span>:</span></span><br><span class="line">    <span class="keyword">for</span> person <span class="keyword">in</span> address_book.person:</span><br><span class="line">      <span class="keyword">print</span> <span class="string">"Person ID:"</span>, person.id</span><br><span class="line">      <span class="keyword">print</span> <span class="string">"  Name:"</span>, person.name</span><br><span class="line">      <span class="keyword">if</span> person.HasField(<span class="string">'email'</span>):</span><br><span class="line">          <span class="keyword">print</span> <span class="string">"  E-mail address:"</span>, person.email</span><br><span class="line"></span><br><span class="line">      <span class="keyword">for</span> phone_number <span class="keyword">in</span> person.phone:</span><br><span class="line">          <span class="keyword">if</span> phone_number.type == addressbook_pb2.Person.MOBILE:</span><br><span class="line">              <span class="keyword">print</span> <span class="string">"  Mobile phone #: "</span>,</span><br><span class="line">          <span class="keyword">elif</span> phone_number.type == addressbook_pb2.Person.HOME:</span><br><span class="line">              <span class="keyword">print</span> <span class="string">"  Home phone #: "</span>,</span><br><span class="line">          <span class="keyword">elif</span> phone_number.type == addressbook_pb2.Person.WORK:</span><br><span class="line">              <span class="keyword">print</span> <span class="string">"  Work phone #: "</span>,</span><br><span class="line">          <span class="keyword">print</span> phone_number.number</span><br><span class="line"></span><br><span class="line"><span class="comment"># Main procedure:  Reads the entire address book from a file and prints all</span></span><br><span class="line"><span class="comment">#   the information inside.</span></span><br><span class="line"><span class="keyword">if</span> len(sys.argv) != <span class="number">2</span>:</span><br><span class="line">    <span class="keyword">print</span> <span class="string">"Usage:"</span>, sys.argv[<span class="number">0</span>], <span class="string">"ADDRESS_BOOK_FILE"</span></span><br><span class="line">    sys.exit(<span class="number">-1</span>)</span><br><span class="line"></span><br><span class="line">address_book = addressbook_pb2.AddressBook()</span><br><span class="line"></span><br><span class="line"><span class="comment"># Read the existing address book.</span></span><br><span class="line">f = open(sys.argv[<span class="number">1</span>], <span class="string">"rb"</span>)</span><br><span class="line">address_book.ParseFromString(f.read())</span><br><span class="line">f.close()</span><br><span class="line"></span><br><span class="line">ListPeople(address_book)</span><br></pre></td></tr></table></figure>
+<h2 id="7-Extending-a-Protocol-Buffer"><a href="#7-Extending-a-Protocol-Buffer" class="headerlink" title="7. Extending a Protocol Buffer"></a>7. Extending a Protocol Buffer</h2><p>迟早你会发布使用protocol buffer的代码，毫无疑问你会想“改善” protocol buffer的定义。如果你想让你的新buffers 是向后兼容的，又或者你的旧buffers是向前兼容（能够前后兼容，至少不产生冲突导致以前的程序无法运行，谁都想这样设计吧😂），那么你需要遵守一些规则。在新版本的protocol buffer中：</p>
+<ul>
+<li>你不能更改任何现有字段的标签数字。</li>
+<li>你不能添加或删除任何required的字段。</li>
+<li>你可以删除optional 或repeated 字段。</li>
+<li>你可以添加新的optional 或repeated 字段，但必须使用新的标签数字。（即在protocol buffer从来没有使用过的标签数字，甚至不能使用已删除的标签数字）</li>
+</ul>
+<p>这些规则有<a href="https://developers.google.com/protocol-buffers/docs/proto.html#updating" target="_blank" rel="noopener">一些例外</a>，但他们很少使用。</p>
+<p>如果你遵守这些规则：</p>
+<ul>
+<li>旧的代码能够兼容地读取新messages，但会忽略所有新增字段；</li>
+<li>旧的代码被删除的可选optional 字段会使用它们的默认值，被删除的repeated字段会变为空；</li>
+<li>新代码能够兼容地读取旧messages；</li>
+<li>旧message不会显示新的optional字段，所以你需要明确地检查它们是否设置<code>has_</code>，或者检查你的<code>.proto</code>文件内，在标签数字后是否提供合理的默认值：<code>[default = value]</code>。如果没有为optional元素设置默认值，则使用特定于类型的默认值：对于字符串，默认值为空字符串；对于布尔类型，默认值为false；对于整型类型，缺省为0；</li>
+<li>如果你添加一个新repeated字段，你的新代码将无法判断它是否是空的(通过新代码)或从未设置(旧代码)，由于没有给它设置<code>has_</code>。（这句没看懂🤔）</li>
+</ul>
+<h2 id="8-高级用法"><a href="#8-高级用法" class="headerlink" title="8. 高级用法"></a>8. 高级用法</h2><p>Protocol buffers的用途不仅仅是简单的访问器和序列化。请务必浏览<a href="https://developers.google.com/protocol-buffers/docs/reference/python/index.html" target="_blank" rel="noopener">Python API参考</a>，以了解您可以使用它们做些什么。</p>
+<p>协议消息类提供的一个关键特性是映射。您可以迭代消息的字段并操纵它们的值，而无需针对任何特定的消息类型编写代码。使用映射的一种非常有用的方法是将协议消息转换为与其他编码（例如XML或JSON）之间的转换。更高级的映射使用可能是找到两个相同类型的消息之间的差异，或者开发一种“协议消息的正则表达式”，您可以在其中编写与某些消息内容匹配的表达式。如果您运用自己的想象力，可以将协议缓冲区应用于比您最初预期更广泛的问题！</p>
+<p>映射只是<a href="https://developers.google.com/protocol-buffers/docs/reference/python/google.protobuf.message.Message-class" target="_blank" rel="noopener">Message接口</a>提供的一部分功能。</p>
+<p>本文翻译自：<a href="https://developers.google.com/protocol-buffers/docs/pythontutorial" target="_blank" rel="noopener">https://developers.google.com/protocol-buffers/docs/pythontutorial</a></p>
+<p>大部分谷歌翻译，少部分自己翻译！🤪</p>
+
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+      <div>
+        <div style="padding: 10px 0; margin: 20px auto; width: 90%; text-align: center;">
+  <div>😊打  赏😊</div>
+  <button id="rewardButton" disable="enable" onclick="var qr = document.getElementById('QR'); if (qr.style.display === 'none') {qr.style.display='block';} else {qr.style.display='none'}">
+    <span>打赏</span>
+  </button>
+  <div id="QR" style="display: none;">
+
+    
+      <div id="wechat" style="display: inline-block">
+        <img id="wechat_qr" src="/images/wechatpay500.png" alt="Aifore 微信支付"/>
+        <p>微信支付</p>
+      </div>
+    
+
+    
+
+    
+
+  </div>
+</div>
+
+      </div>
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Protocol/" rel="tag"># Protocol</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2019/04/09/正则表达式与Python re模块/" rel="next" title="正则表达式与Python re模块">
+                <i class="fa fa-chevron-left"></i> 正则表达式与Python re模块
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2019/04/18/Python项目部署从菜鸟到实战/" rel="prev" title="Python项目部署从菜鸟到实战">
+                Python项目部署从菜鸟到实战 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+  
+    <div class="comments" id="comments">
+      <div id="disqus_thread">
+        <noscript>
+          Please enable JavaScript to view the
+          <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a>
+        </noscript>
+      </div>
+    </div>
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image"
+                src="/images/avatar.jpg"
+                alt="Aifore" />
+            
+              <p class="site-author-name" itemprop="name">Aifore</p>
+              <p class="site-description motion-element" itemprop="description">欢迎来到宇宙最帅Aifore的博客！</p>
+          </div>
+
+          
+            <nav class="site-state motion-element">
+              
+                <div class="site-state-item site-state-posts">
+                
+                  <a href="/archives/">
+                
+                    <span class="site-state-item-count">30</span>
+                    <span class="site-state-item-name">日志</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-categories">
+                  <a href="/categories/index.html">
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">15</span>
+                    <span class="site-state-item-name">分类</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-tags">
+                  <a href="/tags/index.html">
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">40</span>
+                    <span class="site-state-item-name">标签</span>
+                  </a>
+                </div>
+              
+            </nav>
+          
+
+          
+
+          
+            <div class="links-of-author motion-element">
+              
+                <span class="links-of-author-item">
+                  <a href="https://github.com/aifore" target="_blank" title="GitHub"><i class="fa fa-fw fa-github"></i>GitHub</a>
+                  
+                </span>
+              
+            </div>
+          
+
+          
+          
+
+          
+          
+            <div class="links-of-blogroll motion-element links-of-blogroll-inline">
+              <div class="links-of-blogroll-title">
+                <i class="fa  fa-fw fa-link"></i>
+                我的博客
+              </div>
+              <ul class="links-of-blogroll-list">
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://me.csdn.net/aifore" title="我的CSDN" target="_blank">我的CSDN</a>
+                  </li>
+                
+              </ul>
+            </div>
+          
+
+          
+            
+          
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Protocol-Buffer-Basics-Python"><span class="nav-text">Protocol Buffer Basics: Python</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-Why-Use-Protocol-Buffers"><span class="nav-text">1. Why Use Protocol Buffers?</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-Defining-Your-Protocol-Format"><span class="nav-text">2. Defining Your Protocol Format</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-Compiling-Your-Protocol-Buffers"><span class="nav-text">3. Compiling Your Protocol Buffers</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#4-The-Protocol-Buffer-API"><span class="nav-text">4. The Protocol Buffer API</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#4-1-Enums：枚举"><span class="nav-text">4.1 Enums：枚举</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-2-Standard-Message-Methods"><span class="nav-text">4.2 Standard Message Methods</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-3-Parsing-and-Serialization"><span class="nav-text">4.3 Parsing and Serialization</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#5-Writing-A-Message"><span class="nav-text">5. Writing A Message</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#6-Reading-A-Message"><span class="nav-text">6. Reading A Message</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#7-Extending-a-Protocol-Buffer"><span class="nav-text">7. Extending a Protocol Buffer</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#8-高级用法"><span class="nav-text">8. 高级用法</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2019</span>
+  <span class="with-love" id="animate">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Aifore</span>
+
+  
+
+  
+</div>
+
+
+
+
+
+
+
+
+
+
+
+        
+<div class="busuanzi-count">
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+  
+    <span class="site-uv" title="总访客量">
+      <i class="fa fa-user"></i>
+      <span class="busuanzi-value" id="busuanzi_value_site_uv"></span>
+    </span>
+  
+
+  
+    <span class="site-pv" title="总访问量">
+      <i class="fa fa-eye"></i>
+      <span class="busuanzi-value" id="busuanzi_value_site_pv"></span>
+    </span>
+  
+</div>
+
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=6.3.0"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=6.3.0"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=6.3.0"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=6.3.0"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=6.3.0"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=6.3.0"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=6.3.0"></script>
+
+
+
+  
+
+  
+    <script id="dsq-count-scr" src="https://aifore.disqus.com/count.js" async></script>
+  
+
+  
+    <script type="text/javascript">
+      var disqus_config = function () {
+        this.page.url = 'http://yoursite.com/2019/04/12/Protocol简介及常规使用/';
+        this.page.identifier = '2019/04/12/Protocol简介及常规使用/';
+        this.page.title = 'Protocol简介及在Python中的常规使用';
+        };
+      function loadComments () {
+        var d = document, s = d.createElement('script');
+        s.src = 'https://aifore.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', '' + +new Date());
+        (d.head || d.body).appendChild(s);
+      }
+      
+        loadComments();
+      
+    </script>
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    var isXml = true;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length === 0) {
+      search_path = "search.xml";
+    } else if (/json$/i.test(search_path)) {
+      isXml = false;
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    var onPopupClose = function (e) {
+      $('.popup').hide();
+      $('#local-search-input').val('');
+      $('.search-result-list').remove();
+      $('#no-result').remove();
+      $(".local-search-pop-overlay").remove();
+      $('body').css('overflow', '');
+    }
+
+    function proceedsearch() {
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay"></div>')
+        .css('overflow', 'hidden');
+      $('.search-popup-overlay').click(onPopupClose);
+      $('.popup').toggle();
+      var $localSearchInput = $('#local-search-input');
+      $localSearchInput.attr("autocapitalize", "none");
+      $localSearchInput.attr("autocorrect", "off");
+      $localSearchInput.focus();
+    }
+
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+
+      // start loading animation
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay">' +
+          '<div id="search-loading-icon">' +
+          '<i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>' +
+          '</div>' +
+          '</div>')
+        .css('overflow', 'hidden');
+      $("#search-loading-icon").css('margin', '20% auto 0 auto').css('text-align', 'center');
+
+      
+
+      $.ajax({
+        url: path,
+        dataType: isXml ? "xml" : "json",
+        async: true,
+        success: function(res) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = isXml ? $("entry", res).map(function() {
+            return {
+              title: $("title", this).text(),
+              content: $("content",this).text(),
+              url: $("url" , this).text()
+            };
+          }).get() : res;
+          var input = document.getElementById(search_id);
+          var resultContent = document.getElementById(content_id);
+          var inputEventFunction = function() {
+            var searchText = input.value.trim().toLowerCase();
+            var keywords = searchText.split(/[\s\-]+/);
+            if (keywords.length > 1) {
+              keywords.push(searchText);
+            }
+            var resultItems = [];
+            if (searchText.length > 0) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var hitCount = 0;
+                var searchTextCount = 0;
+                var title = data.title.trim();
+                var titleInLowerCase = title.toLowerCase();
+                var content = data.content.trim().replace(/<[^>]+>/g,"");
+                
+                var contentInLowerCase = content.toLowerCase();
+                var articleUrl = decodeURIComponent(data.url);
+                var indexOfTitle = [];
+                var indexOfContent = [];
+                // only match articles with not empty titles
+                if(title != '') {
+                  keywords.forEach(function(keyword) {
+                    function getIndexByWord(word, text, caseSensitive) {
+                      var wordLen = word.length;
+                      if (wordLen === 0) {
+                        return [];
+                      }
+                      var startPosition = 0, position = [], index = [];
+                      if (!caseSensitive) {
+                        text = text.toLowerCase();
+                        word = word.toLowerCase();
+                      }
+                      while ((position = text.indexOf(word, startPosition)) > -1) {
+                        index.push({position: position, word: word});
+                        startPosition = position + wordLen;
+                      }
+                      return index;
+                    }
+
+                    indexOfTitle = indexOfTitle.concat(getIndexByWord(keyword, titleInLowerCase, false));
+                    indexOfContent = indexOfContent.concat(getIndexByWord(keyword, contentInLowerCase, false));
+                  });
+                  if (indexOfTitle.length > 0 || indexOfContent.length > 0) {
+                    isMatch = true;
+                    hitCount = indexOfTitle.length + indexOfContent.length;
+                  }
+                }
+
+                // show search results
+
+                if (isMatch) {
+                  // sort index by position of keyword
+
+                  [indexOfTitle, indexOfContent].forEach(function (index) {
+                    index.sort(function (itemLeft, itemRight) {
+                      if (itemRight.position !== itemLeft.position) {
+                        return itemRight.position - itemLeft.position;
+                      } else {
+                        return itemLeft.word.length - itemRight.word.length;
+                      }
+                    });
+                  });
+
+                  // merge hits into slices
+
+                  function mergeIntoSlice(text, start, end, index) {
+                    var item = index[index.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    var hits = [];
+                    var searchTextCountInSlice = 0;
+                    while (position + word.length <= end && index.length != 0) {
+                      if (word === searchText) {
+                        searchTextCountInSlice++;
+                      }
+                      hits.push({position: position, length: word.length});
+                      var wordEnd = position + word.length;
+
+                      // move to next position of hit
+
+                      index.pop();
+                      while (index.length != 0) {
+                        item = index[index.length - 1];
+                        position = item.position;
+                        word = item.word;
+                        if (wordEnd > position) {
+                          index.pop();
+                        } else {
+                          break;
+                        }
+                      }
+                    }
+                    searchTextCount += searchTextCountInSlice;
+                    return {
+                      hits: hits,
+                      start: start,
+                      end: end,
+                      searchTextCount: searchTextCountInSlice
+                    };
+                  }
+
+                  var slicesOfTitle = [];
+                  if (indexOfTitle.length != 0) {
+                    slicesOfTitle.push(mergeIntoSlice(title, 0, title.length, indexOfTitle));
+                  }
+
+                  var slicesOfContent = [];
+                  while (indexOfContent.length != 0) {
+                    var item = indexOfContent[indexOfContent.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    // cut out 100 characters
+                    var start = position - 20;
+                    var end = position + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if (end < position + word.length) {
+                      end = position + word.length;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    slicesOfContent.push(mergeIntoSlice(content, start, end, indexOfContent));
+                  }
+
+                  // sort slices in content by search text's count and hits' count
+
+                  slicesOfContent.sort(function (sliceLeft, sliceRight) {
+                    if (sliceLeft.searchTextCount !== sliceRight.searchTextCount) {
+                      return sliceRight.searchTextCount - sliceLeft.searchTextCount;
+                    } else if (sliceLeft.hits.length !== sliceRight.hits.length) {
+                      return sliceRight.hits.length - sliceLeft.hits.length;
+                    } else {
+                      return sliceLeft.start - sliceRight.start;
+                    }
+                  });
+
+                  // select top N slices in content
+
+                  var upperBound = parseInt('1');
+                  if (upperBound >= 0) {
+                    slicesOfContent = slicesOfContent.slice(0, upperBound);
+                  }
+
+                  // highlight title and content
+
+                  function highlightKeyword(text, slice) {
+                    var result = '';
+                    var prevEnd = slice.start;
+                    slice.hits.forEach(function (hit) {
+                      result += text.substring(prevEnd, hit.position);
+                      var end = hit.position + hit.length;
+                      result += '<b class="search-keyword">' + text.substring(hit.position, end) + '</b>';
+                      prevEnd = end;
+                    });
+                    result += text.substring(prevEnd, slice.end);
+                    return result;
+                  }
+
+                  var resultItem = '';
+
+                  if (slicesOfTitle.length != 0) {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + highlightKeyword(title, slicesOfTitle[0]) + "</a>";
+                  } else {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + title + "</a>";
+                  }
+
+                  slicesOfContent.forEach(function (slice) {
+                    resultItem += "<a href='" + articleUrl + "'>" +
+                      "<p class=\"search-result\">" + highlightKeyword(content, slice) +
+                      "...</p>" + "</a>";
+                  });
+
+                  resultItem += "</li>";
+                  resultItems.push({
+                    item: resultItem,
+                    searchTextCount: searchTextCount,
+                    hitCount: hitCount,
+                    id: resultItems.length
+                  });
+                }
+              })
+            };
+            if (keywords.length === 1 && keywords[0] === "") {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>'
+            } else if (resultItems.length === 0) {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>'
+            } else {
+              resultItems.sort(function (resultLeft, resultRight) {
+                if (resultLeft.searchTextCount !== resultRight.searchTextCount) {
+                  return resultRight.searchTextCount - resultLeft.searchTextCount;
+                } else if (resultLeft.hitCount !== resultRight.hitCount) {
+                  return resultRight.hitCount - resultLeft.hitCount;
+                } else {
+                  return resultRight.id - resultLeft.id;
+                }
+              });
+              var searchResultList = '<ul class=\"search-result-list\">';
+              resultItems.forEach(function (result) {
+                searchResultList += result.item;
+              })
+              searchResultList += "</ul>";
+              resultContent.innerHTML = searchResultList;
+            }
+          }
+
+          if ('auto' === 'auto') {
+            input.addEventListener('input', inputEventFunction);
+          } else {
+            $('.search-icon').click(inputEventFunction);
+            input.addEventListener('keypress', function (event) {
+              if (event.keyCode === 13) {
+                inputEventFunction();
+              }
+            });
+          }
+
+          // remove loading animation
+          $(".local-search-pop-overlay").remove();
+          $('body').css('overflow', '');
+
+          proceedsearch();
+        }
+      });
+    }
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched === false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(onPopupClose);
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+    $(document).on('keyup', function (event) {
+      var shouldDismissSearchPopup = event.which === 27 &&
+        $('.search-popup').is(':visible');
+      if (shouldDismissSearchPopup) {
+        onPopupClose();
+      }
+    });
+  </script>
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  <script type="text/javascript" src="/js/src/love.js"></script>
+</body>
+</html>

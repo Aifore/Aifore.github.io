@@ -1,0 +1,1401 @@
+<!DOCTYPE html>
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+<html class="theme-next gemini use-motion" lang="zh-CN">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=6.3.0" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/cat.png?v=6.3.0">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=6.3.0">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=6.3.0">
+
+
+  <link rel="mask-icon" href="/images/cat.svg?v=6.3.0" color="#222">
+
+
+
+
+
+
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Gemini',
+    version: '6.3.0',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: false,
+    fastclick: false,
+    lazyload: false,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+  
+
+
+
+
+  <meta name="description" content="爬虫宝典1. 采集 urllib  1234567891011121314151617&amp;gt;1. 获取网页请求req = urllib.request.Request(url=url, headers=header)type(req) → &amp;lt;class &apos;urllib.request.Request&apos;&amp;gt;&amp;gt;2. 解析网页请求响应resp = urllib.request.urlo">
+<meta name="keywords" content="爬虫">
+<meta property="og:type" content="article">
+<meta property="og:title" content="爬虫学习总结">
+<meta property="og:url" content="http://yoursite.com/2018/06/27/爬虫宝典/index.html">
+<meta property="og:site_name" content="AiforeのBlog">
+<meta property="og:description" content="爬虫宝典1. 采集 urllib  1234567891011121314151617&amp;gt;1. 获取网页请求req = urllib.request.Request(url=url, headers=header)type(req) → &amp;lt;class &apos;urllib.request.Request&apos;&amp;gt;&amp;gt;2. 解析网页请求响应resp = urllib.request.urlo">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:updated_time" content="2018-07-03T07:00:48.588Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="爬虫学习总结">
+<meta name="twitter:description" content="爬虫宝典1. 采集 urllib  1234567891011121314151617&amp;gt;1. 获取网页请求req = urllib.request.Request(url=url, headers=header)type(req) → &amp;lt;class &apos;urllib.request.Request&apos;&amp;gt;&amp;gt;2. 解析网页请求响应resp = urllib.request.urlo">
+
+
+
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2018/06/27/爬虫宝典/"/>
+
+
+
+<script type="text/javascript" id="page.configurations">
+  CONFIG.page = {
+    sidebar: "",
+  };
+</script>
+
+  <title>爬虫学习总结 | AiforeのBlog</title>
+  
+
+
+
+
+
+
+
+
+
+  <noscript>
+  <style type="text/css">
+    .use-motion .motion-element,
+    .use-motion .brand,
+    .use-motion .menu-item,
+    .sidebar-inner,
+    .use-motion .post-block,
+    .use-motion .pagination,
+    .use-motion .comments,
+    .use-motion .post-header,
+    .use-motion .post-body,
+    .use-motion .collection-title { opacity: initial; }
+
+    .use-motion .logo,
+    .use-motion .site-title,
+    .use-motion .site-subtitle {
+      opacity: initial;
+      top: initial;
+    }
+
+    .use-motion {
+      .logo-line-before i { left: initial; }
+      .logo-line-after i { right: initial; }
+    }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-CN">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">AiforeのBlog</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+    
+      
+        <p class="site-subtitle">太陽が輝く限り、希望もまた輝く。</p>
+      
+    
+  </div>
+
+  <div class="site-nav-toggle">
+    <button aria-label="切换导航栏">
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  
+    <ul id="menu" class="menu">
+      
+        
+        
+        
+          
+          <li class="menu-item menu-item-home">
+    <a href="/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-home"></i> <br />首页</a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-about">
+    <a href="/about/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-user"></i> <br />关于</a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-tags">
+    <a href="/tags/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />标签</a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-categories">
+    <a href="/categories/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-th"></i> <br />分类</a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-archives">
+    <a href="/archives/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />归档</a>
+  </li>
+
+      
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br />搜索</a>
+        </li>
+      
+    </ul>
+  
+
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup search-popup local-search-popup">
+  <div class="local-search-header clearfix">
+    <span class="search-icon">
+      <i class="fa fa-search"></i>
+    </span>
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+    <div class="local-search-input-wrapper">
+      <input autocomplete="off"
+             placeholder="搜索..." spellcheck="false"
+             type="text" id="local-search-input">
+    </div>
+  </div>
+  <div id="local-search-result"></div>
+</div>
+
+
+
+    </div>
+  
+</nav>
+
+
+
+  
+
+
+
+</div>
+    </header>
+
+    
+
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+            
+
+          
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/06/27/爬虫宝典/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Aifore">
+      <meta itemprop="description" content="欢迎来到宇宙最帅Aifore的博客！">
+      <meta itemprop="image" content="/images/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="AiforeのBlog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">爬虫学习总结
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+
+              
+                
+              
+
+              <time title="创建时间：2018-06-27 12:30:48" itemprop="dateCreated datePublished" datetime="2018-06-27T12:30:48+08:00">2018-06-27</time>
+            
+
+            
+              
+
+              
+                
+                <span class="post-meta-divider">|</span>
+                
+
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">更新于</span>
+                
+                <time title="修改时间：2018-07-03 15:00:48" itemprop="dateModified" datetime="2018-07-03T15:00:48+08:00">2018-07-03</time>
+              
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/第三阶段学习笔记/" itemprop="url" rel="index"><span itemprop="name">第三阶段学习笔记</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h1 id="爬虫宝典"><a href="#爬虫宝典" class="headerlink" title="爬虫宝典"></a><center>爬虫宝典</center></h1><h2 id="1-采集"><a href="#1-采集" class="headerlink" title="1. 采集"></a>1. 采集</h2><ul>
+<li><h3 id="urllib"><a href="#urllib" class="headerlink" title="urllib"></a>urllib</h3></li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">&gt;<span class="number">1.</span> 获取网页请求</span><br><span class="line">req = urllib.request.Request(url=url, headers=header)</span><br><span class="line"></span><br><span class="line">type(req) → &lt;<span class="class"><span class="keyword">class</span> '<span class="title">urllib</span>.<span class="title">request</span>.<span class="title">Request</span>'&gt;</span></span><br><span class="line"><span class="class"></span></span><br><span class="line"><span class="class">&gt;2. 解析网页请求响应</span></span><br><span class="line">resp = urllib.request.urlopen(req)</span><br><span class="line"></span><br><span class="line">type(resp) → &lt;<span class="class"><span class="keyword">class</span> '<span class="title">http</span>.<span class="title">client</span>.<span class="title">HTTPResponse</span>'&gt;</span></span><br><span class="line"><span class="class"></span></span><br><span class="line"><span class="class">&gt;3. 解码为字符串格式的数据<span class="params">(可能为json字符串)</span></span></span><br><span class="line">data = res.read().decode('utf-8')</span><br><span class="line"></span><br><span class="line">&gt;<span class="number">4.</span> 若数据为json格式，需将json字符串解码为字符串(loads/dumps)</span><br><span class="line">result = json.loads(data)</span><br><span class="line"></span><br><span class="line">&gt;<span class="number">5.</span> 使用re/xpath/beautifulsoup4匹配信息</span><br></pre></td></tr></table></figure>
+<ul>
+<li><h3 id="requests"><a href="#requests" class="headerlink" title="requests"></a>requests</h3></li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">&gt;&lt;content&gt;, &lt;text&gt;, &lt;json()&gt;都是requests包&lt;models&gt;模块里&lt;Response&gt;类的方法:</span><br><span class="line"></span><br><span class="line">  &gt;content: <span class="string">"""Content of the response, in bytes."""</span></span><br><span class="line">  &gt;text: <span class="string">"""Content of the response, in unicode."""</span></span><br><span class="line">  &gt;json(): <span class="string">"""Returns the json-encoded content of a response, if any."""</span></span><br><span class="line">  </span><br><span class="line">&gt;requests包&lt;api&gt;模块下的&lt;get()&gt;函数</span><br><span class="line">  &gt;<span class="string">"""Sends a GET request.</span></span><br><span class="line"><span class="string">   :return: :class:`Response &lt;Response&gt;` object</span></span><br><span class="line"><span class="string">   :rtype: requests.Response"""</span></span><br><span class="line"></span><br><span class="line">路径：C:\Users\Administrator\AppData\Local\Programs\Python\Python36<span class="number">-32</span>\Lib\site-packages\requests\models.py</span><br></pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line">&gt;<span class="number">1.</span> 获取网页请求响应对象</span><br><span class="line">resp = requests.get(url=url, headers=header)</span><br><span class="line"></span><br><span class="line">type(resp) → &lt;<span class="class"><span class="keyword">class</span> '<span class="title">requests</span>.<span class="title">models</span>.<span class="title">Response</span>'&gt;</span></span><br><span class="line"><span class="class"></span></span><br><span class="line"><span class="class">&gt;2. 获取响应的字符串对象的<span class="params">(content/text)</span></span></span><br><span class="line">cont = resp.content</span><br><span class="line">text = resp.text</span><br><span class="line"></span><br><span class="line">type(cont) → &lt;<span class="class"><span class="keyword">class</span> '<span class="title">bytes</span>'&gt;</span></span><br><span class="line"><span class="class"><span class="title">type</span><span class="params">(text)</span> → &lt;<span class="title">class</span> '<span class="title">str</span>'&gt;</span></span><br><span class="line"><span class="class"></span></span><br><span class="line"><span class="class">&gt;3. 将字符串对象转化为&lt;<span class="title">Element</span> <span class="title">html</span>&gt;对象 → 不能打印</span></span><br><span class="line">html_ele1 = html.fromstring(cont/text)</span><br><span class="line">html_ele2 = etree.HTML(cont/text) → HTML也能直接解析url</span><br><span class="line"></span><br><span class="line">soup = BeautifulSoup(cont/text, <span class="string">"lxml"</span>) → 能打印</span><br><span class="line"></span><br><span class="line">type(html_ele1) → &lt;<span class="class"><span class="keyword">class</span> '<span class="title">lxml</span>.<span class="title">html</span>.<span class="title">HtmlElement</span>'&gt;</span></span><br><span class="line"><span class="class"><span class="title">type</span><span class="params">(html_ele2)</span> → &lt;<span class="title">class</span> '<span class="title">lxml</span>.<span class="title">etree</span>.<span class="title">_Element</span>'&gt;</span></span><br><span class="line"><span class="class">&gt;<span class="title">fromstring</span><span class="params">()</span>:</span> <span class="string">"Parse the html, returning a single element/document."</span></span><br><span class="line">&gt;HTML(): <span class="string">"Parses an HTML document from a string constant."</span></span><br><span class="line"></span><br><span class="line">&gt;<span class="number">4.</span> 匹配需要获取的链接</span><br><span class="line">pic_url = html_ele.xpath(<span class="string">'//div[@class="main-image"]/p/a/img/@src'</span>)[<span class="number">0</span>]</span><br></pre></td></tr></table></figure>
+<ul>
+<li><h3 id="BeautifulSoup"><a href="#BeautifulSoup" class="headerlink" title="BeautifulSoup"></a>BeautifulSoup</h3></li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">&gt;<span class="number">1.</span> 获取网页请求响应对象</span><br><span class="line">requests:</span><br><span class="line">    resp1 = requests.get(url=url, headers=header)</span><br><span class="line">urllib:</span><br><span class="line">    resp2 = request.urlopen(request.Request(url, headers=header))</span><br><span class="line"></span><br><span class="line">&gt;<span class="number">2.</span> 解析页面</span><br><span class="line">requests:</span><br><span class="line">    soup = BeautifulSoup(resp1.text/content, <span class="string">"lxml"</span>)</span><br><span class="line">urllib:</span><br><span class="line">    soup = BeautifulSoup(resp2, <span class="string">"lxml"</span>)</span><br><span class="line">print(soup) → 能打印</span><br><span class="line"></span><br><span class="line">type(soup) → &lt;<span class="class"><span class="keyword">class</span> '<span class="title">bs4</span>.<span class="title">BeautifulSoup</span>'&gt;</span></span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>可以通过urllib | requests发送网页请求并获取到网页对象。</p>
+<p>获取到网页相应对象后，可以使用：</p>
+<ol>
+<li>resp2.read().decode(‘utf-8’) → 针对urllib的响应，得到[str]</li>
+<li>BeautifulSoup → 需为字符串对象或者文件对象如resp1</li>
+<li>html.fromstring → 需为字符串对象</li>
+<li>etree.HTML → 需为字符串对象</li>
+</ol>
+<p>解析网页，其中BeautifulSoup解析的能够打印输出，html.fromstring | etree.HTML解析的为Element html对象不能打印输出，不能使用正则匹配。都能够使用xpath提取信息。</p>
+</blockquote>
+<hr>
+<h2 id="2-提取"><a href="#2-提取" class="headerlink" title="2. 提取"></a>2. 提取</h2><blockquote>
+<p>使用 re | xpath | Beautifulsoup匹配提取信息</p>
+</blockquote>
+<ul>
+<li><h3 id="re"><a href="#re" class="headerlink" title="re"></a>re</h3><ul>
+<li><a href="http://www.runoob.com/regexp/regexp-tutorial.html" target="_blank" rel="noopener">正则表达式菜鸟教程</a></li>
+<li><a href="http://deerchao.net/tutorials/regex/regex.htm" target="_blank" rel="noopener">正则表达式30分钟入门教程</a></li>
+<li><a href="https://docs.python.org/3.6/library/re.html" target="_blank" rel="noopener">re模块官方文档</a></li>
+<li><a href="https://www.cnblogs.com/MrFiona/p/5954084.html" target="_blank" rel="noopener">re模块中文博客</a></li>
+</ul>
+</li>
+</ul>
+<p>  常用功能函数：</p>
+<ol>
+<li>re.compile(pattern,flags=0) </li>
+<li>re.match(pattern, string, flags=0) </li>
+<li>re.search(pattern, string, flags=0) </li>
+<li>re.<strong>findall</strong>(pattern, string, flags=0) </li>
+<li>re.finditer(pattern, string, flags=0) </li>
+<li>re.split(pattern, string[, maxsplit]) </li>
+<li>re.sub(pattern, repl, string, count) </li>
+<li>subn(pattern, repl, string, count=0, flags=0) </li>
+</ol>
+<ul>
+<li><h3 id="xpath"><a href="#xpath" class="headerlink" title="xpath"></a>xpath</h3><ul>
+<li><a href="http://www.w3school.com.cn/xpath/" target="_blank" rel="noopener">xpath中文文档</a></li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">pic_url = pic_content.xpath(<span class="string">'//div[@class="main-image"]/p/a/img/@src'</span>)[<span class="number">0</span>]</span><br></pre></td></tr></table></figure>
+</li>
+<li><h3 id="Beautifulsoup"><a href="#Beautifulsoup" class="headerlink" title="Beautifulsoup"></a>Beautifulsoup</h3></li>
+</ul>
+<p><strong>find | find_all</strong></p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">find_all( name , attrs , recursive , text , **kwargs )</span><br><span class="line">find_all() 方法搜索当前tag的所有tag子节点,并判断是否符合过滤器的条件</span><br><span class="line"></span><br><span class="line"><span class="number">1.</span> 查询所有a标签的内容</span><br><span class="line"></span><br><span class="line">    soup.find_all(<span class="string">'a'</span>)</span><br><span class="line"></span><br><span class="line"><span class="number">2.</span> 查询所有a标签下<span class="class"><span class="keyword">class</span>样式为<span class="title">bb</span>的内容</span></span><br><span class="line"><span class="class"></span></span><br><span class="line"><span class="class">    <span class="title">soup</span>.<span class="title">find_all</span><span class="params">(<span class="string">'a'</span>, <span class="string">'bb'</span>)</span></span></span><br><span class="line"><span class="class"></span></span><br><span class="line"><span class="class">3. 查询所有<span class="title">id</span>样式为<span class="title">cc</span>的内容</span></span><br><span class="line"><span class="class"></span></span><br><span class="line"><span class="class">    <span class="title">soup</span>.<span class="title">find_all</span><span class="params">(id=<span class="string">'cc'</span>)</span></span></span><br></pre></td></tr></table></figure>
+<hr>
+<h2 id="3-线程-线程锁-进程"><a href="#3-线程-线程锁-进程" class="headerlink" title="3. 线程 | 线程锁 | 进程"></a>3. 线程 | 线程锁 | 进程</h2><ul>
+<li><h3 id="构造方法"><a href="#构造方法" class="headerlink" title="-构造方法-"></a>-构造方法-</h3></li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="number">1.</span> Thread/Process([group [, target [, name [, args [, kwargs]]]]])</span><br><span class="line">    group: 线程组，目前还没有实现，库引用中提示必须是<span class="keyword">None</span>；</span><br><span class="line">    target: 要执行的方法；</span><br><span class="line">    name: 线程名/进程名；</span><br><span class="line">    args/kwargs: 要传入方法的参数。</span><br><span class="line"></span><br><span class="line"><span class="number">2.</span> 定义Thread/Process类</span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">foo</span><span class="params">(Process)</span>:</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__init__</span><span class="params">(self, arg)</span>:</span></span><br><span class="line">        super(foo, self).__init__()</span><br><span class="line">        <span class="comment"># threading.Thread.__init__(self)</span></span><br><span class="line">        <span class="comment"># multiprocessing.Process.__init__(self)</span></span><br><span class="line">        self.arg = arg</span><br><span class="line"></span><br><span class="line">    <span class="comment"># 重构run函数</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">run</span><span class="params">(self)</span>:</span></span><br><span class="line">        print(<span class="string">'hello, %s'</span> % self.arg)</span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> __name__ == <span class="string">'__main__'</span>:</span><br><span class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> range(<span class="number">10</span>):</span><br><span class="line">        p = foo(i)</span><br><span class="line">        p.start()</span><br><span class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> range(<span class="number">10</span>):</span><br><span class="line">    	p.join()</span><br></pre></td></tr></table></figure>
+<ul>
+<li><h3 id="线程-进程"><a href="#线程-进程" class="headerlink" title="线程 | 进程"></a>线程 | 进程</h3></li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> threading <span class="keyword">import</span> Thread</span><br><span class="line"></span><br><span class="line"><span class="keyword">from</span> multiprocessing <span class="keyword">import</span> Process, Pool, Queue</span><br></pre></td></tr></table></figure>
+<p>进程实例方法：</p>
+<ol>
+<li>is_alive()：返回进程是否在运行。</li>
+<li>join([timeout])：阻塞当前上下文环境的进程，阻塞调用线程直至线程的join() 方法被调用中止-正常退出或者抛出未处理的异常-或者是可选的超时发生。 </li>
+<li>start()：进程准备就绪，等待CPU调度。</li>
+<li>run()：strat()调用run方法，如果实例进程时未制定传入target，这star执行t默认run()方法。</li>
+<li>terminate()：不管任务是否完成，立即停止工作进程。</li>
+</ol>
+<p>属性：</p>
+<ol>
+<li>authkey</li>
+<li>daemon：和线程的setDeamon功能一样（将父进程设置为守护进程，当父进程结束时，子进程也结束）。</li>
+<li>exitcode(进程在运行时为None、如果为–N，表示被信号N结束）。</li>
+<li>name：进程名字。</li>
+<li>pid：进程号。</li>
+</ol>
+<blockquote>
+<p>Pool: 如果想要控制进程数量，则建议使用进程池Pool类。<br>Queue: Process类适合简单的进程创建，如需资源共享可以结合Queue使用。</p>
+</blockquote>
+<ul>
+<li><h3 id="线程锁"><a href="#线程锁" class="headerlink" title="线程锁"></a>线程锁</h3></li>
+</ul>
+<p>其实并不是给资源加锁, 而是用锁去锁定资源，你可以定义多个锁，当你需要独占某一资源时，任何一个锁都可以锁这个资源，就好比你用不同的锁都可以把相同的一个门锁住是一个道理。当一个线程使用：lock.acquire() 获得了锁时，其他的线程就无法再获得该锁，他们就会阻塞在“if lock.acquire()”这里，直到锁被获得锁的线程释放：lock.release()。 锁内语句中的内容就是一块完整的代码，不会再存在执行了一半就暂停去执行别的线程的情况。所以最后结果是整齐的。 </p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 创建锁</span></span><br><span class="line">mutex = threading.Lock()</span><br><span class="line"><span class="comment"># 锁定</span></span><br><span class="line">mutex.acquire([timeout])</span><br><span class="line"><span class="comment"># 释放</span></span><br><span class="line">mutex.release()</span><br></pre></td></tr></table></figure>
+<ul>
+<li><h3 id="全局解释器锁GIL"><a href="#全局解释器锁GIL" class="headerlink" title="全局解释器锁GIL"></a>全局解释器锁GIL</h3></li>
+</ul>
+<p>Python代码的执行由Python 虚拟机(也叫解释器主循环，CPython版本)来控制，Python 在设计之初就考虑到要在解释器的主循环中，同时只有一个线程在执行，即在任意时刻，只有一个线程在解释器中运行。对Python 虚拟机的访问由全局解释器锁（GIL）来控制，正是这个锁能<strong>保证同一时刻只有一个线程在运行。</strong></p>
+<p>GIL的设计简化了CPython的实现，使得对象模型，包括关键的内建类型如字典，都是隐含可以并发访问的。锁住全局解释器使得比较容易的实现对多线程的支持，但也损失了多处理器主机的并行计算能力。</p>
+<p>但是，不论标准的，还是第三方的扩展模块，都被设计成在<strong>进行密集计算任务时，释放GIL。</strong></p>
+<p>还有，就是<strong>在做I/O操作时，GIL总是会被释放。</strong>对所有面向I/O 的(会调用内建的操作系统C 代码的)程序来说，GIL 会在这个I/O 调用之前被释放，以允许其它的线程在这个线程等待I/O 的时候运行。如果是纯计算的程序，没有 I/O 操作，解释器会每隔 100 次操作就释放这把锁，让别的线程有机会执行（这个次数可以通过 sys.setcheckinterval 来调整）。如果某线程并未使用很多I/O 操作，它会在自己的时间片内一直占用处理器（和GIL）。也就是说，<strong>I/O 密集型的Python 程序比计算密集型的程序更能充分利用多线程环境的好处。</strong></p>
+<p>在多线程环境中，Python 虚拟机按以下方式执行：</p>
+<ol>
+<li>设置GIL</li>
+<li>切换到一个线程去运行</li>
+<li>运行：</li>
+</ol>
+<p>​       a. 指定数量的字节码指令，或者</p>
+<p>​       b. 线程主动让出控制（可以调用time.sleep(0)）</p>
+<ol start="4">
+<li>把线程设置为睡眠状态</li>
+<li>解锁GIL</li>
+<li>再次重复以上所有步骤</li>
+</ol>
+<blockquote>
+<p>在调用外部代码（如C/C++扩展函数）的时候，GIL 将会被锁定，直到这个函数结束为止（由于在这期间没有Python 的字节码被运行，所以不会做线程切换）。</p>
+</blockquote>
+<ul>
+<li><strong>个人解读：</strong></li>
+</ul>
+<p>某一个时刻，有且只有一个线程在执行，但是在I/O操作和一定操作次数后会跳到其他线程执行 ，就相当于运算密集型的多线程其实没啥意义，每次在执行运算的时候只有一个线程，反而还花费了每100次切换线程的时间；而I/O密集型的多线程意义在于代码运算量很小，进行I/O操作时GIL会释放从而切换到其他线程再次快速完成代码运算，可以说所有I/O操作几乎在很短的时间段内同时进行(代码运算时间很短)，从而节省大量I/O等待时间。</p>
+<hr>
+<h2 id="4-selenium自动框架"><a href="#4-selenium自动框架" class="headerlink" title="4. selenium自动框架"></a>4. selenium自动框架</h2><ul>
+<li><strong>创建浏览器对象</strong></li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> selenium <span class="keyword">import</span> webdriver</span><br><span class="line"></span><br><span class="line"><span class="comment"># 指定驱动的地址</span></span><br><span class="line">chromeDriver = <span class="string">'C:\&lt;path&gt;\chromedriver.exe'</span></span><br><span class="line">browser = webdriver.Chrome(chromeDriver)</span><br><span class="line"></span><br><span class="line"><span class="comment"># browser = webdriver.Firefox()/Ie()/Opera()/Chrome()/PhantomJS()</span></span><br></pre></td></tr></table></figure>
+<ul>
+<li><strong>访问url</strong></li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">browser.get(<span class="string">'https://www.taobao.com/'</span>)</span><br></pre></td></tr></table></figure>
+<ul>
+<li><strong>获取元素</strong></li>
+</ul>
+<p>获取单个元素：</p>
+<ol>
+<li>find_element_by_name()是根据Name值获取</li>
+<li>find_element_by_id()是根据ID获取</li>
+<li>find_element_by_xpath()是根据Xpath提取</li>
+<li>find_element_by_css_selector(‘#xxx’)是根据id=xxx来获取</li>
+<li>find_element()方法，它需要传入两个参数，一个是查找的方式By，另一个就是值，实际上它就是find_element_by_id()这种方法的通用函数版本。</li>
+</ol>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> selenium.webdriver.common.by <span class="keyword">import</span> By</span><br><span class="line"></span><br><span class="line">find_element_by_id(id)</span><br><span class="line">等价于: find_element(By.ID, id)</span><br><span class="line"></span><br><span class="line">find_element_by_css_selector(<span class="string">'#xxx'</span>)</span><br><span class="line">等价于: find_elements(By.CSS_SELECTOR, <span class="string">'.service-bd li'</span>)</span><br></pre></td></tr></table></figure>
+<p>获取多个元素：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">find_elements_by_css_selector(<span class="string">'#xxx li'</span>) &gt;获取id=xxx下面的所有li</span><br></pre></td></tr></table></figure>
+<ul>
+<li><strong>前进后退</strong></li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">browser.back()</span><br><span class="line">browser.implicitly_wait(<span class="number">10</span>) &gt;隐式等待</span><br><span class="line">time.sleep(<span class="number">1</span>)</span><br><span class="line">browser.forward()</span><br></pre></td></tr></table></figure>
+<ul>
+<li><strong>Cookies操作</strong></li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 获取所有cookies信息</span></span><br><span class="line">browser.get_cookies()</span><br><span class="line"></span><br><span class="line"><span class="comment"># 添加一个Cookie信息</span></span><br><span class="line">browser.add_cookie(&#123;<span class="string">'name'</span>: <span class="string">'fxx'</span>, <span class="string">'value'</span>: <span class="string">'16'</span>&#125;)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 删除所有的Cookies</span></span><br><span class="line">browser.delete_all_cookies()</span><br></pre></td></tr></table></figure>
+<ul>
+<li><strong>切换窗口</strong></li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">browser.get(<span class="string">'https://www.taobao.com'</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 获取主窗口</span></span><br><span class="line">taobao_handler = browser.current_window_handle</span><br><span class="line"></span><br><span class="line"><span class="comment"># 点击导航栏女装按钮</span></span><br><span class="line">browser.find_element_by_xpath(<span class="string">'/html/body/div[4]/div[1]/div[1]/div[1]/div/ul/li[1]/a[1]'</span>).click()</span><br><span class="line"></span><br><span class="line">time.sleep(<span class="number">3</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 获取当前窗口</span></span><br><span class="line">text_browser_handler_nv = browser.current_window_handle</span><br><span class="line"></span><br><span class="line"><span class="comment"># 切换窗口继续点击男装案例</span></span><br><span class="line">browser.switch_to_window(taobao_handler)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 点击导航栏男装按钮</span></span><br><span class="line">browser.find_element_by_xpath(<span class="string">'/html/body/div[4]/div[1]/div[1]/div[1]/div/ul/li[1]/a[2]'</span>).click()</span><br><span class="line"></span><br><span class="line"><span class="comment"># 获取一共启动了多少窗口</span></span><br><span class="line">browser.window_handles</span><br></pre></td></tr></table></figure>
+<ul>
+<li><strong>解析页面</strong></li>
+</ul>
+<p>爬取豆瓣电影的图片和名称：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">driver.get(url)</span><br><span class="line">time.sleep(<span class="number">5</span>)</span><br><span class="line">soup = BeautifulSoup(driver.page_source, <span class="string">'lxml'</span>)</span><br><span class="line"><span class="keyword">for</span> img_tag <span class="keyword">in</span> soup.body.select(<span class="string">'img[src]'</span>):</span><br><span class="line">    alt = img_tag.attrs.get(<span class="string">'alt'</span>)</span><br><span class="line">    <span class="keyword">if</span> <span class="keyword">not</span> alt:</span><br><span class="line">        <span class="keyword">pass</span></span><br><span class="line">    <span class="keyword">else</span>:</span><br><span class="line">        print(img_tag.attrs.get(<span class="string">'src'</span>))</span><br><span class="line">        print(alt)</span><br></pre></td></tr></table></figure>
+
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+      <div>
+        <div style="padding: 10px 0; margin: 20px auto; width: 90%; text-align: center;">
+  <div>😊打  赏😊</div>
+  <button id="rewardButton" disable="enable" onclick="var qr = document.getElementById('QR'); if (qr.style.display === 'none') {qr.style.display='block';} else {qr.style.display='none'}">
+    <span>打赏</span>
+  </button>
+  <div id="QR" style="display: none;">
+
+    
+      <div id="wechat" style="display: inline-block">
+        <img id="wechat_qr" src="/images/wechatpay500.png" alt="Aifore 微信支付"/>
+        <p>微信支付</p>
+      </div>
+    
+
+    
+
+    
+
+  </div>
+</div>
+
+      </div>
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/爬虫/" rel="tag"># 爬虫</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2018/06/20/Ajax宝典/" rel="next" title="Ajax学习总结">
+                <i class="fa fa-chevron-left"></i> Ajax学习总结
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2018/07/04/Scrapy宝典/" rel="prev" title="Scrapy宝典">
+                Scrapy宝典 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image"
+                src="/images/avatar.jpg"
+                alt="Aifore" />
+            
+              <p class="site-author-name" itemprop="name">Aifore</p>
+              <p class="site-description motion-element" itemprop="description">欢迎来到宇宙最帅Aifore的博客！</p>
+          </div>
+
+          
+            <nav class="site-state motion-element">
+              
+                <div class="site-state-item site-state-posts">
+                
+                  <a href="/archives/">
+                
+                    <span class="site-state-item-count">13</span>
+                    <span class="site-state-item-name">日志</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-categories">
+                  <a href="/categories/index.html">
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">4</span>
+                    <span class="site-state-item-name">分类</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-tags">
+                  <a href="/tags/index.html">
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">15</span>
+                    <span class="site-state-item-name">标签</span>
+                  </a>
+                </div>
+              
+            </nav>
+          
+
+          
+
+          
+            <div class="links-of-author motion-element">
+              
+                <span class="links-of-author-item">
+                  <a href="https://github.com/aifore" target="_blank" title="GitHub"><i class="fa fa-fw fa-github"></i>GitHub</a>
+                  
+                </span>
+              
+            </div>
+          
+
+          
+          
+
+          
+          
+            <div class="links-of-blogroll motion-element links-of-blogroll-inline">
+              <div class="links-of-blogroll-title">
+                <i class="fa  fa-fw fa-link"></i>
+                友情链接
+              </div>
+              <ul class="links-of-blogroll-list">
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://threereyed.github.io/" title="雍神" target="_blank">雍神</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://gavinliu4011.github.io/" title="泰神" target="_blank">泰神</a>
+                  </li>
+                
+              </ul>
+            </div>
+          
+
+          
+            
+          
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#爬虫宝典"><span class="nav-text">爬虫宝典</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-采集"><span class="nav-text">1. 采集</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#urllib"><span class="nav-text">urllib</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#requests"><span class="nav-text">requests</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#BeautifulSoup"><span class="nav-text">BeautifulSoup</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-提取"><span class="nav-text">2. 提取</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#re"><span class="nav-text">re</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#xpath"><span class="nav-text">xpath</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Beautifulsoup"><span class="nav-text">Beautifulsoup</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-线程-线程锁-进程"><span class="nav-text">3. 线程 | 线程锁 | 进程</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#构造方法"><span class="nav-text">-构造方法-</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#线程-进程"><span class="nav-text">线程 | 进程</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#线程锁"><span class="nav-text">线程锁</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#全局解释器锁GIL"><span class="nav-text">全局解释器锁GIL</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#4-selenium自动框架"><span class="nav-text">4. selenium自动框架</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2018</span>
+  <span class="with-love" id="animate">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Aifore</span>
+
+  
+
+  
+</div>
+
+
+
+
+
+
+
+
+
+
+
+        
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=6.3.0"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=6.3.0"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=6.3.0"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=6.3.0"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=6.3.0"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=6.3.0"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=6.3.0"></script>
+
+
+
+  
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+  
+
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    var isXml = true;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length === 0) {
+      search_path = "search.xml";
+    } else if (/json$/i.test(search_path)) {
+      isXml = false;
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    var onPopupClose = function (e) {
+      $('.popup').hide();
+      $('#local-search-input').val('');
+      $('.search-result-list').remove();
+      $('#no-result').remove();
+      $(".local-search-pop-overlay").remove();
+      $('body').css('overflow', '');
+    }
+
+    function proceedsearch() {
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay"></div>')
+        .css('overflow', 'hidden');
+      $('.search-popup-overlay').click(onPopupClose);
+      $('.popup').toggle();
+      var $localSearchInput = $('#local-search-input');
+      $localSearchInput.attr("autocapitalize", "none");
+      $localSearchInput.attr("autocorrect", "off");
+      $localSearchInput.focus();
+    }
+
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+
+      // start loading animation
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay">' +
+          '<div id="search-loading-icon">' +
+          '<i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>' +
+          '</div>' +
+          '</div>')
+        .css('overflow', 'hidden');
+      $("#search-loading-icon").css('margin', '20% auto 0 auto').css('text-align', 'center');
+
+      
+
+      $.ajax({
+        url: path,
+        dataType: isXml ? "xml" : "json",
+        async: true,
+        success: function(res) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = isXml ? $("entry", res).map(function() {
+            return {
+              title: $("title", this).text(),
+              content: $("content",this).text(),
+              url: $("url" , this).text()
+            };
+          }).get() : res;
+          var input = document.getElementById(search_id);
+          var resultContent = document.getElementById(content_id);
+          var inputEventFunction = function() {
+            var searchText = input.value.trim().toLowerCase();
+            var keywords = searchText.split(/[\s\-]+/);
+            if (keywords.length > 1) {
+              keywords.push(searchText);
+            }
+            var resultItems = [];
+            if (searchText.length > 0) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var hitCount = 0;
+                var searchTextCount = 0;
+                var title = data.title.trim();
+                var titleInLowerCase = title.toLowerCase();
+                var content = data.content.trim().replace(/<[^>]+>/g,"");
+                
+                var contentInLowerCase = content.toLowerCase();
+                var articleUrl = decodeURIComponent(data.url);
+                var indexOfTitle = [];
+                var indexOfContent = [];
+                // only match articles with not empty titles
+                if(title != '') {
+                  keywords.forEach(function(keyword) {
+                    function getIndexByWord(word, text, caseSensitive) {
+                      var wordLen = word.length;
+                      if (wordLen === 0) {
+                        return [];
+                      }
+                      var startPosition = 0, position = [], index = [];
+                      if (!caseSensitive) {
+                        text = text.toLowerCase();
+                        word = word.toLowerCase();
+                      }
+                      while ((position = text.indexOf(word, startPosition)) > -1) {
+                        index.push({position: position, word: word});
+                        startPosition = position + wordLen;
+                      }
+                      return index;
+                    }
+
+                    indexOfTitle = indexOfTitle.concat(getIndexByWord(keyword, titleInLowerCase, false));
+                    indexOfContent = indexOfContent.concat(getIndexByWord(keyword, contentInLowerCase, false));
+                  });
+                  if (indexOfTitle.length > 0 || indexOfContent.length > 0) {
+                    isMatch = true;
+                    hitCount = indexOfTitle.length + indexOfContent.length;
+                  }
+                }
+
+                // show search results
+
+                if (isMatch) {
+                  // sort index by position of keyword
+
+                  [indexOfTitle, indexOfContent].forEach(function (index) {
+                    index.sort(function (itemLeft, itemRight) {
+                      if (itemRight.position !== itemLeft.position) {
+                        return itemRight.position - itemLeft.position;
+                      } else {
+                        return itemLeft.word.length - itemRight.word.length;
+                      }
+                    });
+                  });
+
+                  // merge hits into slices
+
+                  function mergeIntoSlice(text, start, end, index) {
+                    var item = index[index.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    var hits = [];
+                    var searchTextCountInSlice = 0;
+                    while (position + word.length <= end && index.length != 0) {
+                      if (word === searchText) {
+                        searchTextCountInSlice++;
+                      }
+                      hits.push({position: position, length: word.length});
+                      var wordEnd = position + word.length;
+
+                      // move to next position of hit
+
+                      index.pop();
+                      while (index.length != 0) {
+                        item = index[index.length - 1];
+                        position = item.position;
+                        word = item.word;
+                        if (wordEnd > position) {
+                          index.pop();
+                        } else {
+                          break;
+                        }
+                      }
+                    }
+                    searchTextCount += searchTextCountInSlice;
+                    return {
+                      hits: hits,
+                      start: start,
+                      end: end,
+                      searchTextCount: searchTextCountInSlice
+                    };
+                  }
+
+                  var slicesOfTitle = [];
+                  if (indexOfTitle.length != 0) {
+                    slicesOfTitle.push(mergeIntoSlice(title, 0, title.length, indexOfTitle));
+                  }
+
+                  var slicesOfContent = [];
+                  while (indexOfContent.length != 0) {
+                    var item = indexOfContent[indexOfContent.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    // cut out 100 characters
+                    var start = position - 20;
+                    var end = position + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if (end < position + word.length) {
+                      end = position + word.length;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    slicesOfContent.push(mergeIntoSlice(content, start, end, indexOfContent));
+                  }
+
+                  // sort slices in content by search text's count and hits' count
+
+                  slicesOfContent.sort(function (sliceLeft, sliceRight) {
+                    if (sliceLeft.searchTextCount !== sliceRight.searchTextCount) {
+                      return sliceRight.searchTextCount - sliceLeft.searchTextCount;
+                    } else if (sliceLeft.hits.length !== sliceRight.hits.length) {
+                      return sliceRight.hits.length - sliceLeft.hits.length;
+                    } else {
+                      return sliceLeft.start - sliceRight.start;
+                    }
+                  });
+
+                  // select top N slices in content
+
+                  var upperBound = parseInt('1');
+                  if (upperBound >= 0) {
+                    slicesOfContent = slicesOfContent.slice(0, upperBound);
+                  }
+
+                  // highlight title and content
+
+                  function highlightKeyword(text, slice) {
+                    var result = '';
+                    var prevEnd = slice.start;
+                    slice.hits.forEach(function (hit) {
+                      result += text.substring(prevEnd, hit.position);
+                      var end = hit.position + hit.length;
+                      result += '<b class="search-keyword">' + text.substring(hit.position, end) + '</b>';
+                      prevEnd = end;
+                    });
+                    result += text.substring(prevEnd, slice.end);
+                    return result;
+                  }
+
+                  var resultItem = '';
+
+                  if (slicesOfTitle.length != 0) {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + highlightKeyword(title, slicesOfTitle[0]) + "</a>";
+                  } else {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + title + "</a>";
+                  }
+
+                  slicesOfContent.forEach(function (slice) {
+                    resultItem += "<a href='" + articleUrl + "'>" +
+                      "<p class=\"search-result\">" + highlightKeyword(content, slice) +
+                      "...</p>" + "</a>";
+                  });
+
+                  resultItem += "</li>";
+                  resultItems.push({
+                    item: resultItem,
+                    searchTextCount: searchTextCount,
+                    hitCount: hitCount,
+                    id: resultItems.length
+                  });
+                }
+              })
+            };
+            if (keywords.length === 1 && keywords[0] === "") {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>'
+            } else if (resultItems.length === 0) {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>'
+            } else {
+              resultItems.sort(function (resultLeft, resultRight) {
+                if (resultLeft.searchTextCount !== resultRight.searchTextCount) {
+                  return resultRight.searchTextCount - resultLeft.searchTextCount;
+                } else if (resultLeft.hitCount !== resultRight.hitCount) {
+                  return resultRight.hitCount - resultLeft.hitCount;
+                } else {
+                  return resultRight.id - resultLeft.id;
+                }
+              });
+              var searchResultList = '<ul class=\"search-result-list\">';
+              resultItems.forEach(function (result) {
+                searchResultList += result.item;
+              })
+              searchResultList += "</ul>";
+              resultContent.innerHTML = searchResultList;
+            }
+          }
+
+          if ('auto' === 'auto') {
+            input.addEventListener('input', inputEventFunction);
+          } else {
+            $('.search-icon').click(inputEventFunction);
+            input.addEventListener('keypress', function (event) {
+              if (event.keyCode === 13) {
+                inputEventFunction();
+              }
+            });
+          }
+
+          // remove loading animation
+          $(".local-search-pop-overlay").remove();
+          $('body').css('overflow', '');
+
+          proceedsearch();
+        }
+      });
+    }
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched === false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(onPopupClose);
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+    $(document).on('keyup', function (event) {
+      var shouldDismissSearchPopup = event.which === 27 &&
+        $('.search-popup').is(':visible');
+      if (shouldDismissSearchPopup) {
+        onPopupClose();
+      }
+    });
+  </script>
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  <script type="text/javascript" src="/js/src/love.js"></script>
+</body>
+</html>
