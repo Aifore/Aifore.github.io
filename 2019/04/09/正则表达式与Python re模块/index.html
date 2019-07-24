@@ -116,7 +116,7 @@
 <meta property="og:site_name" content="AiforeのBlog">
 <meta property="og:description" content="&amp;emsp;&amp;emsp;本文基本都是搬运的，因为网上的教程大多没什么太大区别，知识点主要都是这些，所以就直接搬运了。主要目的是通过自己整理粘贴过来的格式，把博客能够很好地阅读并理解一边，另外平时也方便在自己的博客地址里直接查看。">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2019-07-17T06:15:13.852Z">
+<meta property="og:updated_time" content="2019-07-17T06:17:53.825Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="正则表达式与Python re模块">
 <meta name="twitter:description" content="&amp;emsp;&amp;emsp;本文基本都是搬运的，因为网上的教程大多没什么太大区别，知识点主要都是这些，所以就直接搬运了。主要目的是通过自己整理粘贴过来的格式，把博客能够很好地阅读并理解一边，另外平时也方便在自己的博客地址里直接查看。">
@@ -399,7 +399,7 @@
                 
                   <span class="post-meta-item-text">更新于</span>
                 
-                <time title="修改时间：2019-07-17 13:15:13" itemprop="dateModified" datetime="2019-07-17T13:15:13+07:00">2019-07-17</time>
+                <time title="修改时间：2019-07-17 13:17:53" itemprop="dateModified" datetime="2019-07-17T13:17:53+07:00">2019-07-17</time>
               
             
           </span>
@@ -698,7 +698,7 @@
 <h3 id="1-10-负向零宽断言"><a href="#1-10-负向零宽断言" class="headerlink" title="1.10 负向零宽断言"></a>1.10 负向零宽断言</h3><blockquote>
 <p>请详细分析表达式(?&lt;=&lt;(\w+)&gt;).*(?=&lt;\/\1&gt;)，这个表达式最能表现零宽断言的真正用途。</p>
 </blockquote>
-<p>前面我们提到过怎么查找<strong>不是某个字符或不在某个字符类里</strong>的字符的方法(反义)。但是如果我们只是想要<strong>确保某个字符没有出现，但并不想去匹配它</strong>时怎么办？例如，如果我们想查找这样的单词–它里面出现了字母q，但是q后面跟的不是字母u，我们可以尝试这样：</p>
+<p>前面我们提到过怎么查找<strong>不是某个字符或不在某个字符类里</strong>的字符的方法(反义)。但是如果我们只是想要<strong>确保某个字符没有出现，但并不想去匹配它</strong>时怎么办？例如，如果我们想查找这样的单词——它里面出现了字母q，但是q后面跟的不是字母u，我们可以尝试这样：</p>
 <p><code>\b\w*q[^u]\w*\b</code>匹配包含<strong>后面不是字母u的字母q</strong>的单词。但是如果多做测试(或者你思维足够敏锐，直接就观察出来了)，你会发现，如果q出现在单词的结尾的话，像<strong>Iraq</strong>、<strong>Benq</strong>，这个表达式就会出错。这是因为<code>[^u]</code>总要匹配一个字符，所以如果q是单词的最后一个字符的话，后面的<code>[^u]</code>将会匹配q后面的单词分隔符(可能是空格，或者是句号或其它的什么)，后面的<code>\w*\b</code>将会匹配下一个单词，于是<code>\b\w*q[^u]\w*\b</code>就能匹配整个<em>Iraq fighting</em>。<strong>负向零宽断言</strong>能解决这样的问题，因为它只匹配一个位置，并不<strong>消费</strong>任何字符。现在，我们可以这样来解决这个问题：<code>\b\w*q(?!u)\w*\b</code>。</p>
 <ul>
 <li><p><strong>零宽度负预测先行断言</strong><code>(?!exp)</code>，<u>断言此位置的后面不能匹配表达式exp。</u>例如：<code>\d{3}(?!\d)</code>匹配三位数字，而且这三位数字的后面不能是数字；<code>\b((?!abc)\w)+\b</code>匹配不包含连续字符串abc的单词。</p>
