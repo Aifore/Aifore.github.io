@@ -116,7 +116,7 @@
 <meta property="og:site_name" content="AiforeのBlog">
 <meta property="og:description" content="本文主要提及内容：  JWT RSA AES">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2019-09-01T17:15:55.101Z">
+<meta property="og:updated_time" content="2019-09-01T17:21:35.363Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="加密之前言（一）">
 <meta name="twitter:description" content="本文主要提及内容：  JWT RSA AES">
@@ -399,7 +399,7 @@
                 
                   <span class="post-meta-item-text">更新于</span>
                 
-                <time title="修改时间：2019-09-02 00:15:55" itemprop="dateModified" datetime="2019-09-02T00:15:55+07:00">2019-09-02</time>
+                <time title="修改时间：2019-09-02 00:21:35" itemprop="dateModified" datetime="2019-09-02T00:21:35+07:00">2019-09-02</time>
               
             
           </span>
@@ -488,10 +488,16 @@
 </li>
 </ul>
 <p>生成密钥：</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 1. 生成公钥 《PKCS1格式》</span></span><br><span class="line">openssl genrsa -out rsa_private_key.pem 2048</span><br><span class="line"><span class="comment"># 将PKCS1格式私钥转换成PKCS8格式</span></span><br><span class="line">openssl pkcs8 -topk8 -inform PEM -<span class="keyword">in</span> rsa_pri_key.pem -outform PEM -nocrypt -out rsa_pri_key_pkcs8.pem</span><br><span class="line"><span class="comment"># 将PKCS8格式私钥转换成PKCS1格式</span></span><br><span class="line">openssl rsa -inform PEM -<span class="keyword">in</span> rsa_pri_key_pkcs8.pem -outform PEM -out rsa_pri_key.pem</span><br><span class="line"></span><br><span class="line"><span class="comment"># 2. 根据私钥生成公钥 《PKCS8格式》</span></span><br><span class="line">openssl rsa -<span class="keyword">in</span> rsa_pri_key.pem -pubout -out rsa_pub_key.pem</span><br><span class="line"><span class="comment"># 将PKCS8格式公钥转换成PKCS1格式</span></span><br><span class="line">openssl rsa -pubin -<span class="keyword">in</span> rsa_pub_key.pem -RSAPublicKey_out -out rsa_pub_key_pkcs1.pem</span><br><span class="line"><span class="comment"># 将PKCS1格式公钥转换成PKCS8格式</span></span><br><span class="line">openssl rsa -RSAPublicKey_in -<span class="keyword">in</span> rsa_pub_key_pkcs1.pem -pubout -out rsa_pub_key.pem</span><br></pre></td></tr></table></figure>
-<p>关于PKCS#8和PKCS#1：</p>
-<p>PKC#8定义了一种编码和传输密钥的方法，它并不特定于OpenSSL；</p>
-<p>PKCS#1定义了一种使用RSA密钥的方法（无论它是如何加载到应用程序中，是否使用PKCS#8）来执行和验证数据的数字签名。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 1. 生成公钥 《默认生成PKCS1格式》</span></span><br><span class="line">openssl genrsa -out rsa_private_key.pem 2048</span><br><span class="line"><span class="comment"># 将PKCS1格式私钥转换成PKCS8格式</span></span><br><span class="line">openssl pkcs8 -topk8 -inform PEM -<span class="keyword">in</span> rsa_pri_key.pem -outform PEM -nocrypt -out rsa_pri_key_pkcs8.pem</span><br><span class="line"><span class="comment"># 将PKCS8格式私钥转换成PKCS1格式</span></span><br><span class="line">openssl rsa -inform PEM -<span class="keyword">in</span> rsa_pri_key_pkcs8.pem -outform PEM -out rsa_pri_key.pem</span><br><span class="line"></span><br><span class="line"><span class="comment"># 2. 根据私钥生成公钥 《默认生成PKCS8格式》</span></span><br><span class="line">openssl rsa -<span class="keyword">in</span> rsa_pri_key.pem -pubout -out rsa_pub_key.pem</span><br><span class="line"><span class="comment"># 将PKCS8格式公钥转换成PKCS1格式</span></span><br><span class="line">openssl rsa -pubin -<span class="keyword">in</span> rsa_pub_key.pem -RSAPublicKey_out -out rsa_pub_key_pkcs1.pem</span><br><span class="line"><span class="comment"># 将PKCS1格式公钥转换成PKCS8格式</span></span><br><span class="line">openssl rsa -RSAPublicKey_in -<span class="keyword">in</span> rsa_pub_key_pkcs1.pem -pubout -out rsa_pub_key.pem</span><br></pre></td></tr></table></figure>
+<p>关于<strong>PKCS#8</strong>和<strong>PKCS#1</strong>：</p>
+<ul>
+<li><p>PKC#8：定义了一种编码和传输密钥的方法，它并不特定于OpenSSL；</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 公钥</span></span><br><span class="line">-----BEGIN PUBLIC KEY-----</span><br><span class="line">-----END PUBLIC KEY-----</span><br><span class="line"><span class="comment"># 私钥</span></span><br><span class="line">-----BEGIN PRIVATE KEY-----</span><br><span class="line">-----END PRIVATE KEY-----</span><br><span class="line"></span><br><span class="line"><span class="comment"># 私钥加密的格式</span></span><br><span class="line">-----BEGIN ENCRYPTED PRIVATE KEY-----</span><br><span class="line">-----END ENCRYPTED PRIVATE KEY-----</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>PKCS#1：定义了一种使用RSA密钥的方法（无论它是如何加载到应用程序中，是否使用PKCS#8）来执行和验证数据的数字签名。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 公钥</span></span><br><span class="line">-----BEGIN RSA PUBLIC KEY-----</span><br><span class="line">-----END RSA PUBLIC KEY-----</span><br><span class="line"><span class="comment"># 私钥</span></span><br><span class="line">-----BEGIN RSA PRIVATE KEY-----</span><br><span class="line">-----END RSA PRIVATE KEY-----</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
 <p>你拥有的这段代码有三件事：</p>
 <ol>
 <li>它将Base64解码为PKCS#8</li>
