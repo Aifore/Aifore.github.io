@@ -108,18 +108,18 @@
 
 
 
-  <meta name="description" content="本文主要提及内容：  常见加密种类：对称加密/非对称加密 常见使用场景：加密与解密/签名与验签 加密的演化原理解析">
+  <meta name="description" content="本文主要提及内容：  常见加密种类：对称加密/非对称加密 常见使用场景：加密与解密/签名与验签 加密的演化原理解析 数字证书的由来及构成">
 <meta name="keywords" content="加密">
 <meta property="og:type" content="article">
 <meta property="og:title" content="加密之前言（一）">
 <meta property="og:url" content="http://yoursite.com/2019/08/27/加密之前言（一）/index.html">
 <meta property="og:site_name" content="AiforeのBlog">
-<meta property="og:description" content="本文主要提及内容：  常见加密种类：对称加密/非对称加密 常见使用场景：加密与解密/签名与验签 加密的演化原理解析">
+<meta property="og:description" content="本文主要提及内容：  常见加密种类：对称加密/非对称加密 常见使用场景：加密与解密/签名与验签 加密的演化原理解析 数字证书的由来及构成">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2019-09-15T18:26:38.241Z">
+<meta property="og:updated_time" content="2019-09-16T16:12:20.119Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="加密之前言（一）">
-<meta name="twitter:description" content="本文主要提及内容：  常见加密种类：对称加密/非对称加密 常见使用场景：加密与解密/签名与验签 加密的演化原理解析">
+<meta name="twitter:description" content="本文主要提及内容：  常见加密种类：对称加密/非对称加密 常见使用场景：加密与解密/签名与验签 加密的演化原理解析 数字证书的由来及构成">
 
 
 
@@ -399,7 +399,7 @@
                 
                   <span class="post-meta-item-text">更新于</span>
                 
-                <time title="修改时间：2019-09-16 01:26:38" itemprop="dateModified" datetime="2019-09-16T01:26:38+07:00">2019-09-16</time>
+                <time title="修改时间：2019-09-16 23:12:20" itemprop="dateModified" datetime="2019-09-16T23:12:20+07:00">2019-09-16</time>
               
             
           </span>
@@ -475,6 +475,7 @@
 <li>常见加密种类：对称加密/非对称加密</li>
 <li>常见使用场景：加密与解密/签名与验签</li>
 <li>加密的演化原理解析</li>
+<li>数字证书的由来及构成</li>
 </ul>
 <a id="more"></a>
 <h3 id="一、前言"><a href="#一、前言" class="headerlink" title="一、前言"></a>一、前言</h3><h4 id="1-1-历史背景"><a href="#1-1-历史背景" class="headerlink" title="1.1 历史背景"></a>1.1 历史背景</h4><p><a href="http://www.ruanyifeng.com/blog/2013/06/rsa_algorithm_part_one.html" target="_blank" rel="noopener">阮一峰的网络日志：RSA算法原理（一）</a></p>
@@ -620,11 +621,11 @@
 <p>就是指的这个数字证书的数字签名所使用的加密算法，这样就可以使用证书发布机构的证书里面的公钥，根据这个算法对指纹进行解密。指纹的加密结果就是数字签名。</p>
 </li>
 <li><p>Thumbprint, Thumbprint algorithm (指纹以及指纹算法)</p>
-<p>这个是用来保证证书的完整性的，也就是说确保证书没有被修改过，这东西的作用和2.7中说到的第3个问题类似。 其原理就是在发布证书时，发布者根据指纹算法(一个hash算法)计算整个证书的hash值(指纹)并和证书放在一起，使用者在打开证书时，自己也根据指纹算法计算一下证书的hash值(指纹)，如果和刚开始的值对得上，就说明证书没有被修改过，因为证书的内容被修改后，根据证书的内容计算的出的hash值(指纹)是会变化的。 注意，这个指纹会使用”SecureTrust CA”这个证书机构的<strong>私钥用签名算法</strong>(Signature algorithm)加密后和证书放在一起。</p>
+<p>这个是用来保证证书的完整性的，也就是说确保证书没有被修改过，这东西的作用和2.7中说到的第3个问题类似。 其原理就是在发布证书时，发布者根据指纹算法(一个hash算法)计算整个证书的<strong>hash值(指纹)</strong>并和证书放在一起，使用者在打开证书时，自己也根据指纹算法计算一下证书的hash值(指纹)，如果和刚开始的值对得上，就说明证书没有被修改过，因为证书的内容被修改后，根据证书的内容计算的出的hash值(指纹)是会变化的。 注意，这个指纹会使用”SecureTrust CA”这个证书机构的私钥用<strong>签名算法</strong>(Signature algorithm)加密后和证书放在一起。</p>
 </li>
 </ol>
 <p>注意，为了保证安全，在证书的发布机构发布证书时，证书的指纹和指纹算法，都会加密后再和证书放到一起发布，以防有人修改指纹后伪造相应的数字证书。这里问题又来了，证书的指纹和指纹算法用什么加密呢？他们是用证书发布机构的私钥进行加密的。可以用证书发布机构的公钥对指纹和指纹算法解密，<strong>也就是说证书发布机构除了给别人发布证书外，他自己本身也有自己的证书</strong>。证书发布机构的证书是哪里来的呢？？？这个证书发布机构的数字证书(一般由他自己生成)在我们的操作系统刚安装好时(例如windows xp等操作系统)，这些证书发布机构的数字证书就已经被微软(或者其它操作系统的开发机构)安装在操作系统中了，微软等公司会根据一些权威安全机构的评估选取一些信誉很好并且通过一定的安全认证的证书发布机构，把这些证书发布机构的证书默认就安装在操作系统里面了，并且设置为操作系统信任的数字证书。这些证书发布机构自己持有与他自己的数字证书对应的私钥，他会用这个私钥加密所有他发布的证书的指纹作为数字签名。</p>
-<h4 id="3-2-如何向证书的发布机构去申请证书"><a href="#3-2-如何向证书的发布机构去申请证书" class="headerlink" title="3.2 如何向证书的发布机构去申请证书"></a>3.2 如何向证书的发布机构去申请证书</h4><p>举个例子方便大家理解，假设我们公司”ABC Company”花了1000块钱，向一个证书发布机构”SecureTrust CA”为我们自己的公司”ABC Company”申请了一张证书，注意，这个证书发布机构”SecureTrust CA”是一个大家公认并被一些权威机构接受的证书发布机构，我们的操作系统里面已经安装了”SecureTrust CA”的证书。”SecureTrust CA”在给我们发布证书时，把Issuer,Public key,Subject,Valid from,Valid to等信息以明文的形式写到证书里面，然后用一个指纹算法计算出这些数字证书内容的一个指纹，并把指纹和指纹算法用自己的私钥进行加密，然后和证书的内容一起发布，同时”SecureTrust CA”还会给一个我们公司”ABC Company”的私钥给到我们。我们花了1000块钱买的这个证书的内容如下：</p>
+<h4 id="3-2-如何向证书的发布机构去申请证书"><a href="#3-2-如何向证书的发布机构去申请证书" class="headerlink" title="3.2 如何向证书的发布机构去申请证书"></a>3.2 如何向证书的发布机构去申请证书</h4><p>举个例子方便大家理解，假设我们公司”ABC Company”花了1000块钱，向一个证书发布机构”SecureTrust CA”为我们自己的公司”ABC Company”申请了一张证书，注意，这个证书发布机构”SecureTrust CA”是一个大家公认并被一些权威机构接受的证书发布机构，我们的操作系统里面已经安装了”SecureTrust CA”的证书。”SecureTrust CA”在给我们发布证书时，把Issuer,Public key,Subject,Valid from,Valid to等信息以明文的形式写到证书里面，然后用一个指纹算法计算出这些数字证书内容的一个指纹，并把指纹和指纹算法用自己的私钥进行加密，然后和证书的内容一起发布，同时”SecureTrust CA”还会给一个我们公司”ABC Company”的<strong>私钥</strong>给到我们。我们花了1000块钱买的这个证书的内容如下：</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">×××××××××××××××证书内容开始×××××××××××××××××</span><br><span class="line"></span><br><span class="line">Issuer : SecureTrust CA</span><br><span class="line"></span><br><span class="line">Subject : ABC Company</span><br><span class="line"></span><br><span class="line">Valid from ： 某个日期</span><br><span class="line"></span><br><span class="line">Valid to： 某个日期</span><br><span class="line"></span><br><span class="line">Public Key : 一串很长的数字</span><br><span class="line"></span><br><span class="line">…… 其它的一些证书内容……</span><br><span class="line"></span><br><span class="line">// 这个就是&quot;SecureTrust CA&quot;对这个证书的一个数字签名，表示这个证书确实是他发布的，有什么问题他会负责</span><br><span class="line">&#123;证书的指纹和计算指纹所使用的指纹算法&#125;[SecureTrust CA的私钥|RSA]</span><br><span class="line"></span><br><span class="line">×××××××××××××××证书内容结束×××××××××××××××××</span><br></pre></td></tr></table></figure>
 <p>我们”ABC Company”申请到这个证书后，我们把证书投入使用，我们在通信过程开始时会把证书发给对方，对方如何检查这个证书的确是合法的并且是我们”ABC Company”公司的证书呢？首先应用程序(对方通信用的程序，例如IE、OUTLook等)读取证书中的Issuer(发布机构)为”SecureTrust CA” ，然后会在操作系统中受信任的发布机构的证书中去找”SecureTrust CA”的证书，如果找不到，那说明证书的发布机构是个水货发布机构，证书可能有问题，程序会给出一个错误信息。 如果在系统中找到了”SecureTrust CA”的证书，那么应用程序就会从证书中取出”SecureTrust CA”的公钥，然后对我们”ABC Company”公司的证书里面的指纹和指纹算法用这个公钥进行解密，然后使用这个指纹算法计算”ABC Company”证书的指纹，将这个计算的指纹与放在证书中的指纹对比，如果一致，说明”ABC Company”的证书肯定没有被修改过并且证书是”SecureTrust CA” 发布的，证书中的公钥肯定是”ABC Company”的。对方然后就可以放心的使用这个公钥和我们”ABC Company”进行通信了。</p>
 <h4 id="3-3-证书的发布机构"><a href="#3-3-证书的发布机构" class="headerlink" title="3.3 证书的发布机构"></a>3.3 证书的发布机构</h4><p>其实所有的公司都可以发布证书，我们自己也可以去注册一家公司来专门给别人发布证书。但是很明显，我们自己的专门发布证书的公司是不会被那些国际上的权威机构认可的，人家怎么知道你是不是个狗屁皮包公司？因此微软在它的操作系统中，并不会信任我们这个证书发布机构，当应用程序在检查证书的合法信的时候，一看证书的发布机构并不是操作系统所信任的发布机构，就会抛出错误信息。也就是说windows操作系统中不会预先安装好我们这个证书发布机构的证书，不信任我们这个发布机构。</p>
