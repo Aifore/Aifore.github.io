@@ -108,24 +108,25 @@
 
 
 
-  <meta name="description" content="欢迎来到宇宙最帅Aifore的博客！">
-<meta name="keywords" content="python">
-<meta property="og:type" content="website">
-<meta property="og:title" content="AiforeのBlog">
-<meta property="og:url" content="http://yoursite.com/tags/datetime模块/index.html">
+  <meta name="description" content="Vamei：Linux进程间通信 进程间通信方式主要可以分为两种：  管道(PIPE)机制。 使用管道将一个进程的输出和另一个进程的输入连接起来，从而利用文件操作API来管理进程间通信。  传统IPC (interprocess communication)。 主要是指：  消息队列(message queue) 信号量(semaphore) 共享内存(shared memory)  这些IPC的">
+<meta name="keywords" content="管道,队列,共享内存">
+<meta property="og:type" content="article">
+<meta property="og:title" content="进程间常见通信方式">
+<meta property="og:url" content="http://yoursite.com/2019/05/02/进程间常见通信方式/index.html">
 <meta property="og:site_name" content="AiforeのBlog">
-<meta property="og:description" content="欢迎来到宇宙最帅Aifore的博客！">
+<meta property="og:description" content="Vamei：Linux进程间通信 进程间通信方式主要可以分为两种：  管道(PIPE)机制。 使用管道将一个进程的输出和另一个进程的输入连接起来，从而利用文件操作API来管理进程间通信。  传统IPC (interprocess communication)。 主要是指：  消息队列(message queue) 信号量(semaphore) 共享内存(shared memory)  这些IPC的">
 <meta property="og:locale" content="zh-CN">
+<meta property="og:updated_time" content="2019-09-17T15:46:28.019Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="AiforeのBlog">
-<meta name="twitter:description" content="欢迎来到宇宙最帅Aifore的博客！">
+<meta name="twitter:title" content="进程间常见通信方式">
+<meta name="twitter:description" content="Vamei：Linux进程间通信 进程间通信方式主要可以分为两种：  管道(PIPE)机制。 使用管道将一个进程的输出和另一个进程的输入连接起来，从而利用文件操作API来管理进程间通信。  传统IPC (interprocess communication)。 主要是指：  消息队列(message queue) 信号量(semaphore) 共享内存(shared memory)  这些IPC的">
 
 
 
 
 
 
-  <link rel="canonical" href="http://yoursite.com/tags/datetime模块/"/>
+  <link rel="canonical" href="http://yoursite.com/2019/05/02/进程间常见通信方式/"/>
 
 
 
@@ -135,7 +136,7 @@
   };
 </script>
 
-  <title>标签: datetime模块 | AiforeのBlog</title>
+  <title>进程间常见通信方式 | AiforeのBlog</title>
   
 
 
@@ -182,7 +183,7 @@
     
   
 
-  <div class="container sidebar-position-left ">
+  <div class="container sidebar-position-left page-post-detail">
     <div class="headband"></div>
 
     <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
@@ -239,7 +240,7 @@
         
         
           
-          <li class="menu-item menu-item-tags menu-item-active">
+          <li class="menu-item menu-item-tags">
     <a href="/tags/" rel="section">
       <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />标签</a>
   </li>
@@ -319,84 +320,355 @@
           
             
 
-    
-    
-      
-      
-    
-      
-      
-    
-      
-      
-    
-      
-      
-    
-      
-      
-    
-    
-
-  
-
-
           
           <div id="content" class="content">
             
 
-  
-  
-  
-  <div class="post-block tag">
+  <div id="posts" class="posts-expand">
+    
 
-    <div id="posts" class="posts-collapse">
-      <div class="collection-title">
-        <h1>datetime模块<small>标签</small>
-        </h1>
-      </div>
+  
 
-      
-        
+  
+  
+  
+
+  
 
   <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/05/02/进程间常见通信方式/">
 
-      <h2 class="post-title">
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Aifore">
+      <meta itemprop="description" content="欢迎来到宇宙最帅Aifore的博客！">
+      <meta itemprop="image" content="/images/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="AiforeのBlog">
+    </span>
+
+    
+      <header class="post-header">
+
         
-            <a class="post-title-link" href="/2018/07/06/Python常用基础操作/" itemprop="url">
-              
-                <span itemprop="name">Python常用模块第一篇</span>
-              
-            </a>
         
-      </h2>
+          <h1 class="post-title" itemprop="name headline">进程间常见通信方式
+              
+            
+          </h1>
+        
 
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated"
-              datetime="2018-07-06T19:30:48+07:00"
-              content="2018-07-06" >
-          07-06
-        </time>
-      </div>
+        <div class="post-meta">
+          <span class="post-time">
 
-    </header>
-  </article>
+            
+            
+            
 
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+
+              
+                
+              
+
+              <time title="创建时间：2019-05-02 18:27:00" itemprop="dateCreated datePublished" datetime="2019-05-02T18:27:00+07:00">2019-05-02</time>
+            
+
+            
+              
+
+              
+                
+                <span class="post-meta-divider">|</span>
+                
+
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">更新于</span>
+                
+                <time title="修改时间：2019-09-17 22:46:28" itemprop="dateModified" datetime="2019-09-17T22:46:28+07:00">2019-09-17</time>
+              
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/通信/" itemprop="url" rel="index"><span itemprop="name">通信</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2019/05/02/进程间常见通信方式/#comments" itemprop="discussionUrl">
+                
+                  <span class="post-comments-count disqus-comment-count"
+                        data-disqus-identifier="2019/05/02/进程间常见通信方式/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+            <span class="post-meta-divider">|</span>
+            <span class="post-meta-item-icon"
+            >
+            <i class="fa fa-eye"></i>
+             阅读次数： 
+            <span class="busuanzi-value" id="busuanzi_value_page_pv" ></span>
+            </span>
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p><a href="https://www.cnblogs.com/vamei/archive/2012/10/10/2715398.html" target="_blank" rel="noopener">Vamei：Linux进程间通信</a></p>
+<p>进程间通信方式主要可以分为两种：</p>
+<ul>
+<li><p><strong><font color="red" size="4">管道(PIPE)机制</font></strong>。</p>
+<p>使用管道将一个进程的输出和另一个进程的输入连接起来，从而利用文件操作API来管理进程间通信。</p>
+</li>
+<li><p><strong><font color="red" size="4">传统IPC (interprocess communication)</font></strong>。</p>
+<p>主要是指：</p>
+<ul>
+<li><strong>消息队列(message queue)</strong></li>
+<li><strong>信号量(semaphore)</strong></li>
+<li><strong>共享内存(shared memory)</strong></li>
+</ul>
+<p>这些IPC的特点是允许多进程之间共享资源，这与多线程共享heap和global data相类似。由于多进程任务具有并发性 (每个进程包含一个进程，多个进程的话就有多个线程)，所以在共享资源的时候也必须解决同步的问题 (参考<a href="http://www.cnblogs.com/vamei/archive/2012/10/09/2715393.html" target="_blank" rel="noopener">Linux多线程与同步</a>)。</p>
+</li>
+</ul>
+<a id="more"></a>
+<h3 id="1-管道"><a href="#1-管道" class="headerlink" title="1. 管道"></a>1. 管道</h3><p>管道通信方式的中间介质是文件，通常称这种文件为<strong>管道文件</strong>。两个进程利用管道文件进行通信时，一个进程为写进程，另一个进程为读进程。写进程通过写端（发送端）往管道文件中写入信息；读进程通过读端（接收端）从管道文件中读取信息。两个进程协调不断地进行写、读，便会构成双方通过管道传递信息的流水线。</p>
+<p>优点：</p>
+<ul>
+<li>不需要加锁</li>
+</ul>
+<p>缺点：</p>
+<ul>
+<li>默认缓冲区太小，只有4K</li>
+<li>只适合父子进程间通信</li>
+<li>一个管道只适合单向通信，如果要双向通信需要建立两个</li>
+<li>不适合多个子进程，因为消息会乱</li>
+<li>发送接收机制是用read/write这种适用流的，数据本身没有边界，需要应用程序自己解释</li>
+<li>一般消息大多是一个固定长的消息头，和一个变长的消息体，一个子进程从管道read到消息头后，消息体可能被别的子进程接收到</li>
+</ul>
+<h4 id="1-1-匿名管道"><a href="#1-1-匿名管道" class="headerlink" title="1.1 匿名管道"></a>1.1 匿名管道</h4><blockquote>
+<p>管道是半双工的，数据只能<strong>单向通信</strong>；需要双方通信时，需要建立起两个管道；只能用于父子进程或者兄弟进程之间（具有亲缘关系的进程）。</p>
+</blockquote>
+<h4 id="1-2-命名管道"><a href="#1-2-命名管道" class="headerlink" title="1.2 命名管道"></a>1.2 命名管道</h4><blockquote>
+<p>可在同一台计算机的不同进程之间或在跨越一个网络的不同计算机的不同进程之间，支持可靠的、单向或双向的数据通信。</p>
+</blockquote>
+<p>不同于匿名管道之处在于它提供一个路径名与之关联，以<strong>FIFO</strong>的文件形式存在于文件系统中。这样，即使与FIFO的创建进程不存在亲缘关系的进程，只要可以访问该路径，就能够彼此通过FIFO相互通信（能够访问该路径的进程与FIFO的创建进程之间）。</p>
+<p>FIFO严格遵循<strong>先进先出</strong>，对管道及FIFO的读总是从文件开始处返回数据，对它们的写则把数据添加到文件末尾。</p>
+<h4 id="1-3-区别"><a href="#1-3-区别" class="headerlink" title="1.3 区别"></a>1.3 区别</h4><table>
+<thead>
+<tr>
+<th>管道</th>
+<th>命名管道</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>利用系统调用<strong>pipe()</strong>创建</td>
+<td>利用系统调用<strong>mknod()</strong>创建</td>
+</tr>
+<tr>
+<td><strong>非永久性</strong>的管道通信机构，会随进程终止而撤销</td>
+<td><strong>永久</strong></td>
+</tr>
+<tr>
+<td><strong>不能</strong>用于不同族系的进程之间通信</td>
+<td><strong>能</strong></td>
+</tr>
+<tr>
+<td>匿名管道的文件是<strong>内存中</strong>的特殊文件，不可见</td>
+<td>命名管道的文件是<strong>硬盘上</strong>的设备文件，可见</td>
+</tr>
+</tbody>
+</table>
+<p>管道文件被创建后，使用open()将文件进行打开，然后便可对它进行读写操作，通过系统调用write()和read()来实现。通信完毕后，可使用close()将管道文件关闭。</p>
+<h3 id="2-队列"><a href="#2-队列" class="headerlink" title="2. 队列"></a>2. 队列</h3><p>消息队列与命名管道类似，但少了打开和关闭管道方面的复杂性。使用消息队列并未解决我们在使用命名管道时遇到的一些问题，如管道满时的<strong>阻塞</strong>问题。消息队列提供了一种在两个不相关进程间传递数据的简单有效的方法。</p>
+<p>与命名管道相比，消息队列的优势在于：它独立于发送和接收进程而存在，这消除了在同步命名管道的打开和关闭时可能产生的一些困难。消息队列提供了一种从一个进程向另一个进程发送一个数据块的方法。而且，每个数据块被认为含有一个类型，接收进程可以独立地接收含有不同类型值的数据块。</p>
+<p>由于消息缓冲机制中所使用的缓冲区为共用缓冲区，因此使用消息缓冲机制传送数据时，两通信进程必须满足如下条件：</p>
+<ol>
+<li><p>在发送进程把写入消息的缓冲区挂入消息队列时，应禁止其他进程对消息队列的访问，否则，将引起消息队列的混乱。同理，当接收进程正从消息队列中取消息时，也应禁止其他进程对该队列的访问。（相当于避免资源竞争，多个进程同时写消息需要先去获取锁，保证同一时刻只有一个进程在写消息，取消息同理。）</p>
+</li>
+<li><p>当缓冲区中无消息存在时，接收进程不能接收任何消息；而发送进程是否可以发送消息，则只由发送进程是否能够申请缓冲区决定。</p>
+</li>
+</ol>
+<h3 id="3-共享内存"><a href="#3-共享内存" class="headerlink" title="3. 共享内存"></a>3. 共享内存</h3><p>共享内存是进程间通信中最简单的方式之一，它允许两个或更多进程访问同一块内存，从而提供了在任意数量的进程之间进行高效双向通信的机制。同时因为所有进程共享同一块内存，在各种进程间通信方式中是最高效的。访问共享内存区域和访问进程独有的内存区域一样快，并不需要通过系统调用或者其它需要切入内核的过程来完成。同时它也避免了对数据的各种不必要的复制。</p>
+<p>因为系统内核没有对访问共享内存进行同步，应用程序必须提供自己的同步措施（<strong>做互斥</strong>）。例如，在数据被写入之前不允许进程从共享内存中读取信息、不允许两个进程同时向同一个共享内存地址写入数据等。不幸的是，Linux无法严格保证提供对共享内存块的独占访问。</p>
+<p>解决这些问题的常用方法：</p>
+<ol>
+<li><p><strong>标志位</strong>：只适用两个进程共享，在内存中放一个标志位，一定要声明为volatile，大家基于标志位来互斥，例如为0时第一个可以写，第二个就等待，为1时第一个等待，第二个可以写/读。</p>
+</li>
+<li><p><strong>信号</strong>：也只适用两个进程，大家等待不同的信号，第一个写完了发送信号2，等待信号1，第二个等待信号2，收到后读取/写入完，发送信号1。它不适用更多进程是因为虽然父进程可以向不同子进程分别发送信号，但是子进程收到信号会同时访问共享内存，产生不同子进程间的<strong>竞态条件</strong>；如果用多块共享内存，又存在子进程发送结果通知信号时，父进程收到信号后，不知道是谁发送，也意味着不知道该访问哪块共享内存，即使子进程发送不同的结果通知信号，因为等待信号的一定是阻塞的，如果某个子进程意外终止，父进程将永远阻塞下去，而不能超时处理。</p>
+</li>
+<li><p>采用<strong>信号量</strong>或者<strong>锁</strong>，也是最常用的方式。</p>
+</li>
+</ol>
+<p>信息同步是个大话题啊！🤔</p>
 
       
     </div>
 
+    
+
+    
+    
+    
+
+    
+
+    
+      <div>
+        <div style="padding: 10px 0; margin: 20px auto; width: 90%; text-align: center;">
+  <div>😊打  赏😊</div>
+  <button id="rewardButton" disable="enable" onclick="var qr = document.getElementById('QR'); if (qr.style.display === 'none') {qr.style.display='block';} else {qr.style.display='none'}">
+    <span>打赏</span>
+  </button>
+  <div id="QR" style="display: none;">
+
+    
+      <div id="wechat" style="display: inline-block">
+        <img id="wechat_qr" src="/images/wechatpay500.png" alt="Aifore 微信支付"/>
+        <p>微信支付</p>
+      </div>
+    
+
+    
+
+    
+
+  </div>
+</div>
+
+      </div>
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/管道/" rel="tag"># 管道</a>
+          
+            <a href="/tags/队列/" rel="tag"># 队列</a>
+          
+            <a href="/tags/共享内存/" rel="tag"># 共享内存</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2019/05/01/Python队列(Queue)基础/" rel="next" title="Python队列(Queue)基础">
+                <i class="fa fa-chevron-left"></i> Python队列(Queue)基础
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2019/05/03/Golang游戏框架Leaf从懵逼到入门/" rel="prev" title="Golang游戏框架Leaf从懵逼到入门">
+                Golang游戏框架Leaf从懵逼到入门 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
   </div>
   
   
   
+  </article>
 
-  
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
 
 
           </div>
           
+
+  
+    <div class="comments" id="comments">
+      <div id="disqus_thread">
+        <noscript>
+          Please enable JavaScript to view the
+          <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a>
+        </noscript>
+      </div>
+    </div>
+
+  
+
+
 
         </div>
         
@@ -417,8 +689,17 @@
       
 
       
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
 
-      <section class="site-overview-wrap sidebar-panel sidebar-panel-active">
+      <section class="site-overview-wrap sidebar-panel">
         <div class="site-overview">
           <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
             
@@ -498,7 +779,7 @@
                     
                       
                     
-                    <span class="site-state-item-count">17</span>
+                    <span class="site-state-item-count">16</span>
                     <span class="site-state-item-name">分类</span>
                   </a>
                 </div>
@@ -510,6 +791,10 @@
                 <div class="site-state-item site-state-tags">
                   <a href="/tags/index.html">
                     
+                    
+                      
+                    
+                      
                     
                       
                     
@@ -665,6 +950,22 @@
       </section>
 
       
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-管道"><span class="nav-text">1. 管道</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#1-1-匿名管道"><span class="nav-text">1.1 匿名管道</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#1-2-命名管道"><span class="nav-text">1.2 命名管道</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#1-3-区别"><span class="nav-text">1.3 区别</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-队列"><span class="nav-text">2. 队列</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-共享内存"><span class="nav-text">3. 共享内存</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
 
       
 
@@ -810,6 +1111,10 @@
 
 
   
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=6.3.0"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=6.3.0"></script>
+
+
 
   
 
@@ -824,6 +1129,23 @@
     <script id="dsq-count-scr" src="https://aifore.disqus.com/count.js" async></script>
   
 
+  
+    <script type="text/javascript">
+      var disqus_config = function () {
+        this.page.url = 'http://yoursite.com/2019/05/02/进程间常见通信方式/';
+        this.page.identifier = '2019/05/02/进程间常见通信方式/';
+        this.page.title = '进程间常见通信方式';
+        };
+      function loadComments () {
+        var d = document, s = d.createElement('script');
+        s.src = 'https://aifore.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', '' + +new Date());
+        (d.head || d.body).appendChild(s);
+      }
+      
+        loadComments();
+      
+    </script>
   
 
 

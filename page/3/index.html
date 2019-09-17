@@ -1167,7 +1167,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/07/06/Python常用基础操作/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/07/06/Python基础之时间处理/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Aifore">
@@ -1186,8 +1186,8 @@
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/2018/07/06/Python常用基础操作/" itemprop="url">
-                  Python常用模块第一篇
+                <a class="post-title-link" href="/2018/07/06/Python基础之时间处理/" itemprop="url">
+                  Python基础之时间处理
                 </a>
               
             
@@ -1230,7 +1230,7 @@
                 
                   <span class="post-meta-item-text">更新于</span>
                 
-                <time title="修改时间：2018-12-06 22:59:04" itemprop="dateModified" datetime="2018-12-06T22:59:04+07:00">2018-12-06</time>
+                <time title="修改时间：2019-09-17 23:17:49" itemprop="dateModified" datetime="2019-09-17T23:17:49+07:00">2019-09-17</time>
               
             
           </span>
@@ -1247,7 +1247,7 @@
                 <span class="post-meta-item-text">分类于</span>
               
               
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/模块使用/" itemprop="url" rel="index"><span itemprop="name">模块使用</span></a></span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/Python基础/" itemprop="url" rel="index"><span itemprop="name">Python基础</span></a></span>
 
                 
                 
@@ -1262,10 +1262,10 @@
                 <span class="post-meta-item-icon">
                   <i class="fa fa-comment-o"></i>
                 </span>
-                <a href="/2018/07/06/Python常用基础操作/#comments" itemprop="discussionUrl">
+                <a href="/2018/07/06/Python基础之时间处理/#comments" itemprop="discussionUrl">
                 
                   <span class="post-comments-count disqus-comment-count"
-                        data-disqus-identifier="2018/07/06/Python常用基础操作/" itemprop="commentCount"></span>
+                        data-disqus-identifier="2018/07/06/Python基础之时间处理/" itemprop="commentCount"></span>
                 </a>
               </span>
             
@@ -1294,24 +1294,12 @@
 
       
         
-          <h2 id="1-datetime模块"><a href="#1-datetime模块" class="headerlink" title="1. datetime模块"></a>1. datetime模块</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line">&lt;<span class="number">1</span>&gt; 模型定义：</span><br><span class="line"><span class="comment"># 注册时间，不可更改</span></span><br><span class="line">user_create_time = models.DateTimeField(auto_now_add=<span class="keyword">True</span>)</span><br><span class="line"><span class="comment"># 最后登录时间</span></span><br><span class="line">user_operate_time = models.DateTimeField(auto_now=<span class="keyword">True</span>)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">&lt;<span class="number">2.1</span>&gt; 将时间对象转换成字符串：</span><br><span class="line">user_operate_time.strftime(<span class="string">'%Y%m%d %H%M%S'</span>) → str:<span class="string">'20180706 160345'</span></span><br><span class="line">user_operate_time.strftime(<span class="string">'%Y-%m-%d %H:%M:%S'</span>) → str:<span class="string">'2018-07-06 16:03:45'</span></span><br><span class="line"> → A. user_operate_time：</span><br><span class="line">    datetime.datetime(<span class="number">2018</span>, <span class="number">7</span>, <span class="number">6</span>, <span class="number">16</span>, <span class="number">3</span>, <span class="number">45</span>, tzinfo=&lt;UTC&gt;)</span><br><span class="line"> → B. user_operate_time.replace(tzinfo=<span class="keyword">None</span>)：</span><br><span class="line">    datetime.datetime(<span class="number">2018</span>, <span class="number">7</span>, <span class="number">6</span>, <span class="number">16</span>, <span class="number">3</span>, <span class="number">45</span>)</span><br><span class="line">    </span><br><span class="line">&lt;<span class="number">2.2</span>&gt; 将字符串解析成时间对象：</span><br><span class="line">begin_date = datetime.strptime(request.form.get(<span class="string">'begin_date'</span>), <span class="string">'%Y-%m-%d'</span>)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">&lt;<span class="number">3</span>&gt; 页面解析后的显示结果：</span><br><span class="line">A. <span class="number">2018</span>年<span class="number">7</span>月<span class="number">7</span>日 <span class="number">00</span>:<span class="number">03</span> → UTC时间会自动加<span class="number">8</span>小时</span><br><span class="line">B. <span class="number">2018</span>年<span class="number">7</span>月<span class="number">6</span>日 <span class="number">16</span>:<span class="number">03</span> → tzinfo=<span class="keyword">None</span>后就不再是UTC时间，不会再加<span class="number">8</span>小时</span><br></pre></td></tr></table></figure>
-<ol>
-<li><p>其实可以不用将时间格式化成字符串，一是不管时间被转换成什么格式的字符串，最后django在页面解析的时候都会解析成<code>2018年7月7日 00:03</code>这种格式；二是django可以直接解析[datetime.datetime]时间对象。</p>
-</li>
-<li><p>django在数据库中储存的时间形式为<strong>UTC标准时间</strong>；</p>
-</li>
-<li><p>东八区比UTC标准时间早8小时，django储存到数据库时会自动转换为少8小时的UTC标准时间，取用和页面解析时又将UTC标准时间自动加上8个小时…坑！</p>
-<ul>
-<li><p>在mysql中执行 SET GLOBAL time_zone=’+08:00’；</p>
-</li>
-<li><p>django默认是有运用时区的，需要在设置中把USE_TZ=False；</p>
-</li>
-</ul>
-</li>
-</ol>
+          <p>Python的时间处理主要有time和datetime两个模块。</p>
+<h2 id="一、datetime模块"><a href="#一、datetime模块" class="headerlink" title="一、datetime模块"></a>一、datetime模块</h2><h4 id="1-1-时间转字符串"><a href="#1-1-时间转字符串" class="headerlink" title="1.1 时间转字符串"></a>1.1 时间转字符串</h4><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> datetime <span class="keyword">import</span> datetime</span><br><span class="line"></span><br><span class="line">now = datetime.now()</span><br><span class="line">time = now.strftime(<span class="string">'%Y-%m-%d %H:%M:%S'</span>)</span><br></pre></td></tr></table></figure>
+<h4 id="1-2-字符串转时间"><a href="#1-2-字符串转时间" class="headerlink" title="1.2 字符串转时间"></a>1.2 字符串转时间</h4><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> datetime <span class="keyword">import</span> datetime</span><br><span class="line"></span><br><span class="line">time_str = <span class="string">'2019-09-10 20:22:32'</span></span><br><span class="line">time = datetime.strptime(time_str, <span class="string">'%Y-%m-%d %H:%M:%S'</span>)</span><br></pre></td></tr></table></figure>
           <!--noindex-->
           <div class="post-button text-center">
-            <a class="btn" href="/2018/07/06/Python常用基础操作/#more" rel="contents">
+            <a class="btn" href="/2018/07/06/Python基础之时间处理/#more" rel="contents">
               阅读全文 &raquo;
             </a>
           </div>
@@ -2416,7 +2404,7 @@
                     
                       
                     
-                    <span class="site-state-item-count">17</span>
+                    <span class="site-state-item-count">16</span>
                     <span class="site-state-item-name">分类</span>
                   </a>
                 </div>
@@ -2428,6 +2416,10 @@
                 <div class="site-state-item site-state-tags">
                   <a href="/tags/index.html">
                     
+                    
+                      
+                    
+                      
                     
                       
                     
