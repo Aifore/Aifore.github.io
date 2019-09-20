@@ -116,7 +116,7 @@
 <meta property="og:site_name" content="AiforeのBlog">
 <meta property="og:description" content="hash算法常用在加密过程中，加密经常不直接加密信息，而是先将信息进行hash计算得到一个唯一的hash值后，再对这个hash值进行加密，这是为什么呢？ 其实直接签原始信息也是完全可以的，但几乎所有的签名都是签hash，原因很简单，减少计算量。如果被签名的信息很大，签名是非对称算法，效率会非常低，所以会先做hash生成摘要，hash后信息量有限，在签名效率会好很多。">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2019-09-19T17:46:26.974Z">
+<meta property="og:updated_time" content="2019-09-20T15:19:59.725Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="加密之Hash算法简述（三）">
 <meta name="twitter:description" content="hash算法常用在加密过程中，加密经常不直接加密信息，而是先将信息进行hash计算得到一个唯一的hash值后，再对这个hash值进行加密，这是为什么呢？ 其实直接签原始信息也是完全可以的，但几乎所有的签名都是签hash，原因很简单，减少计算量。如果被签名的信息很大，签名是非对称算法，效率会非常低，所以会先做hash生成摘要，hash后信息量有限，在签名效率会好很多。">
@@ -382,7 +382,7 @@
                 
               
 
-              <time title="创建时间：2019-09-20 01:08:18 / 修改时间：00:46:26" itemprop="dateCreated datePublished" datetime="2019-09-20T01:08:18+07:00">2019-09-20</time>
+              <time title="创建时间：2019-09-20 01:08:18 / 修改时间：22:19:59" itemprop="dateCreated datePublished" datetime="2019-09-20T01:08:18+07:00">2019-09-20</time>
             
 
             
@@ -463,9 +463,9 @@
 <a id="more"></a>
 <h3 id="1-使用方法"><a href="#1-使用方法" class="headerlink" title="1. 使用方法"></a>1. 使用方法</h3><p>python常见的hash库主要有hashlib，以及一些加密库也附带了hash模块如pycrypto，pycryptodome等。</p>
 <ul>
-<li>Hash lib</li>
+<li>hashlib</li>
 </ul>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> hashlib</span><br><span class="line"><span class="keyword">import</span> base64</span><br><span class="line"></span><br><span class="line">m = hashlib.md5()</span><br><span class="line">b = <span class="string">'fxx'</span></span><br><span class="line"><span class="comment"># py2因为没有bytes类型需要先utf8编码成二进制数据</span></span><br><span class="line">md5.update(b.encode(<span class="string">'utf-8'</span>))</span><br><span class="line"></span><br><span class="line"><span class="comment"># 返回摘要(二进制数据字节串值)</span></span><br><span class="line">b = md5.digest()</span><br><span class="line"></span><br><span class="line"><span class="comment"># 返回摘要（16进制字符串）</span></span><br><span class="line">print(sha1.hexdigest())</span><br><span class="line"></span><br><span class="line">print(b)</span><br><span class="line">print(base64.b64encode(b).decode(<span class="string">'utf-8'</span>))</span><br></pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> hashlib</span><br><span class="line"><span class="keyword">import</span> base64</span><br><span class="line"></span><br><span class="line">m = hashlib.md5()</span><br><span class="line">b = <span class="string">'fxx'</span></span><br><span class="line"><span class="comment"># py2因为没有bytes类型需要先utf8编码成二进制数据</span></span><br><span class="line">md5.update(b.encode(<span class="string">'utf-8'</span>))</span><br><span class="line"></span><br><span class="line"><span class="comment"># 返回摘要（16进制字符串）</span></span><br><span class="line">print(md5.hexdigest())</span><br><span class="line"><span class="comment"># 返回摘要(二进制数据字节串值)</span></span><br><span class="line">b = md5.digest()</span><br><span class="line"></span><br><span class="line">print(b)</span><br><span class="line">print(base64.b64encode(b).decode(<span class="string">'utf-8'</span>))</span><br></pre></td></tr></table></figure>
 <ul>
 <li>pycryptodome</li>
 </ul>
