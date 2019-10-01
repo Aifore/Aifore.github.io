@@ -108,24 +108,30 @@
 
 
 
-  <meta name="description" content="欢迎来到宇宙最帅Aifore的博客！">
+  <meta name="description" content="对称密钥算法（英语：Symmetric-key algorithm）又称为对称加密、私钥加密、共享密钥加密，是密码学中的一类加密算法。这类算法在加密和解密时使用相同的密钥，或是使用两个可以简单地相互推算的密钥。事实上，这组密钥成为在两个或多个成员间的共同秘密，以便维持专属的通信联系[1]。与公开密钥加密相比，要求双方获取相同的密钥是对称密钥加密的主要缺点之一[2]。 常见的对称加密算法有DES、3">
 <meta name="keywords" content="python">
-<meta property="og:type" content="website">
-<meta property="og:title" content="AiforeのBlog">
-<meta property="og:url" content="http://yoursite.com/archives/2019/07/index.html">
+<meta property="og:type" content="article">
+<meta property="og:title" content="加密之对称加密简述（四）">
+<meta property="og:url" content="http://yoursite.com/2019/09/20/加密之对称加密简述（四）/index.html">
 <meta property="og:site_name" content="AiforeのBlog">
-<meta property="og:description" content="欢迎来到宇宙最帅Aifore的博客！">
+<meta property="og:description" content="对称密钥算法（英语：Symmetric-key algorithm）又称为对称加密、私钥加密、共享密钥加密，是密码学中的一类加密算法。这类算法在加密和解密时使用相同的密钥，或是使用两个可以简单地相互推算的密钥。事实上，这组密钥成为在两个或多个成员间的共同秘密，以便维持专属的通信联系[1]。与公开密钥加密相比，要求双方获取相同的密钥是对称密钥加密的主要缺点之一[2]。 常见的对称加密算法有DES、3">
 <meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="http://yoursite.com/2019/09/20/加密之对称加密简述（四）/src_img/aes_1.png">
+<meta property="og:image" content="http://yoursite.com/2019/09/20/加密之对称加密简述（四）/src_img/aes_3.png">
+<meta property="og:image" content="http://yoursite.com/2019/09/20/加密之对称加密简述（四）/src_img/aes_4.png">
+<meta property="og:image" content="http://yoursite.com/2019/09/20/加密之对称加密简述（四）/src_img/aes_2.png">
+<meta property="og:updated_time" content="2019-10-01T10:26:21.198Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="AiforeのBlog">
-<meta name="twitter:description" content="欢迎来到宇宙最帅Aifore的博客！">
+<meta name="twitter:title" content="加密之对称加密简述（四）">
+<meta name="twitter:description" content="对称密钥算法（英语：Symmetric-key algorithm）又称为对称加密、私钥加密、共享密钥加密，是密码学中的一类加密算法。这类算法在加密和解密时使用相同的密钥，或是使用两个可以简单地相互推算的密钥。事实上，这组密钥成为在两个或多个成员间的共同秘密，以便维持专属的通信联系[1]。与公开密钥加密相比，要求双方获取相同的密钥是对称密钥加密的主要缺点之一[2]。 常见的对称加密算法有DES、3">
+<meta name="twitter:image" content="http://yoursite.com/2019/09/20/加密之对称加密简述（四）/src_img/aes_1.png">
 
 
 
 
 
 
-  <link rel="canonical" href="http://yoursite.com/archives/2019/07/"/>
+  <link rel="canonical" href="http://yoursite.com/2019/09/20/加密之对称加密简述（四）/"/>
 
 
 
@@ -135,7 +141,7 @@
   };
 </script>
 
-  <title>归档 | AiforeのBlog</title>
+  <title>加密之对称加密简述（四） | AiforeのBlog</title>
   
 
 
@@ -182,7 +188,7 @@
     
   
 
-  <div class="container sidebar-position-left page-archive">
+  <div class="container sidebar-position-left page-post-detail">
     <div class="headband"></div>
 
     <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
@@ -255,7 +261,7 @@
         
         
           
-          <li class="menu-item menu-item-archives menu-item-active">
+          <li class="menu-item menu-item-archives">
     <a href="/archives/" rel="section">
       <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />归档</a>
   </li>
@@ -319,105 +325,274 @@
           
             
 
-    
-    
-      
-      
-    
-      
-      
-    
-      
-      
-    
-      
-      
-    
-      
-      
-    
-    
-
-  
-
-
           
           <div id="content" class="content">
             
 
+  <div id="posts" class="posts-expand">
+    
+
+  
+
   
   
   
-  <div class="post-block archive">
-    <div id="posts" class="posts-collapse">
-      <span class="archive-move-on"></span>
 
-      
-      <span class="archive-page-counter">
-        
-        
-         
-        
-        还行! 目前共计 38 篇日志。 继续努力。
-      </span>
-      
-
-      
-
-        
-        
-        
-
-        
-          
-          <div class="collection-title">
-            <h1 class="archive-year" id="archive-year-2019">2019</h1>
-          </div>
-        
-        
-
-        
+  
 
   <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/09/20/加密之对称加密简述（四）/">
 
-      <h2 class="post-title">
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Aifore">
+      <meta itemprop="description" content="欢迎来到宇宙最帅Aifore的博客！">
+      <meta itemprop="image" content="/images/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="AiforeのBlog">
+    </span>
+
+    
+      <header class="post-header">
+
         
-            <a class="post-title-link" href="/2019/07/20/Linux常用命令之日志查看(一)/" itemprop="url">
-              
-                <span itemprop="name">Linux常用命令之日志查看（一）</span>
-              
-            </a>
         
-      </h2>
+          <h1 class="post-title" itemprop="name headline">加密之对称加密简述（四）
+              
+            
+          </h1>
+        
 
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated"
-              datetime="2019-07-20T00:28:59+07:00"
-              content="2019-07-20" >
-          07-20
-        </time>
-      </div>
+        <div class="post-meta">
+          <span class="post-time">
 
-    </header>
-  </article>
+            
+            
+            
 
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
 
+              
+                
+              
+
+              <time title="创建时间：2019-09-20 23:21:33" itemprop="dateCreated datePublished" datetime="2019-09-20T23:21:33+07:00">2019-09-20</time>
+            
+
+            
+              
+
+              
+                
+                <span class="post-meta-divider">|</span>
+                
+
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">更新于</span>
+                
+                <time title="修改时间：2019-10-01 17:26:21" itemprop="dateModified" datetime="2019-10-01T17:26:21+07:00">2019-10-01</time>
+              
+            
+          </span>
+
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2019/09/20/加密之对称加密简述（四）/#comments" itemprop="discussionUrl">
+                
+                  <span class="post-comments-count disqus-comment-count"
+                        data-disqus-identifier="2019/09/20/加密之对称加密简述（四）/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+            <span class="post-meta-divider">|</span>
+            <span class="post-meta-item-icon"
+            >
+            <i class="fa fa-eye"></i>
+             阅读次数： 
+            <span class="busuanzi-value" id="busuanzi_value_page_pv" ></span>
+            </span>
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
 
       
+      
 
+      
+        <p><strong>对称密钥算法</strong>（英语：<strong>Symmetric-key algorithm</strong>）又称为<strong>对称加密</strong>、<strong>私钥加密</strong>、<strong>共享密钥加密</strong>，是<a href="https://zh.wikipedia.org/wiki/密碼學" target="_blank" rel="noopener">密码学</a>中的一类加密算法。这类算法在加密和解密时使用相同的密钥，或是使用两个可以简单地相互推算的密钥。事实上，这组密钥成为在两个或多个成员间的共同秘密，以便维持专属的通信联系<a href="https://zh.wikipedia.org/wiki/對稱密鑰加密#cite_note-1" target="_blank" rel="noopener">[1]</a>。与<a href="https://zh.wikipedia.org/wiki/公开密钥加密" target="_blank" rel="noopener">公开密钥加密</a>相比，要求双方获取相同的密钥是对称密钥加密的主要缺点之一<a href="https://zh.wikipedia.org/wiki/對稱密鑰加密#cite_note-2" target="_blank" rel="noopener">[2]</a>。</p>
+<p>常见的对称加密算法有<a href="https://zh.wikipedia.org/wiki/資料加密標準" target="_blank" rel="noopener">DES</a>、<a href="https://zh.wikipedia.org/wiki/3DES" target="_blank" rel="noopener">3DES</a>、<a href="https://zh.wikipedia.org/wiki/高级加密标准" target="_blank" rel="noopener">AES</a>、<a href="https://zh.wikipedia.org/wiki/Blowfish_(密码学" target="_blank" rel="noopener">Blowfish</a>)、<a href="https://zh.wikipedia.org/wiki/國際資料加密演算法" target="_blank" rel="noopener">IDEA</a>、<a href="https://zh.wikipedia.org/wiki/RC5" target="_blank" rel="noopener">RC5</a>、<a href="https://zh.wikipedia.org/wiki/RC6" target="_blank" rel="noopener">RC6</a>。</p>
+<p>对称加密的速度比公钥加密快很多，在很多场合都需要对称加密。</p>
+<a id="more"></a>
+<h3 id="一、DES"><a href="#一、DES" class="headerlink" title="一、DES"></a>一、DES</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> Crypto.Cipher <span class="keyword">import</span> DES</span><br><span class="line"><span class="keyword">import</span> base64</span><br><span class="line"></span><br><span class="line">key = bytes(<span class="string">'test_key'</span>.ljust(<span class="number">8</span>,<span class="string">' '</span>), encoding=<span class="string">'utf8'</span>)</span><br><span class="line">des = DES.new(key, DES.MODE_ECB)</span><br><span class="line"></span><br><span class="line"><span class="comment"># encrypt</span></span><br><span class="line">plain_text = bytes(<span class="string">'this_is_a_plain'</span>.ljust(<span class="number">16</span>,<span class="string">' '</span>), encoding=<span class="string">'utf8'</span>)</span><br><span class="line">text_enc = des.encrypt(plain_text)</span><br><span class="line">text_enc_b64 = base64.b64encode(text_enc)</span><br><span class="line">print(text_enc_b64.decode(encoding=<span class="string">'utf8'</span>))</span><br><span class="line"></span><br><span class="line"><span class="comment"># decrypt</span></span><br><span class="line">msg_enc = base64.b64decode(text_enc_b64)</span><br><span class="line">msg = des.decrypt(msg_enc)</span><br><span class="line">print(msg.decode(encoding=<span class="string">'utf8'</span>))</span><br></pre></td></tr></table></figure>
+<h3 id="二、AES"><a href="#二、AES" class="headerlink" title="二、AES"></a>二、AES</h3><p>高级加密标准（英语：Advanced Encryption Standard，缩写：AES），在密码学中又称Rijndael加密法，是美国联邦政府采用的一种区块加密标准。这个标准用来替代原先的DES，已经被多方分析且广为全世界所使用。经过五年的甄选流程，高级加密标准由美国国家标准与技术研究院（NIST）于2001年11月26日发布于FIPS PUB 197，并在2002年5月26日成为有效的标准。2006年，高级加密标准已然成为对称密钥加密中最流行的算法之一。</p>
+<h4 id="1-加密操作模式"><a href="#1-加密操作模式" class="headerlink" title="1. 加密操作模式"></a>1. 加密操作模式</h4><p><strong>操作模式</strong>是使用<strong>分组密码（即伪随机置换）</strong>来加密<strong>任意长度消息</strong>的基本方法。通过使用<strong>足够多的0</strong>来填充，可将任意长度的消息填充为总长度为<strong>分组大小的倍数</strong>。</p>
+<p><strong>伪随机置换</strong>的概念具体请参考<em>Jonathan Katz</em>, <em>Yehuda Lindell</em> 编著的<strong>现代密码学</strong>一书，这里从<strong>应用的角度</strong>出发不作深入介绍。<strong>CPA安全（抗选择明文攻击）</strong>的概念亦是。</p>
+<p>AES采用<strong>对称分组密码体制</strong>，对几乎所有依赖<strong>伪随机置换</strong>的密码学方案实现而言，AES是一个极好的选择对象。</p>
+<p>AES有5种<strong>加密操作模式</strong>：</p>
+<ol>
+<li><p>电码本模式（Electronic Codebook Book (ECB)）</p>
+<p>将整个明文分成若干段相同的小段，然后对每一小段进行加密。</p>
+</li>
+<li><p>密码分组链接模式（Cipher Block Chaining (CBC)）</p>
+<p>先将明文切分成若干小段，然后每一小段与初始块或者上一段的密文段进行异或运算后，再与密钥进行加密。</p>
+</li>
+<li><p>计算器模式（Counter (CTR)）</p>
+<p>计算器模式不常见，在CTR模式中， 有一个自增的算子，这个算子用密钥加密之后的输出和明文异或的结果得到密文，相当于一次一密。这种加密方式简单快速，安全可靠，而且可以并行加密，但是在计算器不能维持很长的情况下，密钥只能使用一次。</p>
+</li>
+<li><p>密码反馈模式（Cipher FeedBack (CFB)）</p>
+</li>
+<li><p>输出反馈模式（Output FeedBack (OFB)）</p>
+</li>
+</ol>
+<p> 这里仅简单地介绍<strong>密码分组链接模式CBC</strong>。在这种模式中，首先选择一个<strong>长度为n（分组大小）</strong>的随机<strong>初始向量（IV）</strong>，然后，通过对当前明文和前一个密文的异或值做<strong>伪随机置换</strong>，来获得下一个密文分组。即</p>
+<p><img src="/2019/09/20/加密之对称加密简述（四）/src_img/aes_1.png" alt="img">，然后从<strong>i=1</strong> 到<strong>l</strong> （其中<strong><em>l</em></strong> 为分组组数），令<img src="/2019/09/20/加密之对称加密简述（四）/src_img/aes_3.png" alt="img">，最终密文为<img src="/2019/09/20/加密之对称加密简述（四）/src_img/aes_4.png" alt="img">，<strong>注意IV 不加密，并作为密文的一部分发送</strong>。</p>
+<p><img src="/2019/09/20/加密之对称加密简述（四）/src_img/aes_2.png" alt="img"></p>
+<p>​        已证明，如果<strong><em>F</em></strong> 为伪随机置换，那么CBC加密模式是<strong>CPA安全</strong>的。</p>
+<p>​        CBC模式的加密是依次执行，对于即时通信较为合适，而面对<strong>数据量较大</strong>的文件加密，CBC模式不是最有效率的选择，可以考虑有并行操作的<strong>OFB模式</strong>或<strong>CTR模式</strong>（但需要注意CTR模式计数器长度）。</p>
+<h4 id="2-Python-使用示例"><a href="#2-Python-使用示例" class="headerlink" title="2. Python 使用示例"></a>2. Python 使用示例</h4><ul>
+<li><p>补0</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line"><span class="string">"""</span></span><br><span class="line"><span class="string"> 补0方式</span></span><br><span class="line"><span class="string">"""</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">from</span> Crypto.Cipher <span class="keyword">import</span> AES</span><br><span class="line"><span class="keyword">from</span> Crypto <span class="keyword">import</span> Random</span><br><span class="line"><span class="keyword">import</span> base64</span><br><span class="line"></span><br><span class="line"><span class="comment"># 密钥 key 长度必须为16（AES-128）、24（AES-192）、或32（AES-256）Bytes 长度，目前AES-128足够用</span></span><br><span class="line">key = bytes(<span class="string">'this_is_a_key'</span>.ljust(<span class="number">16</span>,<span class="string">' '</span>), encoding=<span class="string">'utf8'</span>)</span><br><span class="line"><span class="comment"># 生成随机初始向量IV，加密第一块明文，类似于salt起扰乱作用</span></span><br><span class="line">iv = Random.new().read(AES.block_size)  <span class="comment"># AES.block_size == 16</span></span><br><span class="line">aes = AES.new(key, AES.MODE_ECB, iv)</span><br><span class="line"></span><br><span class="line"><span class="comment"># encrypt</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">aes_encrypt</span><span class="params">(key, text)</span>:</span></span><br><span class="line">    <span class="comment">#加密函数，如果text不是16的倍数【加密文本text必须为16的倍数！】，那就补足为16的倍数</span></span><br><span class="line">    count = len(text)</span><br><span class="line">	  <span class="keyword">if</span>(count % <span class="number">16</span> != <span class="number">0</span>) :</span><br><span class="line">        	add = length - (count % length)</span><br><span class="line">	  <span class="keyword">else</span>:</span><br><span class="line">		    add = <span class="number">0</span></span><br><span class="line">    text = text + (<span class="string">'\0'</span> * add)</span><br><span class="line">    text_enc = aes.encrypt(text)</span><br><span class="line">    text_enc_b64 = base64.b64encode(text_enc)</span><br><span class="line">    <span class="keyword">return</span> text_enc_b64.decode(encoding=<span class="string">'utf8'</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment"># decrypt</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">aes_decrypt</span><span class="params">(text_enc_b64)</span>:</span></span><br><span class="line">    msg_enc = base64.b64decode(text_enc_b64)</span><br><span class="line">    msg = aes.decrypt(msg_enc)</span><br><span class="line">    <span class="keyword">return</span> msg.decode(encoding=<span class="string">'utf8'</span>).rstrip(<span class="string">'\0'</span>)</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>pkcs5</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"><span class="string">"""</span></span><br><span class="line"><span class="string"> pkcs5补码方式</span></span><br><span class="line"><span class="string">"""</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> base64</span><br><span class="line"><span class="keyword">from</span> Crypto.Cipher <span class="keyword">import</span> AES</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment"># 补足字符串长度为16的倍数</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">add_to_16</span><span class="params">(s)</span>:</span></span><br><span class="line">    <span class="keyword">while</span> len(s) % <span class="number">16</span> != <span class="number">0</span>:</span><br><span class="line">        s += (<span class="number">16</span> - len(s) % <span class="number">16</span>) * chr(<span class="number">16</span> - len(s) % <span class="number">16</span>)</span><br><span class="line">    <span class="keyword">return</span> str.encode(s)  <span class="comment"># 返回bytes</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">key = <span class="string">'1234567890123456'</span>  <span class="comment"># 密钥长度必须为16、24或32位，分别对应AES-128、AES-192和AES-256</span></span><br><span class="line">text = <span class="string">'abcdefg'</span>  <span class="comment"># 待加密文本</span></span><br><span class="line"></span><br><span class="line">aes = AES.new(str.encode(key), AES.MODE_ECB)  <span class="comment"># 初始化加密器，本例采用ECB加密模式</span></span><br><span class="line">encrypted_text = str(base64.encodebytes(aes.encrypt(add_to_16(text))), encoding=<span class="string">'utf8'</span>).replace(<span class="string">'\n'</span>, <span class="string">''</span>)  <span class="comment"># 加密</span></span><br><span class="line">decrypted_text = aes.decrypt(base64.decodebytes(bytes(encrypted_text, encoding=<span class="string">'utf8'</span>))).decode(<span class="string">"utf8"</span>)  <span class="comment"># 解密</span></span><br><span class="line">decrypted_text = decrypted_text[:-ord(decrypted_text[<span class="number">-1</span>])]  <span class="comment"># 去除多余补位</span></span><br><span class="line"></span><br><span class="line">print(<span class="string">'pkcs5加密值:'</span>, encrypted_text)</span><br><span class="line">print(<span class="string">'pkcs5解密值:'</span>, decrypted_text)</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+
+      
     </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+      <div>
+        <div style="padding: 10px 0; margin: 20px auto; width: 90%; text-align: center;">
+  <div>😊打  赏😊</div>
+  <button id="rewardButton" disable="enable" onclick="var qr = document.getElementById('QR'); if (qr.style.display === 'none') {qr.style.display='block';} else {qr.style.display='none'}">
+    <span>打赏</span>
+  </button>
+  <div id="QR" style="display: none;">
+
+    
+      <div id="wechat" style="display: inline-block">
+        <img id="wechat_qr" src="/images/wechatpay500.png" alt="Aifore 微信支付"/>
+        <p>微信支付</p>
+      </div>
+    
+
+    
+
+    
+
+  </div>
+</div>
+
+      </div>
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2019/09/20/加密之Hash算法简述（三）/" rel="next" title="加密之Hash算法简述（三）">
+                <i class="fa fa-chevron-left"></i> 加密之Hash算法简述（三）
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
   </div>
   
   
   
+  </article>
 
-  
 
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
 
 
           </div>
           
+
+  
+    <div class="comments" id="comments">
+      <div id="disqus_thread">
+        <noscript>
+          Please enable JavaScript to view the
+          <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a>
+        </noscript>
+      </div>
+    </div>
+
+  
+
+
 
         </div>
         
@@ -438,8 +613,17 @@
       
 
       
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
 
-      <section class="site-overview-wrap sidebar-panel sidebar-panel-active">
+      <section class="site-overview-wrap sidebar-panel">
         <div class="site-overview">
           <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
             
@@ -692,6 +876,22 @@
       </section>
 
       
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#一、DES"><span class="nav-text">一、DES</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#二、AES"><span class="nav-text">二、AES</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#1-加密操作模式"><span class="nav-text">1. 加密操作模式</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-Python-使用示例"><span class="nav-text">2. Python 使用示例</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
 
       
 
@@ -837,6 +1037,10 @@
 
 
   
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=6.3.0"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=6.3.0"></script>
+
+
 
   
 
@@ -851,6 +1055,23 @@
     <script id="dsq-count-scr" src="https://aifore.disqus.com/count.js" async></script>
   
 
+  
+    <script type="text/javascript">
+      var disqus_config = function () {
+        this.page.url = 'http://yoursite.com/2019/09/20/加密之对称加密简述（四）/';
+        this.page.identifier = '2019/09/20/加密之对称加密简述（四）/';
+        this.page.title = '加密之对称加密简述（四）';
+        };
+      function loadComments () {
+        var d = document, s = d.createElement('script');
+        s.src = 'https://aifore.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', '' + +new Date());
+        (d.head || d.body).appendChild(s);
+      }
+      
+        loadComments();
+      
+    </script>
   
 
 
