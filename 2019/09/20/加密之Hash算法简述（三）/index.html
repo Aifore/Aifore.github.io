@@ -116,7 +116,7 @@
 <meta property="og:site_name" content="AiforeのBlog">
 <meta property="og:description" content="hash算法常用在加密过程中，加密经常不直接加密信息，而是先将信息进行hash计算得到一个唯一的hash值后，再对这个hash值进行加密，这是为什么呢？ 其实直接签原始信息也是完全可以的，但几乎所有的签名都是签hash，原因很简单，减少计算量。如果被签名的信息很大，签名是非对称算法，效率会非常低，所以会先做hash生成摘要，hash后信息量有限，在签名效率会好很多。">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2019-11-03T17:05:35.314Z">
+<meta property="og:updated_time" content="2019-11-03T17:09:35.205Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="加密之Hash算法简述（三）">
 <meta name="twitter:description" content="hash算法常用在加密过程中，加密经常不直接加密信息，而是先将信息进行hash计算得到一个唯一的hash值后，再对这个hash值进行加密，这是为什么呢？ 其实直接签原始信息也是完全可以的，但几乎所有的签名都是签hash，原因很简单，减少计算量。如果被签名的信息很大，签名是非对称算法，效率会非常低，所以会先做hash生成摘要，hash后信息量有限，在签名效率会好很多。">
@@ -399,7 +399,7 @@
                 
                   <span class="post-meta-item-text">更新于</span>
                 
-                <time title="修改时间：2019-11-04 00:05:35" itemprop="dateModified" datetime="2019-11-04T00:05:35+07:00">2019-11-04</time>
+                <time title="修改时间：2019-11-04 00:09:35" itemprop="dateModified" datetime="2019-11-04T00:09:35+07:00">2019-11-04</time>
               
             
           </span>
@@ -482,7 +482,7 @@
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> Crypto.Hash <span class="keyword">import</span> SHA1, MD5</span><br><span class="line"></span><br><span class="line">sha1 = SHA1.new()</span><br><span class="line"><span class="comment"># py3可直接使用bytes类型</span></span><br><span class="line">sha1.update(<span class="string">b'sha1_test'</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 返回字节串</span></span><br><span class="line">print(sha1.digest())</span><br><span class="line"><span class="comment"># 返回16进制字符串</span></span><br><span class="line">print(sha1.hexdigest())</span><br><span class="line"></span><br><span class="line">m = MD5.new()</span><br><span class="line">m.update(<span class="string">b'md5_test'</span>)</span><br><span class="line">print(m.hexdigest())</span><br></pre></td></tr></table></figure>
 </li>
 </ul>
-<h3 id="2-常见用途"><a href="#2-常见用途" class="headerlink" title="2. 常见用途"></a>2. 常见用途</h3><p>在常见的API的请求数据中，如果使用哈希算法对数据进行处理，能够保证数据在传输过程中没有被黑客劫持串改，但不能保证发送数据的发送方的合法性，即如果黑客拿到了密钥，就能冒充正确的发送方发送假数据。这个和对称加密类似，因为密钥需要发送方和接收方同时保存，很容易遭到窃取。</p>
+<h3 id="2-常见用途"><a href="#2-常见用途" class="headerlink" title="2. 常见用途"></a>2. 常见用途</h3><p>在常见的API的请求数据中，如果使用哈希算法对数据进行处理，能够保证数据在传输过程中没有被黑客劫持串改，但不能保证数据发送方的合法性，即如果黑客拿到了密钥，就能冒充发送方发送假数据。这个和对称加密类似，因为密钥需要发送方和接收方同时保存，很容易遭到窃取。</p>
 <p>如果想要保证发送方的合法性，一般使用非对称加密方式，发送方利用私钥对数据进行签名，接受方使用公钥验签，签名的私钥只需要保存在发送方一方，从而大大降低被窃取的可能性，不过缺点是加密速度相对较慢。</p>
 <h4 id="1-签名与验签"><a href="#1-签名与验签" class="headerlink" title="1. 签名与验签"></a>1. 签名与验签</h4><p>使用哈希算法，我们可以通过对比该数据的哈希值验证一段数据是否有效。例如，判断用户口令是否正确，我们用保存在数据库中的<code>password_md5</code>对比计算<code>md5(password)</code>的结果，如果一致，用户输入的口令就是正确的。</p>
 <p>为了防止黑客通过彩虹表根据哈希值反推原始口令，在计算哈希的时候，不能仅针对原始输入计算，需要增加一个salt来使得相同的输入也能得到不同的哈希，大大增加黑客破解的难度。</p>
