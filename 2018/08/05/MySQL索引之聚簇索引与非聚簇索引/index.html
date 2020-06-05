@@ -108,25 +108,27 @@
 
 
 
-  <meta name="description" content="0. 前言为什么要使用数据库？数据持久化：将数据从一掉电数据就丢失的存储介质(内存)转移到持久存储介质(硬盘)普通文件 / 二进制文件 / Excel数据库 - 高效的存储和管理数据方便的检索数据 什么是关系型数据库？ 用二维表组织数据，表(实体)与表(实体)之间存在关系。  理论基础：集合论和关系代数 表 - 实体（一个类） 行 - 记录（一个实例对象） 列 - 字段（一个属性） 数据库、数据库">
+  <meta name="description" content="数据库索引数据库表的索引从数据存储方式上可以分为聚簇索引和非聚簇索引两种。 非聚簇索引是针对MyISAM引擎而言的。Innodb的索引储存是聚簇索引，没有非聚簇索引说法，其更加准确的叫法应该是辅助索引或二级索引。聚集索引这种主+辅助索引的好处是，当发生数据行移动或者页分裂时，辅助索引树不需要更新，因为辅助索引树存储的是主索引的主键关键字，而不是数据具体的物理地址。 1.1 聚簇索引 ”聚簇”的意思">
 <meta name="keywords" content="MySQL索引">
 <meta property="og:type" content="article">
-<meta property="og:title" content="MySQL宝典-基础篇">
-<meta property="og:url" content="http://yoursite.com/2018/08/02/MySQL宝典-基础篇/index.html">
+<meta property="og:title" content="MySQL索引之聚簇索引与非聚簇索引">
+<meta property="og:url" content="http://yoursite.com/2018/08/05/MySQL索引之聚簇索引与非聚簇索引/index.html">
 <meta property="og:site_name" content="AiforeのBlog">
-<meta property="og:description" content="0. 前言为什么要使用数据库？数据持久化：将数据从一掉电数据就丢失的存储介质(内存)转移到持久存储介质(硬盘)普通文件 / 二进制文件 / Excel数据库 - 高效的存储和管理数据方便的检索数据 什么是关系型数据库？ 用二维表组织数据，表(实体)与表(实体)之间存在关系。  理论基础：集合论和关系代数 表 - 实体（一个类） 行 - 记录（一个实例对象） 列 - 字段（一个属性） 数据库、数据库">
+<meta property="og:description" content="数据库索引数据库表的索引从数据存储方式上可以分为聚簇索引和非聚簇索引两种。 非聚簇索引是针对MyISAM引擎而言的。Innodb的索引储存是聚簇索引，没有非聚簇索引说法，其更加准确的叫法应该是辅助索引或二级索引。聚集索引这种主+辅助索引的好处是，当发生数据行移动或者页分裂时，辅助索引树不需要更新，因为辅助索引树存储的是主索引的主键关键字，而不是数据具体的物理地址。 1.1 聚簇索引 ”聚簇”的意思">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2019-10-20T16:51:11.201Z">
+<meta property="og:image" content="http://yoursite.com/2018/08/05/MySQL索引之聚簇索引与非聚簇索引/mysql聚簇索引.jpg">
+<meta property="og:updated_time" content="2020-06-05T09:29:09.805Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="MySQL宝典-基础篇">
-<meta name="twitter:description" content="0. 前言为什么要使用数据库？数据持久化：将数据从一掉电数据就丢失的存储介质(内存)转移到持久存储介质(硬盘)普通文件 / 二进制文件 / Excel数据库 - 高效的存储和管理数据方便的检索数据 什么是关系型数据库？ 用二维表组织数据，表(实体)与表(实体)之间存在关系。  理论基础：集合论和关系代数 表 - 实体（一个类） 行 - 记录（一个实例对象） 列 - 字段（一个属性） 数据库、数据库">
+<meta name="twitter:title" content="MySQL索引之聚簇索引与非聚簇索引">
+<meta name="twitter:description" content="数据库索引数据库表的索引从数据存储方式上可以分为聚簇索引和非聚簇索引两种。 非聚簇索引是针对MyISAM引擎而言的。Innodb的索引储存是聚簇索引，没有非聚簇索引说法，其更加准确的叫法应该是辅助索引或二级索引。聚集索引这种主+辅助索引的好处是，当发生数据行移动或者页分裂时，辅助索引树不需要更新，因为辅助索引树存储的是主索引的主键关键字，而不是数据具体的物理地址。 1.1 聚簇索引 ”聚簇”的意思">
+<meta name="twitter:image" content="http://yoursite.com/2018/08/05/MySQL索引之聚簇索引与非聚簇索引/mysql聚簇索引.jpg">
 
 
 
 
 
 
-  <link rel="canonical" href="http://yoursite.com/2018/08/02/MySQL宝典-基础篇/"/>
+  <link rel="canonical" href="http://yoursite.com/2018/08/05/MySQL索引之聚簇索引与非聚簇索引/"/>
 
 
 
@@ -136,7 +138,7 @@
   };
 </script>
 
-  <title>MySQL宝典-基础篇 | AiforeのBlog</title>
+  <title>MySQL索引之聚簇索引与非聚簇索引 | AiforeのBlog</title>
   
 
 
@@ -340,7 +342,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/08/02/MySQL宝典-基础篇/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/08/05/MySQL索引之聚簇索引与非聚簇索引/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Aifore">
@@ -357,7 +359,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">MySQL宝典-基础篇
+          <h1 class="post-title" itemprop="name headline">MySQL索引之聚簇索引与非聚簇索引
               
             
           </h1>
@@ -382,7 +384,7 @@
                 
               
 
-              <time title="创建时间：2018-08-02 23:19:12" itemprop="dateCreated datePublished" datetime="2018-08-02T23:19:12+07:00">2018-08-02</time>
+              <time title="创建时间：2018-08-05 21:19:12" itemprop="dateCreated datePublished" datetime="2018-08-05T21:19:12+07:00">2018-08-05</time>
             
 
             
@@ -399,7 +401,7 @@
                 
                   <span class="post-meta-item-text">更新于</span>
                 
-                <time title="修改时间：2019-10-20 23:51:11" itemprop="dateModified" datetime="2019-10-20T23:51:11+07:00">2019-10-20</time>
+                <time title="修改时间：2020-06-05 16:29:09" itemprop="dateModified" datetime="2020-06-05T16:29:09+07:00">2020-06-05</time>
               
             
           </span>
@@ -431,10 +433,10 @@
                 <span class="post-meta-item-icon">
                   <i class="fa fa-comment-o"></i>
                 </span>
-                <a href="/2018/08/02/MySQL宝典-基础篇/#comments" itemprop="discussionUrl">
+                <a href="/2018/08/05/MySQL索引之聚簇索引与非聚簇索引/#comments" itemprop="discussionUrl">
                 
                   <span class="post-comments-count disqus-comment-count"
-                        data-disqus-identifier="2018/08/02/MySQL宝典-基础篇/" itemprop="commentCount"></span>
+                        data-disqus-identifier="2018/08/05/MySQL索引之聚簇索引与非聚簇索引/" itemprop="commentCount"></span>
                 </a>
               </span>
             
@@ -470,63 +472,55 @@
       
 
       
-        <h2 id="0-前言"><a href="#0-前言" class="headerlink" title="0. 前言"></a>0. 前言</h2><h3 id="为什么要使用数据库？"><a href="#为什么要使用数据库？" class="headerlink" title="为什么要使用数据库？"></a>为什么要使用数据库？</h3><p>数据持久化：将数据从一掉电数据就丢失的存储介质(内存)转移到持久存储介质(硬盘)<br>普通文件 / 二进制文件 / Excel<br>数据库 - 高效的存储和管理数据方便的检索数据</p>
-<h3 id="什么是关系型数据库？"><a href="#什么是关系型数据库？" class="headerlink" title="什么是关系型数据库？"></a>什么是关系型数据库？</h3><blockquote>
-<p>用二维表组织数据，表(实体)与表(实体)之间存在关系。</p>
-</blockquote>
-<p>理论基础：集合论和关系代数</p>
-<p>表 - 实体（一个类）</p>
-<p>行 - 记录（一个实例对象）</p>
-<p>列 - 字段（一个属性）</p>
-<h3 id="数据库、数据库系统、数据库管理系统？"><a href="#数据库、数据库系统、数据库管理系统？" class="headerlink" title="数据库、数据库系统、数据库管理系统？"></a>数据库、数据库系统、数据库管理系统？</h3><p>Database - DB - 数据的仓库(集散地)</p>
-<p>DBS - 包括了DB、DBMS、DBA(数据库管理员)</p>
-<p>(R)DBMS - (关系型)数据库管理系统 - 管理数据库的软件</p>
-<ul>
-<li>MySQL - 体积小 功能完备</li>
-<li>Oracle - 安全强大 商业智能 昂贵</li>
-<li>DB2 - 安全强大 商业智能 昂贵</li>
-<li>SQL Server - 微软平台</li>
-<li>SQLite - 嵌入式数据库(移动端)</li>
-</ul>
-<p>连接数据库</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">mysql -h localhost -u root -p</span><br></pre></td></tr></table></figure>
-<a id="more"></a>
-<h3 id="数据库引擎"><a href="#数据库引擎" class="headerlink" title="数据库引擎"></a>数据库引擎</h3><ul>
-<li>Myisam：支持全文检索(fulltext)，操作表的时候是<code>表级锁</code>。不支持事务，日志，外键等。</li>
-<li>Innodb：不支持全文检索，操作表的时候是<code>行级锁</code>。支持事务处理，日志，外键。由于有事务和日志，所以Innodb在添加和修改的时候数据更安全，但是读取速度较慢。</li>
-</ul>
-<h3 id="外键约束"><a href="#外键约束" class="headerlink" title="外键约束"></a>外键约束</h3><p>设置外键约束检查</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">SET foreign_key_checks = 0;  // 先设置外键约束检查关闭</span><br><span class="line"> </span><br><span class="line">drop table table1;  // 删除表（由于表关联生成了强制约束）</span><br><span class="line"> </span><br><span class="line">SET foreign_key_checks = 1;  // 开启外键约束检查，以保持表结构完整性</span><br></pre></td></tr></table></figure>
-<p>设置唯一性校验</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">set unique_checks=0;  //关闭唯一性校验 </span><br><span class="line">set unique_checks=1;  //开启唯一性校验</span><br></pre></td></tr></table></figure>
-<h2 id="1-MySQL之索引"><a href="#1-MySQL之索引" class="headerlink" title="1. MySQL之索引"></a>1. MySQL之索引</h2><blockquote>
-<p><code>普通索引</code>、<code>组合索引</code>、<code>主键索引</code>、<code>唯一索引</code>、<code>全文索引</code></p>
-</blockquote>
-<p>​        在索引列上，除了有序查找之外，数据库利用各种各样的快速定位技术，能够大大提高查询效率。特别是当数据量非常大，查询涉及多个表时，使用索引往往能使查询速度加快成千上万倍。</p>
-<p>​        在创建索引时，可以规定索引能否包含重复值。如果不包含，则索引应该创建为PRIMARY KEY或UNIQUE索引。对于单列惟一性索引，这保证单列不包含重复的值。对于多列惟一性索引，保证多个值的组合不重复。PRIMARY KEY索引和UNIQUE索引非常类似。事实上，PRIMARY KEY索引仅是一个具有名称PRIMARY的UNIQUE索引。这表示一个表只能包含一个PRIMARY KEY，因为一个表中不可能具有两个同名的索引。</p>
-<ul>
-<li><h4 id="创建索引"><a href="#创建索引" class="headerlink" title="创建索引"></a>创建索引</h4></li>
-</ul>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">CREATE INDEX index_name ON tb_name (column_list);</span><br><span class="line"></span><br><span class="line">CREATE UNIQUE INDEX index_name ON tb_name (column_list);</span><br><span class="line"></span><br><span class="line">CREATE FULLTEXT INDEX index_name ON tb_name (column_list);</span><br></pre></td></tr></table></figure>
-<p>​        其中table_name是要增加索引的表名，column_list指出对哪些列进行索引，多列时各列之间用逗号分隔。索引名index_name可选，缺省时，MySQL将根据第一个索引列赋一个名称。另外，不能用CREATE INDEX语句创建PRIMARY KEY索引。</p>
-<ul>
-<li><h4 id="添加索引"><a href="#添加索引" class="headerlink" title="添加索引"></a>添加索引</h4></li>
-</ul>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">ALTER TABLE tb_name ADD INDEX index_name (column_list);</span><br><span class="line"></span><br><span class="line">ALTER TABLE tb_name ADD UNIQUE (column_list);</span><br><span class="line"></span><br><span class="line">ALTER TABLE tb_name ADD PRIMARY KEY (column);</span><br><span class="line"></span><br><span class="line">ALTER TABLE tb_name ADD FULLTEXT (column);</span><br></pre></td></tr></table></figure>
-<p>​        tb_name、index_name和column_list具有与ALTER TABLE语句中相同的含义，索引名可不选（默认为字段名）。另外，ALTER TABLE允许在单个语句中更改多个表，因此可以在同时创建多个索引。</p>
-<ul>
-<li><h4 id="定义索引"><a href="#定义索引" class="headerlink" title="定义索引"></a>定义索引</h4></li>
-</ul>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">-- 1 在表级以key方式建立</span><br><span class="line">CREATE TABLE tb_name (id int not null auto_increment, PRIMARY KEY(id));</span><br><span class="line">CREATE TABLE tb_name (id int not null auto_increment, UNIQUE(column_list));</span><br><span class="line">CREATE TABLE tb_name (id int not null auto_increment, INDEX(column_list));</span><br><span class="line">CREATE TABLE tb_name (id int not null auto_increment, FULLTEXT(column_list));</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">-- 2 在字段级以key方式建立</span><br><span class="line">CREATE TABLE tb_name (id int not null auto_increment PRIMARY KEY);</span><br><span class="line">CREATE TABLE tb_name (id int not null auto_increment UNIQUE);</span><br><span class="line"></span><br><span class="line">-- 3 在表级以constraint方式建立</span><br><span class="line">CREATE TABLE tb_name (id int not null auto_increment, CONSTRAINT index_name UNIQUE(column_list));</span><br></pre></td></tr></table></figure>
-<ul>
-<li><h4 id="删除索引"><a href="#删除索引" class="headerlink" title="删除索引"></a>删除索引</h4></li>
-</ul>
-<p>​        可利用ALTER TABLE或DROP INDEX语句来删除索引。类似于CREATE INDEX语句，DROP INDEX可以在ALTER TABLE内部作为一条语句处理，语法如下。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">DROP INDEX index_name ON tb_name;</span><br><span class="line"></span><br><span class="line">ALTER TABLE tb_name DROP INDEX index_name;</span><br><span class="line"></span><br><span class="line">-- 一个表只有一个主键索引，无需指定索引名</span><br><span class="line">ALTER TABLE tb_name DROP PRIMARY KEY;</span><br></pre></td></tr></table></figure>
-<ul>
-<li><h4 id="查看索引"><a href="#查看索引" class="headerlink" title="查看索引"></a>查看索引</h4></li>
-</ul>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">mysql&gt;</span> show index from tb_name;</span><br><span class="line"></span><br><span class="line"><span class="meta">mysql&gt;</span> show keys from tb_name;</span><br></pre></td></tr></table></figure>
+        <h3 id="数据库索引"><a href="#数据库索引" class="headerlink" title="数据库索引"></a>数据库索引</h3><p>数据库表的索引从数据存储方式上可以分为聚簇索引和非聚簇索引两种。</p>
+<p>非聚簇索引是针对MyISAM引擎而言的。Innodb的索引储存是聚簇索引，没有非聚簇索引说法，其更加准确的叫法应该是辅助索引或二级索引。聚集索引这种主+辅助索引的好处是，当发生数据行移动或者页分裂时，辅助索引树不需要更新，因为辅助索引树存储的是主索引的主键关键字，而不是数据具体的物理地址。</p>
+<h4 id="1-1-聚簇索引"><a href="#1-1-聚簇索引" class="headerlink" title="1.1 聚簇索引"></a>1.1 聚簇索引</h4><p><img src="/2018/08/05/MySQL索引之聚簇索引与非聚簇索引/mysql聚簇索引.jpg" alt="mysql聚簇索引"></p>
+<p>”聚簇”的意思是数据行被按照一定顺序一个个紧密地排列在一起存储。因为一个表中的记录只能以一种物理顺序存放，所以一个表只能有一个聚簇索引（和多个辅助索引）。</p>
+<p><strong>特点：</strong></p>
+<ol>
+<li>数据文件本身就是索引文件，B+Tree的叶子节点上的<strong>data就是数据本身</strong>。一般会将主键作为聚簇索引的索引列，也就是通过主键聚集数据，将主键组织到一棵B+树中，而行数据就储存在叶子节点上。</li>
+<li>数据的物理存放顺序与索引顺序一致，即：只要索引是相邻的，那么对应的数据一定也是相邻地存放在磁盘上的。所以要比非聚簇索引查询效率高很多。</li>
+<li>数据文件只有一个<code>.idb</code>文件</li>
+</ol>
+<p>示例：</p>
+<ol>
+<li>若使用“where id = 14”这样的条件查找主键，则按照B+树的检索算法即可查找到对应的叶节点，之后获得行数据。</li>
+<li>若对二级索引Name列进行条件搜索，则需要两个步骤：第一步在辅助索引B+树中检索Name，到达其叶子节点获取对应的<strong>主键</strong>。第二步使用主键在主索引B+树中再执行一次B+树检索操作，最终到达叶子节点即可获取整行数据。也就是说<strong>InnoDB查找数据行会经过两个B树</strong>。这样做有个好处就是<strong>减少了数据行移动或数据页分裂时二级索引的维护工作</strong>，但是查找速度会略微变慢，有一种解决方法是实现<strong>索引覆盖</strong>，让二级索引直接覆盖所需的查询字段，这样就没必要查找数据行，也就没必要走主键索引了。</li>
+</ol>
+<p><strong>优点：</strong></p>
+<ol>
+<li>聚簇索引将索引和数据行保存在同一个B-Tree中，查询通过聚簇索引可以直接获取数据，而非聚簇索引要进行多次I/O，所以聚簇索引通常比非聚簇索引查找更快。</li>
+<li>聚簇索引对主键范围查询的效率很高，因为其数据是按照主键排列的</li>
+<li>二级索引使用索引覆盖可以直接使用叶节点的主键值。</li>
+</ol>
+<p><strong>缺点：</strong></p>
+<ol>
+<li>聚簇索引最大限度地提高了I/O密集型应用的性能，但如果数据都存放在内存中，则访问顺序就不那么重要了，聚簇索引也没什么优势。</li>
+<li>插入速度严重依赖于插入顺序。按照主键顺序往InnoDB中进行数据导入是最快的。如果不是按照主键插入，最好在导入完成后使用<code>OPTIMIZE TABLE</code>命令重新组织一下表。</li>
+<li>聚簇索引在插入新行和更新主键时，可能导致“页分裂”问题：当插入到某个已满的叶子结点时，B+树会分裂成两个页来容纳新插入的行数据。页分裂会导致表占用更多的磁盘空间（不要用UUID或随机数做主键，而应该使用单调递增的值做主键）。</li>
+<li>聚簇索引可能导致全表扫描速度变慢，因为可能需要加载物理上相隔较远的页到内存中（需要耗时的磁盘寻道操作）。</li>
+<li>二级索引访问数据行需要两次索引查找，由于二级索引保存了主键列，二级索引会占更大的空间(所以选用一个短主键是有利的)。</li>
+</ol>
+<h4 id="1-2-非聚簇索引"><a href="#1-2-非聚簇索引" class="headerlink" title="1.2 非聚簇索引"></a>1.2 非聚簇索引</h4><p><strong>特点：</strong></p>
+<ol>
+<li>B+Tree的叶子节点上的<strong>data是数据存放的地址</strong>（数据行在数据文件中的物理偏移量(行指针)），并不是数据本身。表数据存储在独立的地方，这两颗B+树的叶子节点都使用一个地址指向真正的表数据，对于表数据来说，这两个键没有任何差别。</li>
+<li>主索引和辅助索引没啥区别（除主索引中的key一定得是唯一的），两棵B+树节点的结构完全一致只是存储的内容不同而已，主键索引B+树的节点存储了主键，辅助键索引B+树存储了辅助键。</li>
+<li>数据行按照数据插入顺序存储在数据文件中。</li>
+<li>数据文件以<code>.MYD</code>为后缀，索引文件以<code>.MYI</code>为后缀</li>
+</ol>
+<p>由于索引树是独立的，通过辅助键检索无需访问主键的索引树。</p>
+<p><strong>优点：</strong></p>
+<ol>
+<li>读取数据行的速度快，特别是当数据行长度固定的时候。</li>
+<li>数据行插入容易，新行直接追加到数据文件末尾。</li>
+<li>支持全文(FULLTEXT)索引</li>
+</ol>
+<p><strong>缺点：</strong></p>
+<ol>
+<li>删除操作必须留出空白区域，否则后面的行数据偏移将会发生变化。正因如此当大量删除MyISAM表数据后，数据文件大小不会发生变化，所以要定期执行<code>OPTIMIZE TABLE</code>操作对MyISAM碎片空间进行整理。</li>
+<li>修改操作数据行长度如果变短，也会留白；数据行如果变长，数据将会分段存储。</li>
+<li>不支持事务、不支持外键、不支持行级锁。</li>
+</ol>
 
       
     </div>
@@ -584,8 +578,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2018/07/06/Python基础之时间处理/" rel="next" title="Python基础之时间处理">
-                <i class="fa fa-chevron-left"></i> Python基础之时间处理
+              <a href="/2018/08/02/MySQL基础手册/" rel="next" title="MySQL宝典-基础篇">
+                <i class="fa fa-chevron-left"></i> MySQL宝典-基础篇
               </a>
             
           </div>
@@ -684,7 +678,7 @@
                 
                   <a href="/archives/">
                 
-                    <span class="site-state-item-count">40</span>
+                    <span class="site-state-item-count">41</span>
                     <span class="site-state-item-name">日志</span>
                   </a>
                 </div>
@@ -941,7 +935,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#0-前言"><span class="nav-text">0. 前言</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#为什么要使用数据库？"><span class="nav-text">为什么要使用数据库？</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#什么是关系型数据库？"><span class="nav-text">什么是关系型数据库？</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#数据库、数据库系统、数据库管理系统？"><span class="nav-text">数据库、数据库系统、数据库管理系统？</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#数据库引擎"><span class="nav-text">数据库引擎</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#外键约束"><span class="nav-text">外键约束</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#1-MySQL之索引"><span class="nav-text">1. MySQL之索引</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#创建索引"><span class="nav-text">创建索引</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#添加索引"><span class="nav-text">添加索引</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#定义索引"><span class="nav-text">定义索引</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#删除索引"><span class="nav-text">删除索引</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#查看索引"><span class="nav-text">查看索引</span></a></li></ol></li></ol></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#数据库索引"><span class="nav-text">数据库索引</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#1-1-聚簇索引"><span class="nav-text">1.1 聚簇索引</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#1-2-非聚簇索引"><span class="nav-text">1.2 非聚簇索引</span></a></li></ol></li></ol></div>
             
 
           </div>
@@ -1114,9 +1108,9 @@
   
     <script type="text/javascript">
       var disqus_config = function () {
-        this.page.url = 'http://yoursite.com/2018/08/02/MySQL宝典-基础篇/';
-        this.page.identifier = '2018/08/02/MySQL宝典-基础篇/';
-        this.page.title = 'MySQL宝典-基础篇';
+        this.page.url = 'http://yoursite.com/2018/08/05/MySQL索引之聚簇索引与非聚簇索引/';
+        this.page.identifier = '2018/08/05/MySQL索引之聚簇索引与非聚簇索引/';
+        this.page.title = 'MySQL索引之聚簇索引与非聚簇索引';
         };
       function loadComments () {
         var d = document, s = d.createElement('script');
