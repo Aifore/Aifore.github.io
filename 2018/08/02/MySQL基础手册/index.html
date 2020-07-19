@@ -108,18 +108,18 @@
 
 
 
-  <meta name="description" content="0. 前言为什么要使用数据库？数据持久化：将数据从一掉电数据就丢失的存储介质(内存)转移到持久存储介质(硬盘)普通文件 / 二进制文件 / Excel数据库 - 高效的存储和管理数据方便的检索数据 什么是关系型数据库？ 用二维表组织数据，表(实体)与表(实体)之间存在关系。  理论基础：集合论和关系代数 表 - 实体（一个类） 行 - 记录（一个实例对象） 列 - 字段（一个属性） 数据库、数据库">
+  <meta name="description" content="0. 前言为什么要使用数据库？数据持久化：将数据从一掉电数据就丢失的存储介质(内存)转移到持久存储介质(硬盘)普通文件 / 二进制文件 / Excel数据库 - 高效的存储和管理数据方便的检索数据">
 <meta name="keywords" content="MySQL索引">
 <meta property="og:type" content="article">
 <meta property="og:title" content="MySQL宝典-基础篇">
 <meta property="og:url" content="http://yoursite.com/2018/08/02/MySQL基础手册/index.html">
 <meta property="og:site_name" content="AiforeのBlog">
-<meta property="og:description" content="0. 前言为什么要使用数据库？数据持久化：将数据从一掉电数据就丢失的存储介质(内存)转移到持久存储介质(硬盘)普通文件 / 二进制文件 / Excel数据库 - 高效的存储和管理数据方便的检索数据 什么是关系型数据库？ 用二维表组织数据，表(实体)与表(实体)之间存在关系。  理论基础：集合论和关系代数 表 - 实体（一个类） 行 - 记录（一个实例对象） 列 - 字段（一个属性） 数据库、数据库">
+<meta property="og:description" content="0. 前言为什么要使用数据库？数据持久化：将数据从一掉电数据就丢失的存储介质(内存)转移到持久存储介质(硬盘)普通文件 / 二进制文件 / Excel数据库 - 高效的存储和管理数据方便的检索数据">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2019-10-20T16:51:11.201Z">
+<meta property="og:updated_time" content="2020-07-19T13:12:25.291Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="MySQL宝典-基础篇">
-<meta name="twitter:description" content="0. 前言为什么要使用数据库？数据持久化：将数据从一掉电数据就丢失的存储介质(内存)转移到持久存储介质(硬盘)普通文件 / 二进制文件 / Excel数据库 - 高效的存储和管理数据方便的检索数据 什么是关系型数据库？ 用二维表组织数据，表(实体)与表(实体)之间存在关系。  理论基础：集合论和关系代数 表 - 实体（一个类） 行 - 记录（一个实例对象） 列 - 字段（一个属性） 数据库、数据库">
+<meta name="twitter:description" content="0. 前言为什么要使用数据库？数据持久化：将数据从一掉电数据就丢失的存储介质(内存)转移到持久存储介质(硬盘)普通文件 / 二进制文件 / Excel数据库 - 高效的存储和管理数据方便的检索数据">
 
 
 
@@ -399,7 +399,7 @@
                 
                   <span class="post-meta-item-text">更新于</span>
                 
-                <time title="修改时间：2019-10-20 23:51:11" itemprop="dateModified" datetime="2019-10-20T23:51:11+07:00">2019-10-20</time>
+                <time title="修改时间：2020-07-19 20:12:25" itemprop="dateModified" datetime="2020-07-19T20:12:25+07:00">2020-07-19</time>
               
             
           </span>
@@ -471,6 +471,7 @@
 
       
         <h2 id="0-前言"><a href="#0-前言" class="headerlink" title="0. 前言"></a>0. 前言</h2><h3 id="为什么要使用数据库？"><a href="#为什么要使用数据库？" class="headerlink" title="为什么要使用数据库？"></a>为什么要使用数据库？</h3><p>数据持久化：将数据从一掉电数据就丢失的存储介质(内存)转移到持久存储介质(硬盘)<br>普通文件 / 二进制文件 / Excel<br>数据库 - 高效的存储和管理数据方便的检索数据</p>
+<a id="more"></a>
 <h3 id="什么是关系型数据库？"><a href="#什么是关系型数据库？" class="headerlink" title="什么是关系型数据库？"></a>什么是关系型数据库？</h3><blockquote>
 <p>用二维表组织数据，表(实体)与表(实体)之间存在关系。</p>
 </blockquote>
@@ -490,7 +491,6 @@
 </ul>
 <p>连接数据库</p>
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">mysql -h localhost -u root -p</span><br></pre></td></tr></table></figure>
-<a id="more"></a>
 <h3 id="数据库引擎"><a href="#数据库引擎" class="headerlink" title="数据库引擎"></a>数据库引擎</h3><ul>
 <li>Myisam：支持全文检索(fulltext)，操作表的时候是<code>表级锁</code>。不支持事务，日志，外键等。</li>
 <li>Innodb：不支持全文检索，操作表的时候是<code>行级锁</code>。支持事务处理，日志，外键。由于有事务和日志，所以Innodb在添加和修改的时候数据更安全，但是读取速度较慢。</li>
