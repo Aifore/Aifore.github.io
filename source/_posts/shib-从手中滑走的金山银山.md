@@ -20,7 +20,10 @@ categories: 币圈交易笔记
 # 均线示意图
 
 ![当时的日线形态](shib.png)
-{% asset_img shib.png This is an example image %}
+
+666
+
+{% asset_img shib-从手中滑走的金山银山/shib.png This is an example image %}
 
 # 血泪总结
 
