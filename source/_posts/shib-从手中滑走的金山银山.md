@@ -21,10 +21,6 @@ categories: 币圈交易笔记
 
 ![当时的日线形态](shib.png)
 
-666
-
-{% asset_img shib-从手中滑走的金山银山/shib.png This is an example image %}
-
 # 血泪总结
 
 1. 提高认知。
