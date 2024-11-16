@@ -3,17 +3,17 @@
 ## Source: https://github.com/hexojs/hexo/
 
 # Site
-title: Hexo
-subtitle: ''
-description: ''
+title: 金刚猪儿虫
+subtitle: '币圈交易笔记'
+description: '记录19年入圈到现在的一个非常深刻、重大、惨痛的交易和心得'
 keywords:
-author: John Doe
-language: en
-timezone: ''
+author: KKZEC
+language: zh
+timezone: 'Asia/Shanghai'
 
 # URL
 ## Set your site url here. For example, if you use GitHub Page, set url as 'https://username.github.io/project'
-url: http://example.com
+url: https://Aifore.github.io
 permalink: :year/:month/:day/:title/
 permalink_defaults:
 pretty_urls:
