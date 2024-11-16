@@ -19,7 +19,7 @@ categories: 交易笔记
 
 # 均线示意图
 
-![当时的日线形态](shib.png)
+![当时的日线形态](/source/images/shib.png)
 
 # 血泪总结
 
