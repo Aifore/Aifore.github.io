@@ -1,5 +1,5 @@
 ---
-title: 交易笔记之shib-曾经错过的金山银山
+title: 交易笔记一之shib-曾经错过的金山银山
 date: 2024-11-10 22:58
 tags: shib
 categories: 交易笔记
